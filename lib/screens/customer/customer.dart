@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class Saller extends StatelessWidget {
+class Customer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
