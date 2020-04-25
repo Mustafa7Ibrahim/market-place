@@ -3,7 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 final CollectionReference userCollection =
     Firestore.instance.collection('users');
-    
+
 final FirebaseAuth auth = FirebaseAuth.instance;
 
 class User {
@@ -22,7 +22,12 @@ class User {
   });
 
   Future addNewUser(
-      String id, String name, String email, String userImg, String type) async {
+    String id,
+    String name,
+    String email,
+    String userImg,
+    String type,
+  ) async {
     return await userCollection.document(id).setData({
       'id': id,
       'name': name,
@@ -40,5 +45,9 @@ class User {
       userImg: documentSnapshot.data['userImg'],
       type: documentSnapshot.data['type'],
     );
+  }
+
+  Stream<User> get getUser {
+    return userCollection.document().snapshots().map(getCurrentUser);
   }
 }

@@ -1,26 +1,36 @@
 import 'package:flutter/material.dart';
+import 'package:market_place/constant/theme.dart';
 import 'package:market_place/screens/customer/customer.dart';
 import 'package:market_place/screens/saller/saller.dart';
 import 'package:market_place/screens/sign_in/sign_in.dart';
 import 'package:market_place/screens/wrapper.dart';
+import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-void main() => runApp(MyApp());
+import 'models/user.dart';
 
-class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(primarySwatch: Colors.blue),
-      initialRoute: '/',
-      routes: {
-        '/': (context) => Wrapper(),
-        '/sign_in': (context) => SignIn(),
-        '/saller': (context) => Saller(),
-        '/customer': (context) => Customer(),
-      },
-      // home: MyHomePage(title: 'Flutter Demo Home Page'),
-    );
-  }
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  SharedPreferences pref = await SharedPreferences.getInstance();
+  var user = pref.getString('user');
+  var type = pref.getString('type');
+  runApp(
+    MultiProvider(
+      providers: [
+        StreamProvider<User>.value(value: User().getUser),
+      ],
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        theme: theme,
+        initialRoute:
+            user == null ? '/' : type == 'Customer' ? '/customer' : '/saller',
+        routes: {
+          '/': (context) => Wrapper(),
+          '/sign_in': (context) => SignIn(),
+          '/saller': (context) => Saller(),
+          '/customer': (context) => Customer(),
+        },
+      ),
+    ),
+  );
 }

@@ -1,5 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:market_place/models/user.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -15,7 +17,8 @@ class Auth {
       // try to sign in with google account
       final GoogleSignInAccount googleSignInAccount = await googleSignIn
           .signIn()
-          .catchError((onError) => showSnakBar(onError.toString(), context));
+          .catchError(
+              (onError) => Fluttertoast.showToast(msg: onError.toString()));
 
       final GoogleSignInAuthentication googleSignInAuthentication =
           await googleSignInAccount.authentication;
@@ -25,69 +28,105 @@ class Auth {
       );
       final AuthResult authResult =
           await firebaseAuth.signInWithCredential(authCredential);
-      final FirebaseUser user = authResult.user;
 
-      // make sure that this user has a right into
-      assert(user.displayName != null);
-      assert(user.email != null);
-      assert(user.photoUrl != null);
-      assert(user.uid != null);
+      if (authResult.additionalUserInfo.isNewUser) {
+        // if it's a new user
+        final FirebaseUser user = authResult.user;
 
-      // add a new user to fireStore
-      _user.addNewUser(user.uid, user.uid, user.email, user.photoUrl, type);
+        // make sure that this user has a right into
+        assert(user.displayName != null);
+        assert(user.email != null);
+        assert(user.photoUrl != null);
+        assert(user.uid != null);
 
-      // make sure that the user is not an anonymous one
-      assert(!user.isAnonymous);
+        // add a new user to fireStore
+        _user.addNewUser(
+          user.uid,
+          user.displayName,
+          user.email,
+          user.photoUrl,
+          type,
+        );
 
-      // make sure that the user id token is not null
-      assert(await user.getIdToken() != null);
+        // make sure that the user is not an anonymous one
+        assert(!user.isAnonymous);
 
-      final FirebaseUser currentUser = await auth.currentUser();
+        // make sure that the user id token is not null
+        assert(await user.getIdToken() != null);
 
-      userCollection.document(user.uid).snapshots().map(_user.getCurrentUser);
+        final FirebaseUser currentUser = await auth.currentUser();
+        sharedPreferences.setString('user', currentUser.displayName);
+        sharedPreferences.setString('type', type);
 
-      sharedPreferences.setString('user', currentUser.displayName);
-      sharedPreferences.setString('type', type);
+        if (type == 'Saller') {
+          Navigator.pushReplacementNamed(context, '/saller');
+        } else {
+          Navigator.pushReplacementNamed(context, '/customer');
+        }
 
-      if (type == 'Saller') {
-        Navigator.pushReplacementNamed(context, '/saller');
+        return user;
       } else {
-        Navigator.pushReplacementNamed(context, '/customer');
+        var userType;
+        // if it's an exesting user
+        final FirebaseUser userAuth = authResult.user;
+        // make sure that this user has a right into
+        assert(userAuth.displayName != null);
+        assert(userAuth.email != null);
+        assert(userAuth.photoUrl != null);
+        assert(userAuth.uid != null);
+        // make sure that the user is not an anonymous one
+        assert(!userAuth.isAnonymous);
+        // make sure that the user id token is not null
+        assert(await userAuth.getIdToken() != null);
+
+        final FirebaseUser currentUser = await auth.currentUser();
+
+        userCollection.document(userAuth.uid).get().then(
+          (DocumentSnapshot snapshot) {
+            userType = snapshot.data['type'];
+          },
+        ).whenComplete(() {
+          if (userType == type) {
+            sharedPreferences.setString('user', currentUser.displayName);
+            sharedPreferences.setString('type', userType);
+            if (userType == 'Saller') {
+              Navigator.pushReplacementNamed(context, '/saller');
+            } else {
+              Navigator.pushReplacementNamed(context, '/customer');
+            }
+          } else {
+            Fluttertoast.showToast(
+              msg: 'You are note a $type please sign in as a $userType',
+            );
+          }
+        });
+
+        return userAuth;
       }
-      return user;
     } catch (e) {
-      showSnakBar(e.toString(), context);
+      Fluttertoast.showToast(msg: e.toString());
       return null;
     }
   }
 
-  Future signOut(BuildContext context) async {
-    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+  signOutWithGoogle(BuildContext context) async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
     try {
       await googleSignIn
           .signOut()
-          .catchError((onError) => showSnakBar(onError.toString(), context))
+          .catchError(
+              (onError) => Fluttertoast.showToast(msg: onError.toString()))
           .whenComplete(
         () {
-          sharedPreferences.remove('user');
-          sharedPreferences.remove('type');
+          pref.remove('user');
+          pref.remove('type');
           Navigator.pushReplacementNamed(context, '/');
         },
       );
-
-      showSnakBar('Sign out Successfuly', context);
+      Fluttertoast.showToast(msg: 'Sign out Successfuly');
     } catch (e) {
-      showSnakBar(e.toString(), context);
+      Fluttertoast.showToast(msg: e.toString());
       return null;
     }
-  }
-
-  void showSnakBar(String msg, BuildContext context) {
-    Scaffold.of(context).showSnackBar(
-      SnackBar(
-        content: Text(msg),
-        duration: Duration(seconds: 7),
-      ),
-    );
   }
 }
