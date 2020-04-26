@@ -12,6 +12,7 @@ class User {
   String email;
   String userImg;
   String type;
+  String companyName;
 
   User({
     this.id,
@@ -19,6 +20,7 @@ class User {
     this.email,
     this.userImg,
     this.type,
+    this.companyName,
   });
 
   Future addNewUser(
@@ -39,15 +41,12 @@ class User {
 
   User getCurrentUser(DocumentSnapshot documentSnapshot) {
     return User(
-      id: documentSnapshot.data['id'],
-      name: documentSnapshot.data['name'],
-      email: documentSnapshot.data['email'],
-      userImg: documentSnapshot.data['userImg'],
-      type: documentSnapshot.data['type'],
+      id: documentSnapshot.data['id'] ?? '',
+      name: documentSnapshot.data['name'] ?? '',
+      email: documentSnapshot.data['email'] ?? '',
+      userImg: documentSnapshot.data['userImg'] ?? ' ',
+      type: documentSnapshot.data['type'] ?? '',
+      companyName: documentSnapshot.data['companyName'] ?? '',
     );
-  }
-
-  Stream<User> get getUser {
-    return userCollection.document().snapshots().map(getCurrentUser);
   }
 }

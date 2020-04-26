@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:market_place/auth/auth.dart';
+import 'package:market_place/screens/saller/profile/profile.dart';
+import 'package:market_place/screens/saller/saller_products/saller_products.dart';
 
 class Saller extends StatefulWidget {
   @override
@@ -20,19 +22,18 @@ class _SallerState extends State<Saller> {
     setState(() => currentIndex = index);
   }
 
+  List<Widget> _screenIndex = <Widget>[
+    SallerProducts(),
+    Profile(),
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        leading: Container(),
-        elevation: 0.0,
-        title: Text('Saller'),
-        centerTitle: true,
-      ),
       floatingActionButton: FloatingActionButton(
         tooltip: 'To add a new Product',
         child: Icon(Icons.add),
-        onPressed: () {},
+        onPressed: () => Navigator.pushNamed(context, '/add_new_product'),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       bottomNavigationBar: BottomNavigationBar(
@@ -56,14 +57,7 @@ class _SallerState extends State<Saller> {
           ),
         ],
       ),
-      body: Container(
-        child: Center(
-          child: RaisedButton(
-            child: Text('Seller'),
-            onPressed: () => auth.signOutWithGoogle(context),
-          ),
-        ),
-      ),
+      body: _screenIndex.elementAt(currentIndex),
     );
   }
 }
