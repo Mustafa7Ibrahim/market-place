@@ -58,6 +58,14 @@ class _ProfileState extends State<Profile> {
               decoration: inputDecoration,
             ),
           ),
+          RaisedButton(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(28.0),
+            ),
+            color: Color.fromRGBO(84, 52, 214, 1),
+            child: Text('Update'),
+            onPressed: () {},
+          ),
         ],
       ),
     );

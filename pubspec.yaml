@@ -29,7 +29,10 @@ dependencies:
   shared_preferences: ^0.5.7
   fluttertoast: ^4.0.1
   provider: ^4.0.5
+  multi_image_picker: ^4.6.5
+  flutter_spinkit: ^4.1.2+1
 
+  
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -50,6 +53,7 @@ flutter:
   assets:
    - assets/images/des.png
    - assets/images/log.png
+   - assets/images/beach.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
