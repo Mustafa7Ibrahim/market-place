@@ -1,5 +1,12 @@
+import 'dart:async';
+
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:market_place/constant/constant.dart';
 import 'package:market_place/constant/decoration.dart';
+import 'package:market_place/models/product.dart';
 import 'package:market_place/widgets/add_images.dart';
 import 'package:market_place/widgets/edit_feild.dart';
 import 'package:market_place/widgets/list_of_images.dart';
@@ -13,35 +20,26 @@ class AddNewProduct extends StatefulWidget {
 }
 
 class _AddNewProductState extends State<AddNewProduct> {
-  BuildContext context;
   final formKey = GlobalKey<FormState>();
+  final Product product = Product();
 
   //faild controller
   final nameController = TextEditingController();
   final priceController = TextEditingController();
   final quantityController = TextEditingController();
-  final descriptionController = TextEditingController();
-  final specificationsController = TextEditingController();
+  final desController = TextEditingController();
+  final specifiController = TextEditingController();
 
   List<Asset> images = List<Asset>();
-  List<String> types = <String>[
-    'Supermarket',
-    'Fashion',
-    'Mobile & Tablets',
-    'Electronics',
-    'Health & Beauty',
-    'Home & Kitchen',
-    'Babies',
-    'Toys',
-    'Appliances',
-    'Sports',
-    'Automotive',
-    'Tools',
-  ];
+  List<String> _imageUrls = List();
+  Map<String, String> filePaths;
+
   String type;
+  bool loading;
 
   @override
   void initState() {
+    loading = false;
     super.initState();
   }
 
@@ -62,10 +60,7 @@ class _AddNewProductState extends State<AddNewProduct> {
             children: <Widget>[
               images == null || images.isEmpty
                   ? AddImages(
-                      height: height,
-                      width: width,
-                      onTap: loadAssets,
-                    )
+                      height: height, width: width, onTap: loadAssets)
                   : SizedBox(
                       height: height / 2,
                       child: ListView.builder(
@@ -85,18 +80,24 @@ class _AddNewProductState extends State<AddNewProduct> {
                       ),
                     ),
               EditFeild(
-                  hint: 'Product Name', max: 1, controller: nameController),
-              EditFeild(hint: 'Price', max: 1, controller: priceController),
+                hint: 'Product Name',
+                max: 1,
+                controller: nameController,
+              ),
               EditFeild(
-                  hint: 'Quantity', max: 1, controller: quantityController),
+                hint: 'Price',
+                max: 1,
+                controller: priceController,
+              ),
+              EditFeild(
+                hint: 'Quantity',
+                max: 1,
+                controller: quantityController,
+              ),
               Container(
                 margin: EdgeInsets.all(12.0),
-                padding: EdgeInsets.only(
-                  left: 14.0,
-                  right: 14.0,
-                  top: 4.0,
-                  bottom: 4.0,
-                ),
+                padding:
+                    EdgeInsets.symmetric(horizontal: 14.0, vertical: 4.0),
                 width: width,
                 decoration: BoxDecoration(
                   color: Colors.white,
@@ -104,49 +105,99 @@ class _AddNewProductState extends State<AddNewProduct> {
                   boxShadow: [shadow],
                 ),
                 child: DropdownButton(
+                  hint: Text('Product Type'),
+                  isExpanded: true,
+                  focusColor: Colors.white,
+                  value: type,
+                  underline: SizedBox(),
+                  style: TextStyle(color: Colors.black87, fontSize: 18.0),
+                  icon: Icon(
+                    Icons.arrow_drop_down,
+                    color: Theme.of(context).primaryColor,
+                  ),
+                  onChanged: (String onChange) => setState(
+                    () => type = onChange,
+                  ),
                   items: types.map((String value) {
                     return DropdownMenuItem<String>(
                       child: Text(value),
                       value: value,
                     );
                   }).toList(),
-                  onChanged: (String onChange) =>
-                      setState(() => type = onChange),
-                  hint: Text('Product Type'),
-                  isExpanded: true,
-                  icon: Icon(
-                    Icons.arrow_drop_down,
-                    color: Theme.of(context).primaryColor,
-                  ),
-                  focusColor: Colors.white,
-                  value: type,
-                  underline: SizedBox(),
-                  style: TextStyle(
-                    color: Colors.black87,
-                    fontSize: 18.0,
-                  ),
                 ),
               ),
               EditFeild(
                 hint: 'Description',
                 max: 6,
-                controller: descriptionController,
+                controller: desController,
               ),
               EditFeild(
                 hint: 'Specifications',
                 max: 8,
-                controller: specificationsController,
+                controller: specifiController,
               ),
               WidthButton(
+                loading: loading,
                 width: width,
-                title: 'Add Product',
-                onTap: () {
+                title:'Add Product',
+                onTap: () async {
                   if (formKey.currentState.validate()) {
+                    // print the data in the termnal
                     print(nameController.text);
                     print(priceController.text);
                     print(quantityController.text);
                     print(quantityController.text);
-                    print(specificationsController.text);
+                    print(specifiController.text);
+                    print(type);
+                    // checking if images is not empty
+                    if (images.isNotEmpty) {
+                      // show the loading screen
+                      setState(() => loading = true);
+                      // start with uploading the images
+                      await uploadImages().then((onComplete) async {
+                        // checking if the urls is empty
+                        if (_imageUrls.isNotEmpty) {
+                          // whene complete add the product data
+                          await product.addNewProduct(
+                            productName: nameController.text,
+                            price: priceController.text,
+                            productType: type,
+                            description: desController.text,
+                            quantity: quantityController.text,
+                            specification: specifiController.text,
+                            productImages: _imageUrls,
+                          );
+                        } else {
+                          // show that there is somthing went wrong
+                          setState(() => loading = false);
+                          Fluttertoast.showToast(
+                            msg: 'Somthing went wrong',
+                          );
+                        }
+                        // if an error happened
+                      }).catchError((onError) {
+                        setState(() => loading = false);
+                        Fluttertoast.showToast(
+                          msg: 'Somthing went wrong: $onError',
+                        );
+                        // when it finshed clear everything and navigate to home
+                      }).whenComplete(() {
+                        setState(() {
+                          loading = false;
+                          nameController.clear();
+                          priceController.clear();
+                          desController.clear();
+                          quantityController.clear();
+                          specifiController.clear();
+                          images.clear();
+                          type.isEmpty;
+                        });
+                        Fluttertoast.showToast(
+                          msg: 'Product add Successfuly',
+                        );
+                        Navigator.pushNamed(context, '/saller');
+                      });
+                    }
                   }
                 },
               ),
@@ -170,7 +221,7 @@ class _AddNewProductState extends State<AddNewProduct> {
           asset: images[index],
           width: 300,
           height: 300,
-          spinner: Loading(),
+          spinner: Loading(color: Theme.of(context).primaryColor),
         ),
       ),
     );
@@ -188,13 +239,42 @@ class _AddNewProductState extends State<AddNewProduct> {
     } on Exception catch (e) {
       e.toString();
     }
-    // If the widget was removed from the tree while the asynchronous platform
-    // message was in flight, we want to discard the reply rather than calling
-    // setState to update our non-existent appearance.
     if (!mounted) return;
 
-    setState(() {
-      images = resultList;
-    });
+    setState(() => images = resultList);
+  }
+
+  Future<List<String>> uploadImages() async {
+    await Future.wait(
+        images.map(
+          (Asset asset) async {
+            ByteData byteData = await asset.getByteData();
+            List<int> imageData = byteData.buffer.asUint8List();
+
+            StorageReference reference =
+                FirebaseStorage.instance.ref().child(asset.name);
+            StorageUploadTask uploadTask = reference.putData(imageData);
+            StorageTaskSnapshot storageTaskSnapshot;
+
+            StorageTaskSnapshot snapshot = await uploadTask.onComplete;
+            if (snapshot.error == null) {
+              storageTaskSnapshot = snapshot;
+              final String downloadUrl =
+                  await storageTaskSnapshot.ref.getDownloadURL();
+              _imageUrls.add(downloadUrl.toString());
+
+              print('Upload success');
+            } else {
+              print('Error from image repo ${snapshot.error.toString()}');
+              throw ('This file is not an image');
+            }
+          },
+        ),
+        eagerError: true,
+        cleanUp: (_) {
+          print('eager cleaned up');
+        });
+
+    return _imageUrls;
   }
 }

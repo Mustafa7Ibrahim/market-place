@@ -29,8 +29,11 @@ dependencies:
   shared_preferences: ^0.5.7
   fluttertoast: ^4.0.1
   provider: ^4.0.5
+  file_picker: ^1.8.0+2
   multi_image_picker: ^4.6.5
   flutter_spinkit: ^4.1.2+1
+  uuid: ^2.0.4
+  firebase_storage: ^3.1.5
 
   
 dev_dependencies:

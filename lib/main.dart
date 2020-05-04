@@ -10,6 +10,7 @@ import 'package:market_place/screens/wrapper.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'models/product.dart';
 import 'models/user.dart';
 
 void main() async {
@@ -22,9 +23,10 @@ void main() async {
   runApp(
     MultiProvider(
       providers: [
+        StreamProvider<List<Product>>.value(value: Product().productListstrm),
         StreamProvider<User>.value(
           value: userCollection
-              .document(firebaseUser.uid)
+              .document(firebaseUser?.uid ?? '')
               .snapshots()
               .map(user.getCurrentUser),
         ),

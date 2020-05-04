@@ -40,7 +40,7 @@ class ListOfImages extends StatelessWidget {
               asset: images[index],
               width: 300,
               height: 300,
-              spinner: Loading(),
+              spinner: Loading(color: Theme.of(context).primaryColor),
             ),
           ),
         ),
