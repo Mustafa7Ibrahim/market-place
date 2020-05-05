@@ -25,8 +25,6 @@ class SallerProducts extends StatelessWidget {
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: (orientation == Orientation.portrait) ? 2 : 3,
                 childAspectRatio: width / height,
-                crossAxisSpacing: 12.0,
-                mainAxisSpacing: 12.0,
               ),
               itemCount: _productList.length,
               itemBuilder: (BuildContext context, int index) {

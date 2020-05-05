@@ -39,7 +39,29 @@ class Product {
   }) async {
     FirebaseUser currentUser = await FirebaseAuth.instance.currentUser();
     return await productCollection.document().setData({
-      // 'productId': productId,
+      'productName': productName,
+      'productType': productType,
+      'price': price,
+      'quantity': quantity,
+      'description': description,
+      'specification': specification,
+      'productImages': productImages ?? 'null',
+      'CompanyName': currentUser.displayName ?? 'null',
+    });
+  }
+
+  updateNewProduct({
+    String proId,
+    String productName,
+    String productType,
+    String price,
+    String quantity,
+    String description,
+    String specification,
+    List productImages,
+  }) async {
+    FirebaseUser currentUser = await FirebaseAuth.instance.currentUser();
+    return await productCollection.document(proId).setData({
       'productName': productName,
       'productType': productType,
       'price': price,

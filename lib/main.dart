@@ -2,7 +2,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:market_place/constant/theme.dart';
 import 'package:market_place/screens/customer/customer.dart';
-import 'package:market_place/screens/saller/add_new_product/add_new_product.dart';
 import 'package:market_place/screens/saller/saller.dart';
 import 'package:market_place/screens/saller/saller_products/saller_products.dart';
 import 'package:market_place/screens/sign_in/sign_in.dart';
@@ -26,7 +25,7 @@ void main() async {
         StreamProvider<List<Product>>.value(value: Product().productListstrm),
         StreamProvider<User>.value(
           value: userCollection
-              .document(firebaseUser?.uid ?? '')
+              .document(firebaseUser.uid)
               .snapshots()
               .map(user.getCurrentUser),
         ),
@@ -43,7 +42,6 @@ void main() async {
           '/saller': (context) => Saller(),
           '/customer': (context) => Customer(),
           '/saller_products': (context) => SallerProducts(),
-          '/add_new_product': (context) => AddNewProduct(),
         },
       ),
     ),

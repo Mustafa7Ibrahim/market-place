@@ -1,5 +1,7 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:market_place/auth/auth.dart';
+import 'package:market_place/screens/saller/add_new_product/add_new_product.dart';
 import 'package:market_place/screens/saller/profile/profile.dart';
 import 'package:market_place/screens/saller/saller_products/saller_products.dart';
 
@@ -33,7 +35,20 @@ class _SallerState extends State<Saller> {
       floatingActionButton: FloatingActionButton(
         tooltip: 'To add a new Product',
         child: Icon(Icons.add),
-        onPressed: () => Navigator.pushNamed(context, '/add_new_product'),
+        onPressed: () => Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => AddNewProduct(
+              proImages: null,
+              proName: null,
+              proQuantity: null,
+              proType: null,
+              proDes: null,
+              proSpecif: null,
+              proPrice: null,
+            ),
+          ),
+        ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       bottomNavigationBar: BottomNavigationBar(

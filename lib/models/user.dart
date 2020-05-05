@@ -39,6 +39,18 @@ class User {
     });
   }
 
+  Future updateUser(
+    String id,
+    String name,
+    String companyName,
+  ) async {
+    return await userCollection.document(id).setData({
+      'id': id,
+      'name': name,
+      'companyName': companyName,
+    });
+  }
+
   User getCurrentUser(DocumentSnapshot documentSnapshot) {
     return User(
       id: documentSnapshot.data['id'] ?? '',

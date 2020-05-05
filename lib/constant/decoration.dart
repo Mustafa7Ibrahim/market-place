@@ -29,7 +29,7 @@ var _blurRadius = 8.0;
 var _spreadRadius = 2.0;
 // Shadow decoration
 BoxShadow shadow = BoxShadow(
-  color: Color.fromRGBO(0, 0, 0, _opacity),
+  color: Color.fromRGBO(255, 255, 255, _opacity),
   offset: Offset(_yOffset, _xOffset),
   blurRadius: _blurRadius,
   spreadRadius: _spreadRadius,

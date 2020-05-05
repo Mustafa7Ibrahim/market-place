@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:market_place/constant/decoration.dart';
 import 'package:market_place/models/user.dart';
+import 'package:market_place/widgets/edit_feild.dart';
+import 'package:market_place/widgets/loading.dart';
+import 'package:market_place/widgets/width_button.dart';
 import 'package:provider/provider.dart';
 
 class Profile extends StatefulWidget {
@@ -9,8 +11,14 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
+  User user = User();
+
+  String name;
+  String companyName;
+
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     final currentUser = Provider.of<User>(context);
     return Scaffold(
       appBar: AppBar(
@@ -19,55 +27,43 @@ class _ProfileState extends State<Profile> {
         centerTitle: true,
         elevation: 0.0,
       ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: <Widget>[
-          Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(24.0),
-              boxShadow: [shadow],
-            ),
-            margin: EdgeInsets.symmetric(horizontal: 12.0, vertical: 8.0),
-            child: TextFormField(
-              initialValue: currentUser.companyName,
-              decoration: inputDecoration.copyWith(
-                hintText: 'Edit Your Company Name..',
-              ),
-            ),
-          ),
-          Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(24.0),
-              boxShadow: [shadow],
-            ),
-            margin: EdgeInsets.symmetric(horizontal: 12.0, vertical: 8.0),
-            child: TextFormField(
-              initialValue: currentUser.name,
-              decoration: inputDecoration,
-            ),
-          ),
-          Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(24.0),
-              boxShadow: [shadow],
-            ),
-            margin: EdgeInsets.symmetric(horizontal: 12.0, vertical: 8.0),
-            child: TextFormField(
-              initialValue: currentUser.email,
-              decoration: inputDecoration,
-            ),
-          ),
-          RaisedButton(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(28.0),
-            ),
-            color: Color.fromRGBO(84, 52, 214, 1),
-            child: Text('Update'),
-            onPressed: () {},
-          ),
-        ],
-      ),
+      body: currentUser == null
+          ? Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                EditFeild(
+                  hint: 'Edit Your Company Name..',
+                  enable: true,
+                  currentValue: currentUser.companyName == null
+                      ? companyName
+                      : currentUser.companyName,
+                  max: 1,
+                ),
+                EditFeild(
+                  hint: 'Name',
+                  enable: true,
+                  currentValue: currentUser.name,
+                  max: 1,
+                ),
+                EditFeild(
+                  hint: 'Email',
+                  enable: false,
+                  currentValue: currentUser.email,
+                  max: 1,
+                ),
+                WidthButton(
+                  title: 'Update',
+                  width: size.width,
+                  onTap: () => user.updateUser(
+                    currentUser.id,
+                    name,
+                    companyName,
+                  ),
+                )
+              ],
+            )
+          : Loading(color: Theme.of(context).primaryColor),
     );
   }
 }

@@ -7,6 +7,6 @@ ThemeData theme = ThemeData(
     backgroundColor: Colors.deepPurpleAccent,
     elevation: 0.0,
   ),
-  scaffoldBackgroundColor: Colors.white,
+  scaffoldBackgroundColor: Color(0xFFEFEFEF),
   cursorColor: Colors.deepPurpleAccent,
 );

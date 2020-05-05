@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:market_place/constant/decoration.dart';
-import 'package:market_place/widgets/image_network.dart';
+import 'package:multi_image_picker/multi_image_picker.dart';
 
-class ListOfImages extends StatelessWidget {
-  const ListOfImages({
+import 'loading.dart';
+
+class ListOfAssets extends StatelessWidget {
+  const ListOfAssets({
     this.width,
     this.index,
     this.images,
@@ -15,13 +17,13 @@ class ListOfImages extends StatelessWidget {
   final double height;
   final Function onTap;
   final int index;
-  final List images;
+  final List<Asset> images;
 
   @override
   Widget build(BuildContext context) {
     return Tooltip(
       message: 'Click Here to Change The Photos',
-      preferBelow: true,
+      preferBelow: false,
       showDuration: Duration(seconds: 7),
       waitDuration: Duration(seconds: 7),
       child: InkWell(
@@ -34,10 +36,11 @@ class ListOfImages extends StatelessWidget {
           ),
           child: ClipRRect(
             borderRadius: BorderRadius.circular(12.0),
-            child: ImageNetwork(
-              image: images[index],
-              width: width,
-              height: height,
+            child: AssetThumb(
+              asset: images[index],
+              width: 300,
+              height: 300,
+              spinner: Loading(color: Theme.of(context).primaryColor),
             ),
           ),
         ),

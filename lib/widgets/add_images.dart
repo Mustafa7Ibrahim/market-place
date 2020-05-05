@@ -10,7 +10,7 @@ class AddImages extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: height / 2,
+      height: height / 3,
       width: width / 2 + 34,
       margin: EdgeInsets.all(12.0),
       decoration: BoxDecoration(boxShadow: [shadow]),

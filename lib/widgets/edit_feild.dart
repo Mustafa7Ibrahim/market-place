@@ -2,18 +2,25 @@ import 'package:flutter/material.dart';
 import 'package:market_place/constant/decoration.dart';
 
 class EditFeild extends StatefulWidget {
-  final hint;
-  final max;
-  final controller;
-  EditFeild({Key key, this.hint, this.max,@required this.controller}) : super(key: key);
+  final String hint;
+  final int max;
+  final String currentValue;
+  final bool enable;
+  EditFeild({
+    Key key,
+    this.hint,
+    this.max,
+    this.currentValue,
+    @required this.enable,
+  }) : super(key: key);
 
   @override
-  _EditFeildState createState() => _EditFeildState(controller);
+  _EditFeildState createState() => _EditFeildState(currentValue: currentValue);
 }
 
 class _EditFeildState extends State<EditFeild> {
-  _EditFeildState(this.controller);
-  TextEditingController controller = TextEditingController();
+  _EditFeildState({@required this.currentValue});
+  String currentValue;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -24,11 +31,11 @@ class _EditFeildState extends State<EditFeild> {
       margin: EdgeInsets.symmetric(horizontal: 12.0, vertical: 8.0),
       child: TextFormField(
         validator: (value) => value.isEmpty ? 'Enter Somthing' : null,
-        controller: widget.controller,
+        onChanged: (value) => setState(() => currentValue = value),
+        enabled: widget.enable,
         maxLines: widget.max,
-        decoration: inputDecoration.copyWith(
-          hintText: widget.hint,
-        ),
+        initialValue: currentValue,
+        decoration: inputDecoration.copyWith(hintText: widget.hint),
       ),
     );
   }
