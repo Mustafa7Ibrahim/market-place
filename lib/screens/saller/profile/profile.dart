@@ -1,9 +1,10 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:market_place/constant/decoration.dart';
 import 'package:market_place/models/user.dart';
-import 'package:market_place/widgets/edit_feild.dart';
 import 'package:market_place/widgets/loading.dart';
 import 'package:market_place/widgets/width_button.dart';
-import 'package:provider/provider.dart';
 
 class Profile extends StatefulWidget {
   @override
@@ -12,14 +13,26 @@ class Profile extends StatefulWidget {
 
 class _ProfileState extends State<Profile> {
   User user = User();
+  final formKey = GlobalKey<FormState>();
+
+  TextEditingController nameController = TextEditingController();
+  TextEditingController companyNameController = TextEditingController();
+
+  String id;
+  bool loading;
 
   String name;
   String companyName;
 
   @override
+  void initState() {
+    super.initState();
+    loadUser();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    final currentUser = Provider.of<User>(context);
     return Scaffold(
       appBar: AppBar(
         leading: Container(),
@@ -27,43 +40,96 @@ class _ProfileState extends State<Profile> {
         centerTitle: true,
         elevation: 0.0,
       ),
-      body: currentUser == null
-          ? Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                EditFeild(
-                  hint: 'Edit Your Company Name..',
-                  enable: true,
-                  currentValue: currentUser.companyName == null
-                      ? companyName
-                      : currentUser.companyName,
-                  max: 1,
-                ),
-                EditFeild(
-                  hint: 'Name',
-                  enable: true,
-                  currentValue: currentUser.name,
-                  max: 1,
-                ),
-                EditFeild(
-                  hint: 'Email',
-                  enable: false,
-                  currentValue: currentUser.email,
-                  max: 1,
-                ),
-                WidthButton(
-                  title: 'Update',
-                  width: size.width,
-                  onTap: () => user.updateUser(
-                    currentUser.id,
-                    name,
-                    companyName,
+      body: StreamBuilder<User>(
+        stream:
+            userCollection.document(id).snapshots().map(user.getCurrentUser),
+        builder: (context, snapshot) {
+          return !snapshot.hasData
+              ? Loading(color: Theme.of(context).primaryColor)
+              : Form(
+                  key: formKey,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      Container(
+                        margin: EdgeInsets.all(12.0),
+                        decoration: textFaildDecoration,
+                        child: TextFormField(
+                          decoration: inputDecoration.copyWith(
+                            hintText: 'Edit Your Company Name..',
+                          ),
+                          validator: (value) => value.isEmpty
+                              ? 'Enter your company name ..'
+                              : null,
+                          onChanged: (value) => companyName = value,
+                          initialValue: snapshot?.data?.companyName ?? '',
+                          cursorColor: Theme.of(context).primaryColor,
+                          keyboardType: TextInputType.text,
+                        ),
+                      ),
+                      Container(
+                        margin: EdgeInsets.all(12.0),
+                        decoration: textFaildDecoration,
+                        child: TextFormField(
+                          decoration: inputDecoration.copyWith(
+                            hintText: 'Name',
+                          ),
+                          validator: (value) =>
+                              value.isEmpty ? 'Enter your name ..' : null,
+                          initialValue: snapshot?.data?.name ?? '',
+                          onChanged: (value) => name = value,
+                          cursorColor: Theme.of(context).primaryColor,
+                          keyboardType: TextInputType.text,
+                        ),
+                      ),
+                      Container(
+                        margin: EdgeInsets.all(12.0),
+                        decoration: textFaildDecoration,
+                        child: TextFormField(
+                          decoration: inputDecoration,
+                          enabled: false,
+                          initialValue: snapshot.data.email,
+                          cursorColor: Theme.of(context).primaryColor,
+                          keyboardType: TextInputType.emailAddress,
+                        ),
+                      ),
+                      WidthButton(
+                        title: 'Update',
+                        width: size.width,
+                        loading: loading,
+                        onTap: () async {
+                          if (formKey.currentState.validate()) {
+                            setState(() => loading = true);
+                            print(name);
+                            print(companyName);
+                            user
+                                .updateUser(
+                                  snapshot.data.id,
+                                  name ?? snapshot.data.name,
+                                  companyName ?? snapshot.data.companyName,
+                                )
+                                .whenComplete(
+                                  () => setState(() {
+                                    loading = false;
+                                    Fluttertoast.showToast(
+                                      msg: 'Profile Updated',
+                                    );
+                                  }),
+                                );
+                          }
+                        },
+                      )
+                    ],
                   ),
-                )
-              ],
-            )
-          : Loading(color: Theme.of(context).primaryColor),
+                );
+        },
+      ),
     );
+  }
+
+  loadUser() async {
+    FirebaseUser firebaseUser = await FirebaseAuth.instance.currentUser();
+    setState(() => id = firebaseUser.uid);
   }
 }

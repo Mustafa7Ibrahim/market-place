@@ -61,7 +61,7 @@ class Product {
     List productImages,
   }) async {
     FirebaseUser currentUser = await FirebaseAuth.instance.currentUser();
-    return await productCollection.document(proId).setData({
+    return await productCollection.document(proId).updateData({
       'productName': productName,
       'productType': productType,
       'price': price,

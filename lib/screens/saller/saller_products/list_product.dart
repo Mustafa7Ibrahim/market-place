@@ -42,7 +42,7 @@ class ListProduct extends StatelessWidget {
             SizedBox(height: 4.0),
             Text(
               product.productName,
-              style: Theme.of(context).textTheme.title,
+              style: Theme.of(context).textTheme.headline6,
             ),
             SizedBox(height: 10.0),
             Row(
@@ -50,11 +50,11 @@ class ListProduct extends StatelessWidget {
               children: <Widget>[
                 Text(
                   'Price',
-                  style: Theme.of(context).textTheme.subtitle,
+                  style: Theme.of(context).textTheme.subtitle2,
                 ),
                 Text(
                   product.price,
-                  style: Theme.of(context).textTheme.subhead,
+                  style: Theme.of(context).textTheme.subtitle1,
                 ),
               ],
             ),
@@ -64,11 +64,11 @@ class ListProduct extends StatelessWidget {
               children: <Widget>[
                 Text(
                   'Quantity',
-                  style: Theme.of(context).textTheme.subtitle,
+                  style: Theme.of(context).textTheme.subtitle2,
                 ),
                 Text(
                   product.quantity,
-                  style: Theme.of(context).textTheme.subhead,
+                  style: Theme.of(context).textTheme.subtitle1,
                 ),
               ],
             ),

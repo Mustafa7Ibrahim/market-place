@@ -21,6 +21,11 @@ InputDecoration inputDecoration = InputDecoration(
   ),
 );
 
+BoxDecoration textFaildDecoration = BoxDecoration(
+  borderRadius: BorderRadius.circular(24.0),
+  boxShadow: [shadow],
+);
+
 // varible for the shadow
 var _opacity = 0.1;
 var _xOffset = 0.0;

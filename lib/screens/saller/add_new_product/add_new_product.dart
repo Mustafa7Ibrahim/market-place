@@ -8,7 +8,6 @@ import 'package:market_place/constant/constant.dart';
 import 'package:market_place/constant/decoration.dart';
 import 'package:market_place/models/product.dart';
 import 'package:market_place/widgets/add_images.dart';
-import 'package:market_place/widgets/edit_feild.dart';
 import 'package:market_place/widgets/list_of_assets.dart';
 import 'package:market_place/widgets/list_of_images.dart';
 import 'package:market_place/widgets/loading.dart';
@@ -119,24 +118,50 @@ class _AddNewProductState extends State<AddNewProduct> {
                             },
                           ),
                         ),
-              EditFeild(
-                hint: 'Product Name',
-                enable: true,
-                max: 1,
-                currentValue: widget.proName == null ? name : widget.proName,
+              Container(
+                margin: EdgeInsets.all(12.0),
+                decoration: textFaildDecoration,
+                child: TextFormField(
+                  decoration: inputDecoration.copyWith(
+                    hintText: 'Product Name',
+                  ),
+                  validator: (value) =>
+                      value.isEmpty ? 'Enter Product Name ..' : null,
+                  initialValue: widget?.proName ?? '',
+                  onChanged: (value) => name = value,
+                  cursorColor: Theme.of(context).primaryColor,
+                  keyboardType: TextInputType.text,
+                ),
               ),
-              EditFeild(
-                hint: 'Price',
-                enable: true,
-                max: 1,
-                currentValue: widget.proPrice == null ? price : widget.proPrice,
+              Container(
+                margin: EdgeInsets.all(12.0),
+                decoration: textFaildDecoration,
+                child: TextFormField(
+                  decoration: inputDecoration.copyWith(
+                    hintText: 'Price',
+                  ),
+                  validator: (value) =>
+                      value.isEmpty ? 'Enter Product price ..' : null,
+                  initialValue: widget?.proPrice ?? '',
+                  onChanged: (value) => price = value,
+                  cursorColor: Theme.of(context).primaryColor,
+                  keyboardType: TextInputType.number,
+                ),
               ),
-              EditFeild(
-                hint: 'Quantity',
-                enable: true,
-                max: 1,
-                currentValue:
-                    widget.proQuantity == null ? quantity : widget.proQuantity,
+              Container(
+                margin: EdgeInsets.all(12.0),
+                decoration: textFaildDecoration,
+                child: TextFormField(
+                  decoration: inputDecoration.copyWith(
+                    hintText: 'QUantity',
+                  ),
+                  validator: (value) =>
+                      value.isEmpty ? 'Enter Product Quantity ..' : null,
+                  initialValue: widget?.proQuantity ?? '',
+                  onChanged: (value) => quantity = value,
+                  cursorColor: Theme.of(context).primaryColor,
+                  keyboardType: TextInputType.number,
+                ),
               ),
               Container(
                 margin: EdgeInsets.all(12.0),
@@ -169,20 +194,35 @@ class _AddNewProductState extends State<AddNewProduct> {
                   }).toList(),
                 ),
               ),
-              EditFeild(
-                hint: 'Description',
-                enable: true,
-                max: 6,
-                currentValue:
-                    widget.proDes == null ? description : widget.proDes,
+              Container(
+                margin: EdgeInsets.all(12.0),
+                decoration: textFaildDecoration,
+                child: TextFormField(
+                  decoration: inputDecoration.copyWith(
+                    hintText: 'Description',
+                  ),
+                  validator: (value) =>
+                      value.isEmpty ? 'Enter Product Description ..' : null,
+                  initialValue: widget?.proDes ?? '',
+                  onChanged: (value) => description = value,
+                  cursorColor: Theme.of(context).primaryColor,
+                  keyboardType: TextInputType.text,
+                ),
               ),
-              EditFeild(
-                hint: 'Specifications',
-                enable: true,
-                max: 8,
-                currentValue: widget.proSpecif == null
-                    ? specifications
-                    : widget.proSpecif,
+              Container(
+                margin: EdgeInsets.all(12.0),
+                decoration: textFaildDecoration,
+                child: TextFormField(
+                  decoration: inputDecoration.copyWith(
+                    hintText: 'Specifications',
+                  ),
+                  validator: (value) =>
+                      value.isEmpty ? 'Enter Product Specifications ..' : null,
+                  initialValue: widget?.proSpecif ?? '',
+                  onChanged: (value) => specifications = value,
+                  cursorColor: Theme.of(context).primaryColor,
+                  keyboardType: TextInputType.text,
+                ),
               ),
               WidthButton(
                 loading: loading,

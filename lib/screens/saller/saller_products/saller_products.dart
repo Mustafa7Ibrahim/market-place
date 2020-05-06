@@ -16,7 +16,8 @@ class SallerProducts extends StatelessWidget {
         leading: Container(),
         title: Text(
           'Products',
-          style: Theme.of(context).textTheme.title.apply(color: Colors.white),
+          style:
+              Theme.of(context).textTheme.headline6.apply(color: Colors.white),
         ),
         centerTitle: true,
       ),
