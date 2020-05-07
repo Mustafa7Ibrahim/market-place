@@ -15,6 +15,7 @@ class ListProduct extends StatelessWidget {
         context,
         MaterialPageRoute(
           builder: (context) => AddNewProduct(
+            proId: product.productId,
             proImages: product.productImages,
             proName: product.productName,
             proQuantity: product.quantity,

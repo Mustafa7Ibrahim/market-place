@@ -39,6 +39,7 @@ class _SallerState extends State<Saller> {
           context,
           MaterialPageRoute(
             builder: (context) => AddNewProduct(
+              proId: null,
               proImages: null,
               proName: null,
               proQuantity: null,
