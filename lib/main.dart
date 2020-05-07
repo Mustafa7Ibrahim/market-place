@@ -2,9 +2,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'screens/saller/saller_products/saller_products.dart';
 import 'screens/customer/customer.dart';
-import 'screens/sign_in/sign_in.dart';
 import 'screens/saller/saller.dart';
 import 'screens/wrapper.dart';
 import 'constant/theme.dart';
@@ -45,16 +43,9 @@ class _HomeState extends State<Home> {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: theme,
-        initialRoute: widget.currentUser == null
-            ? '/'
-            : widget.type == 'Customer' ? '/customer' : '/saller',
-        routes: {
-          '/': (context) => Wrapper(),
-          '/sign_in': (context) => SignIn(),
-          '/saller': (context) => Saller(),
-          '/customer': (context) => Customer(),
-          '/saller_products': (context) => SallerProducts(),
-        },
+        home: widget.currentUser == null
+            ? Wrapper()
+            : widget.type == 'Customer' ? Customer() : Saller(),
       ),
     );
   }

@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:market_place/models/user.dart';
+import 'package:market_place/screens/customer/customer.dart';
+import 'package:market_place/screens/saller/saller.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Auth {
@@ -11,7 +13,7 @@ class Auth {
   final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
   final User _user = User();
 
-  Future signInWithGoogle({BuildContext context, String type}) async {
+  Future signInWithGoogle({@required BuildContext context, String type}) async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     try {
       // try to sign in with google account
@@ -59,9 +61,19 @@ class Auth {
         sharedPreferences.setString('type', type);
 
         if (type == 'Saller') {
-          Navigator.pushReplacementNamed(context, '/saller');
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (context) => Saller(),
+            ),
+          );
         } else {
-          Navigator.pushReplacementNamed(context, '/customer');
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (context) => Customer(),
+            ),
+          );
         }
 
         return user;
@@ -90,9 +102,19 @@ class Auth {
             sharedPreferences.setString('user', currentUser.displayName);
             sharedPreferences.setString('type', userType);
             if (userType == 'Saller') {
-              Navigator.pushReplacementNamed(context, '/saller');
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => Saller(),
+                ),
+              );
             } else {
-              Navigator.pushReplacementNamed(context, '/customer');
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => Customer(),
+                ),
+              );
             }
           } else {
             Fluttertoast.showToast(

@@ -37,8 +37,10 @@ class _SignInState extends State<SignIn> {
                 'Sign in with Goolge',
                 style: TextStyle(color: Colors.white),
               ),
-              onPressed: () =>
-                  auth.signInWithGoogle(context: context, type: widget.type),
+              onPressed: () => auth.signInWithGoogle(
+                context: context,
+                type: widget.type,
+              ),
             ),
           ),
         ],

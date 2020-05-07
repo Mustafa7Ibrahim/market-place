@@ -67,9 +67,7 @@ class _SallerState extends State<Saller> {
           ),
           BottomNavigationBarItem(
             title: Text('Profile'),
-            icon: Icon(
-              Icons.person,
-            ),
+            icon: Icon(Icons.person),
           ),
         ],
       ),
