@@ -7,6 +7,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:market_place/constant/constant.dart';
 import 'package:market_place/constant/decoration.dart';
 import 'package:market_place/models/product.dart';
+import 'package:market_place/screens/saller/saller.dart';
 import 'package:market_place/widgets/add_images.dart';
 import 'package:market_place/widgets/list_of_assets.dart';
 import 'package:market_place/widgets/list_of_images.dart';
@@ -275,7 +276,12 @@ class _AddNewProductState extends State<AddNewProduct> {
                             Fluttertoast.showToast(
                               msg: 'Product updated Successfuly',
                             );
-                            Navigator.pushNamed(context, '/saller');
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => Saller(),
+                              ),
+                            );
                           });
                         }
                       },
@@ -332,7 +338,12 @@ class _AddNewProductState extends State<AddNewProduct> {
                               Fluttertoast.showToast(
                                 msg: 'Product add Successfuly',
                               );
-                              Navigator.pushNamed(context, '/saller');
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => Saller(),
+                                ),
+                              );
                             });
                           }
                         }
