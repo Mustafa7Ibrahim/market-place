@@ -27,15 +27,10 @@ BoxDecoration textFaildDecoration = BoxDecoration(
 );
 
 // varible for the shadow
-var _opacity = 0.1;
-var _xOffset = 0.0;
-var _yOffset = 0.0;
-var _blurRadius = 8.0;
-var _spreadRadius = 2.0;
+
 // Shadow decoration
 BoxShadow shadow = BoxShadow(
-  color: Color.fromRGBO(255, 255, 255, _opacity),
-  offset: Offset(_yOffset, _xOffset),
-  blurRadius: _blurRadius,
-  spreadRadius: _spreadRadius,
+  color: Colors.black.withOpacity(0.05),
+  offset: Offset(0, 21),
+  blurRadius: 53,
 );

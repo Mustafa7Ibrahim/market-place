@@ -13,11 +13,12 @@ class SallerProducts extends StatelessWidget {
     final _productList = Provider.of<List<Product>>(context) ?? [];
     return Scaffold(
       appBar: AppBar(
-        leading: Container(),
         title: Text(
           'Products',
-          style:
-              Theme.of(context).textTheme.headline6.apply(color: Colors.white),
+          style: Theme.of(context)
+              .textTheme
+              .headline5
+              .copyWith(color: Theme.of(context).primaryColor),
         ),
         centerTitle: true,
       ),

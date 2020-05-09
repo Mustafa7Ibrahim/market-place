@@ -1,12 +1,19 @@
 import 'package:flutter/material.dart';
 
 ThemeData theme = ThemeData(
-  primarySwatch: Colors.deepPurple,
-  accentColor: Colors.deepPurpleAccent,
+  primarySwatch: Colors.green,
+  accentColor: Colors.greenAccent,
   floatingActionButtonTheme: FloatingActionButtonThemeData(
-    backgroundColor: Colors.deepPurpleAccent,
+    backgroundColor: Colors.greenAccent,
     elevation: 0.0,
   ),
-  scaffoldBackgroundColor: Color(0xFFEFEFEF),
-  cursorColor: Colors.deepPurpleAccent,
+  appBarTheme: AppBarTheme(
+    color: Colors.white,
+    elevation: 0.0,
+    iconTheme: IconThemeData(
+      color: Colors.green,
+    ),
+  ),
+  scaffoldBackgroundColor: Colors.white,
+  cursorColor: Colors.greenAccent,
 );

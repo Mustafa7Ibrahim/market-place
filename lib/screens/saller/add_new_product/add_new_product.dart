@@ -70,9 +70,14 @@ class _AddNewProductState extends State<AddNewProduct> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Add New Product'),
+        title: Text(
+          'Add New Product',
+          style: Theme.of(context)
+              .textTheme
+              .headline5
+              .copyWith(color: Theme.of(context).primaryColor),
+        ),
         centerTitle: true,
-        elevation: 0.0,
       ),
       body: SingleChildScrollView(
         child: Form(

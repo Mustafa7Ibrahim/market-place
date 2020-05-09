@@ -35,10 +35,14 @@ class _ProfileState extends State<Profile> {
     final size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
-        leading: Container(),
-        title: Text('Profile'),
+        title: Text(
+          'Profile',
+          style: Theme.of(context)
+              .textTheme
+              .headline5
+              .copyWith(color: Theme.of(context).primaryColor),
+        ),
         centerTitle: true,
-        elevation: 0.0,
       ),
       body: StreamBuilder<User>(
         stream:

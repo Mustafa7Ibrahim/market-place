@@ -7,9 +7,14 @@ class Categories extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Categories'),
+        title: Text(
+          'Categories',
+          style: Theme.of(context)
+              .textTheme
+              .headline5
+              .copyWith(color: Theme.of(context).primaryColor),
+        ),
         centerTitle: true,
-        elevation: 0.0,
       ),
       body: ListView(
         children: <Widget>[

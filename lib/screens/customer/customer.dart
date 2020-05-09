@@ -38,7 +38,7 @@ class _CustomerState extends State<Customer> {
       bottomNavigationBar: BottomNavigationBar(
         showSelectedLabels: false,
         showUnselectedLabels: false,
-        selectedItemColor: Colors.deepPurpleAccent,
+        selectedItemColor: Theme.of(context).primaryColor,
         unselectedItemColor: Colors.black87,
         currentIndex: currentIndex,
         onTap: changePage,

@@ -7,7 +7,6 @@ class Wrapper extends StatelessWidget {
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
     return Scaffold(
-      // backgroundColor: Color.fromRGBO(84, 52, 214, 1),
       body: Column(
         children: <Widget>[
           Image.asset(
