@@ -3,7 +3,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:market_place/models/user.dart';
+import 'package:market_place/models/customer_user.dart';
+import 'package:market_place/models/saller_user.dart';
 import 'package:market_place/screens/customer/customer.dart';
 import 'package:market_place/screens/saller/saller.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -11,7 +12,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 class Auth {
   final GoogleSignIn googleSignIn = GoogleSignIn();
   final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
-  final User _user = User();
+  final SallerUser _sallerUser = SallerUser();
+  final CustomerUser _customerUser = CustomerUser();
 
   Future signInWithGoogle({@required BuildContext context, String type}) async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
@@ -42,13 +44,23 @@ class Auth {
         assert(user.uid != null);
 
         // add a new user to fireStore
-        _user.addNewUser(
-          user.uid,
-          user.displayName,
-          user.email,
-          user.photoUrl,
-          type,
-        );
+        if (type == 'Saller') {
+          _sallerUser.addNewUser(
+            user.uid,
+            user.displayName,
+            user.email,
+            user.photoUrl,
+            type,
+          );
+        } else {
+          _customerUser.addNewUser(
+            customerId: user.uid,
+            customerName: user.displayName,
+            email: user.email,
+            type: type,
+            userImg: user.photoUrl,
+          );
+        }
 
         // make sure that the user is not an anonymous one
         assert(!user.isAnonymous);

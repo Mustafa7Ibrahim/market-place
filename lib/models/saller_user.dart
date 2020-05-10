@@ -6,7 +6,7 @@ final CollectionReference userCollection =
 
 final FirebaseAuth auth = FirebaseAuth.instance;
 
-class User {
+class SallerUser {
   String id;
   String name;
   String email;
@@ -14,7 +14,7 @@ class User {
   String type;
   String companyName;
 
-  User({
+  SallerUser({
     this.id,
     this.name,
     this.email,
@@ -46,8 +46,8 @@ class User {
     });
   }
 
-  User getCurrentUser(DocumentSnapshot documentSnapshot) {
-    return User(
+  SallerUser getCurrentUser(DocumentSnapshot documentSnapshot) {
+    return SallerUser(
       id: documentSnapshot.data['id'] ?? '',
       name: documentSnapshot.data['name'] ?? '',
       email: documentSnapshot.data['email'] ?? '',

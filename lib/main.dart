@@ -7,7 +7,7 @@ import 'screens/saller/saller.dart';
 import 'screens/wrapper.dart';
 import 'constant/theme.dart';
 import 'models/product.dart';
-import 'models/user.dart';
+import 'models/saller_user.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -32,7 +32,7 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  User user = User();
+  SallerUser user = SallerUser();
 
   @override
   Widget build(BuildContext context) {
@@ -41,6 +41,7 @@ class _HomeState extends State<Home> {
         StreamProvider<List<Product>>.value(value: Product().productListstrm),
       ],
       child: MaterialApp(
+        title: 'makr',
         debugShowCheckedModeBanner: false,
         theme: theme,
         home: widget.currentUser == null

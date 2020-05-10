@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:market_place/constant/decoration.dart';
-import 'package:market_place/models/user.dart';
+import 'package:market_place/models/saller_user.dart';
 import 'package:market_place/widgets/loading.dart';
 import 'package:market_place/widgets/width_button.dart';
 
@@ -12,7 +12,7 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
-  User user = User();
+  SallerUser user = SallerUser();
   final formKey = GlobalKey<FormState>();
 
   TextEditingController nameController = TextEditingController();
@@ -44,7 +44,7 @@ class _ProfileState extends State<Profile> {
         ),
         centerTitle: true,
       ),
-      body: StreamBuilder<User>(
+      body: StreamBuilder<SallerUser>(
         stream:
             userCollection.document(id).snapshots().map(user.getCurrentUser),
         builder: (context, snapshot) {
