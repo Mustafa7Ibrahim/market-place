@@ -21,10 +21,10 @@ class InfoRow extends StatelessWidget {
             horizontal: 6.0,
             vertical: 4.0,
           ),
-          width: size.width / 4,
+          width: size.width / 3,
           child: Text(
             title,
-            style: Theme.of(context).textTheme.caption,
+            style: Theme.of(context).textTheme.bodyText2,
           ),
         ),
         Container(
@@ -34,7 +34,7 @@ class InfoRow extends StatelessWidget {
           ),
           child: Text(
             info,
-            style: Theme.of(context).textTheme.bodyText2,
+            style: Theme.of(context).textTheme.bodyText1,
           ),
         )
       ],

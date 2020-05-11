@@ -30,7 +30,7 @@ BoxDecoration textFaildDecoration = BoxDecoration(
 
 // Shadow decoration
 BoxShadow shadow = BoxShadow(
-  color: Colors.black.withOpacity(0.05),
+  color: Colors.black.withOpacity(0.06),
   offset: Offset(0, 21),
   blurRadius: 53,
 );

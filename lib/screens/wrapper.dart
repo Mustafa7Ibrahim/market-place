@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:market_place/screens/sign_in/sign_in.dart';
 
@@ -32,7 +33,7 @@ class Wrapper extends StatelessWidget {
               ),
               onPressed: () => Navigator.push(
                 context,
-                MaterialPageRoute(
+                CupertinoPageRoute(
                   builder: (context) => SignIn(type: 'Saller'),
                 ),
               ),
@@ -54,7 +55,7 @@ class Wrapper extends StatelessWidget {
               ),
               onPressed: () => Navigator.push(
                 context,
-                MaterialPageRoute(
+                CupertinoPageRoute(
                   builder: (context) => SignIn(type: 'Customer'),
                 ),
               ),

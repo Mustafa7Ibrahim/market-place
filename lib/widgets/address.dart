@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:market_place/constant/decoration.dart';
+import 'package:market_place/widgets/row_edit.dart';
 
 import 'info_row.dart';
 
@@ -20,6 +21,7 @@ class Address extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      padding: EdgeInsets.symmetric(horizontal: 12.0, vertical: 6.0),
       margin: EdgeInsets.symmetric(horizontal: 12.0, vertical: 6.0),
       decoration: BoxDecoration(
         boxShadow: [shadow],
@@ -28,35 +30,10 @@ class Address extends StatelessWidget {
       ),
       child: Column(
         children: <Widget>[
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: <Widget>[
-              Icon(
-                Icons.person_pin_circle,
-                color: Theme.of(context).primaryColor,
-                size: 20.0,
-              ),
-              SizedBox(width: 4.0),
-              Text('Home'),
-              Spacer(),
-              FlatButton(
-                onPressed: () {},
-                child: Row(
-                  children: <Widget>[
-                    Icon(
-                      Icons.edit,
-                      color: Colors.grey,
-                      size: 20.0,
-                    ),
-                    SizedBox(width: 4.0),
-                    Text(
-                      'Edit',
-                      style: Theme.of(context).textTheme.bodyText1,
-                    ),
-                  ],
-                ),
-              ),
-            ],
+          RowEdit(
+            iconRow: Icons.person_pin_circle,
+            onTap: () {},
+            title: 'Home',
           ),
           InfoRow(
             size: size,

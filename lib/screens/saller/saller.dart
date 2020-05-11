@@ -37,7 +37,7 @@ class _SallerState extends State<Saller> {
         child: Icon(Icons.add),
         onPressed: () => Navigator.push(
           context,
-          MaterialPageRoute(
+          CupertinoPageRoute(
             builder: (context) => AddNewProduct(
               proId: null,
               proImages: null,

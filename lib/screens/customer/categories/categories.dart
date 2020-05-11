@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:market_place/constant/decoration.dart';
 import 'package:market_place/screens/customer/list_product_cate/list_product_cate.dart';
@@ -25,7 +26,7 @@ class Categories extends StatelessWidget {
               title: Text('Super Market'),
               onTap: () => Navigator.push(
                 context,
-                MaterialPageRoute(
+                CupertinoPageRoute(
                   builder: (context) =>
                       ListProductCategories(productCat: 'Supermarket'),
                 ),
@@ -39,7 +40,7 @@ class Categories extends StatelessWidget {
               title: Text('Fashion'),
               onTap: () => Navigator.push(
                 context,
-                MaterialPageRoute(
+                CupertinoPageRoute(
                   builder: (context) =>
                       ListProductCategories(productCat: 'Fashion'),
                 ),
@@ -53,7 +54,7 @@ class Categories extends StatelessWidget {
               title: Text('Mobile & Tablets'),
               onTap: () => Navigator.push(
                 context,
-                MaterialPageRoute(
+                CupertinoPageRoute(
                   builder: (context) =>
                       ListProductCategories(productCat: 'Mobile & Tablets'),
                 ),
@@ -67,7 +68,7 @@ class Categories extends StatelessWidget {
               title: Text('Electronics'),
               onTap: () => Navigator.push(
                 context,
-                MaterialPageRoute(
+                CupertinoPageRoute(
                   builder: (context) =>
                       ListProductCategories(productCat: 'Electronics'),
                 ),
@@ -81,7 +82,7 @@ class Categories extends StatelessWidget {
               title: Text('Health & Beauty'),
               onTap: () => Navigator.push(
                 context,
-                MaterialPageRoute(
+                CupertinoPageRoute(
                   builder: (context) =>
                       ListProductCategories(productCat: 'Health & Beauty'),
                 ),
@@ -95,7 +96,7 @@ class Categories extends StatelessWidget {
               title: Text('Home & Kitchen'),
               onTap: () => Navigator.push(
                 context,
-                MaterialPageRoute(
+                CupertinoPageRoute(
                   builder: (context) =>
                       ListProductCategories(productCat: 'Home & Kitchen'),
                 ),
@@ -109,7 +110,7 @@ class Categories extends StatelessWidget {
               title: Text('Babies'),
               onTap: () => Navigator.push(
                 context,
-                MaterialPageRoute(
+                CupertinoPageRoute(
                   builder: (context) =>
                       ListProductCategories(productCat: 'Babies'),
                 ),
@@ -123,7 +124,7 @@ class Categories extends StatelessWidget {
               title: Text('Toys'),
               onTap: () => Navigator.push(
                 context,
-                MaterialPageRoute(
+                CupertinoPageRoute(
                   builder: (context) =>
                       ListProductCategories(productCat: 'Toys'),
                 ),
@@ -137,7 +138,7 @@ class Categories extends StatelessWidget {
               title: Text('Appliances'),
               onTap: () => Navigator.push(
                 context,
-                MaterialPageRoute(
+                CupertinoPageRoute(
                   builder: (context) =>
                       ListProductCategories(productCat: 'Appliances'),
                 ),
@@ -151,7 +152,7 @@ class Categories extends StatelessWidget {
               title: Text('Sports'),
               onTap: () => Navigator.push(
                 context,
-                MaterialPageRoute(
+                CupertinoPageRoute(
                   builder: (context) =>
                       ListProductCategories(productCat: 'Sports'),
                 ),
@@ -165,7 +166,7 @@ class Categories extends StatelessWidget {
               title: Text('Automotive'),
               onTap: () => Navigator.push(
                 context,
-                MaterialPageRoute(
+                CupertinoPageRoute(
                   builder: (context) =>
                       ListProductCategories(productCat: 'Automotive'),
                 ),
@@ -179,7 +180,7 @@ class Categories extends StatelessWidget {
               title: Text('Tools'),
               onTap: () => Navigator.push(
                 context,
-                MaterialPageRoute(
+                CupertinoPageRoute(
                   builder: (context) =>
                       ListProductCategories(productCat: 'Tools'),
                 ),

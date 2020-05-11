@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -283,7 +284,7 @@ class _AddNewProductState extends State<AddNewProduct> {
                             );
                             Navigator.push(
                               context,
-                              MaterialPageRoute(
+                              CupertinoPageRoute(
                                 builder: (context) => Saller(),
                               ),
                             );
@@ -345,7 +346,7 @@ class _AddNewProductState extends State<AddNewProduct> {
                               );
                               Navigator.push(
                                 context,
-                                MaterialPageRoute(
+                                CupertinoPageRoute(
                                   builder: (context) => Saller(),
                                 ),
                               );

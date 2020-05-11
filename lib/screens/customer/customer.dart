@@ -36,10 +36,11 @@ class _CustomerState extends State<Customer> {
   Widget build(BuildContext context) {
     return Scaffold(
       bottomNavigationBar: BottomNavigationBar(
-        showSelectedLabels: false,
-        showUnselectedLabels: false,
+        showSelectedLabels: true,
+        showUnselectedLabels: true,
+        type: BottomNavigationBarType.fixed,
         selectedItemColor: Theme.of(context).primaryColor,
-        unselectedItemColor: Colors.black87,
+        unselectedItemColor: Colors.black.withOpacity(0.6),
         currentIndex: currentIndex,
         onTap: changePage,
         elevation: 0.0,
