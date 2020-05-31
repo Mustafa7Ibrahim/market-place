@@ -7,8 +7,8 @@ import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:market_place/constant/constant.dart';
 import 'package:market_place/constant/decoration.dart';
-import 'package:market_place/models/product.dart';
 import 'package:market_place/screens/saller/saller.dart';
+import 'package:market_place/services/product_services.dart';
 import 'package:market_place/widgets/add_images.dart';
 import 'package:market_place/widgets/list_of_assets.dart';
 import 'package:market_place/widgets/list_of_images.dart';
@@ -42,7 +42,7 @@ class AddNewProduct extends StatefulWidget {
 
 class _AddNewProductState extends State<AddNewProduct> {
   final formKey = GlobalKey<FormState>();
-  final Product product = Product();
+  final ProductServices productServices = ProductServices();
 
   List<Asset> images = List<Asset>();
   List<String> _imageUrls = List();
@@ -250,7 +250,7 @@ class _AddNewProductState extends State<AddNewProduct> {
                           // start with uploading the images
                           await uploadImages().then((onComplete) async {
                             // whene complete add the product data
-                            await product.updateNewProduct(
+                            await productServices.updateNewProduct(
                               proId: widget.proId,
                               productName: name ?? widget.proName,
                               price: price ?? widget.proPrice,
@@ -307,7 +307,7 @@ class _AddNewProductState extends State<AddNewProduct> {
                               // checking if the urls is empty
                               if (_imageUrls.isNotEmpty) {
                                 // whene complete add the product data
-                                await product.addNewProduct(
+                                await productServices.addNewProduct(
                                   productName: name,
                                   price: price,
                                   productType: type,

@@ -3,17 +3,20 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:market_place/models/customer_user.dart';
-import 'package:market_place/models/saller_user.dart';
+import 'package:market_place/constant/constant.dart';
 import 'package:market_place/screens/customer/customer.dart';
 import 'package:market_place/screens/saller/saller.dart';
+import 'package:market_place/services/customer_services.dart';
+import 'package:market_place/services/saller_services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Auth {
   final GoogleSignIn googleSignIn = GoogleSignIn();
   final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
-  final SallerUser _sallerUser = SallerUser();
-  final CustomerUser _customerUser = CustomerUser();
+
+  // get an object of the services
+  final CustomerServices _customerServices = CustomerServices();
+  final SallerServices _sallerServices = SallerServices();
 
   Future signInWithGoogle({@required BuildContext context, String type}) async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
@@ -45,7 +48,7 @@ class Auth {
 
         // add a new user to fireStore
         if (type == 'Saller') {
-          _sallerUser.addNewUser(
+          _sallerServices.addNewUser(
             user.uid,
             user.displayName,
             user.email,
@@ -53,7 +56,7 @@ class Auth {
             type,
           );
         } else {
-          _customerUser.addNewUser(
+          _customerServices.addNewUser(
             customerId: user.uid,
             customerName: user.displayName,
             email: user.email,
@@ -68,7 +71,7 @@ class Auth {
         // make sure that the user id token is not null
         assert(await user.getIdToken() != null);
 
-        final FirebaseUser currentUser = await auth.currentUser();
+        final FirebaseUser currentUser = await firebaseAuth.currentUser();
         sharedPreferences.setString('user', currentUser.displayName);
         sharedPreferences.setString('type', type);
 
@@ -103,7 +106,7 @@ class Auth {
         // make sure that the user id token is not null
         assert(await userAuth.getIdToken() != null);
 
-        final FirebaseUser currentUser = await auth.currentUser();
+        final FirebaseUser currentUser = await firebaseAuth.currentUser();
 
         userCollection.document(userAuth.uid).get().then(
           (DocumentSnapshot snapshot) {

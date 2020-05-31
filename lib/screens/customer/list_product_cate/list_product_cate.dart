@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:market_place/constant/decoration.dart';
 import 'package:market_place/models/product.dart';
+import 'package:market_place/services/product_services.dart';
 import 'package:market_place/widgets/image_network.dart';
 import 'package:market_place/widgets/loading.dart';
 
@@ -28,7 +29,7 @@ class ListProductCategories extends StatelessWidget {
         centerTitle: true,
       ),
       body: StreamBuilder<List<Product>>(
-        stream: Product().productListstrm,
+        stream: ProductServices().productListstrm,
         builder: (context, snapshot) {
           return !snapshot.hasData
               ? Loading(color: Theme.of(context).primaryColor)

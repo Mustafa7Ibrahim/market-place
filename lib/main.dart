@@ -1,3 +1,4 @@
+import 'package:market_place/services/product_services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -38,7 +39,9 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        StreamProvider<List<Product>>.value(value: Product().productListstrm),
+        StreamProvider<List<Product>>.value(
+          value: ProductServices().productListstrm,
+        ),
       ],
       child: MaterialApp(
         title: 'makr',

@@ -1,8 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:market_place/constant/constant.dart';
 import 'package:market_place/constant/decoration.dart';
 import 'package:market_place/models/saller_user.dart';
+import 'package:market_place/services/saller_services.dart';
 import 'package:market_place/widgets/loading.dart';
 import 'package:market_place/widgets/width_button.dart';
 
@@ -12,7 +14,7 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
-  SallerUser user = SallerUser();
+  SallerServices _sallerServices = SallerServices();
   final formKey = GlobalKey<FormState>();
 
   TextEditingController nameController = TextEditingController();
@@ -45,8 +47,10 @@ class _ProfileState extends State<Profile> {
         centerTitle: true,
       ),
       body: StreamBuilder<SallerUser>(
-        stream:
-            userCollection.document(id).snapshots().map(user.getCurrentUser),
+        stream: userCollection
+            .document(id)
+            .snapshots()
+            .map(_sallerServices.getCurrentUser),
         builder: (context, snapshot) {
           return !snapshot.hasData
               ? Loading(color: Theme.of(context).primaryColor)
@@ -107,7 +111,7 @@ class _ProfileState extends State<Profile> {
                             setState(() => loading = true);
                             print(name);
                             print(companyName);
-                            user
+                            _sallerServices
                                 .updateUser(
                                   snapshot.data.id,
                                   name ?? snapshot.data.name,

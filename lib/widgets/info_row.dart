@@ -27,14 +27,16 @@ class InfoRow extends StatelessWidget {
             style: Theme.of(context).textTheme.bodyText2,
           ),
         ),
-        Container(
-          padding: EdgeInsets.symmetric(
-            horizontal: 12.0,
-            vertical: 4.0,
-          ),
-          child: Text(
-            info,
-            style: Theme.of(context).textTheme.bodyText1,
+        Expanded(
+          child: Container(
+            padding: EdgeInsets.symmetric(
+              horizontal: 12.0,
+              vertical: 4.0,
+            ),
+            child: Text(
+              info,
+              style: Theme.of(context).textTheme.bodyText1,
+            ),
           ),
         )
       ],
