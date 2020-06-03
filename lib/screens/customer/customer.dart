@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:market_place/auth/auth.dart';
 import 'package:market_place/screens/customer/cart/cart.dart';
 import 'package:market_place/screens/customer/categories/categories.dart';
 import 'package:market_place/screens/customer/my_account/my_account.dart';
@@ -15,12 +14,11 @@ class _CustomerState extends State<Customer> {
   List<Widget> _screenIndex = <Widget>[
     Home(),
     Categories(),
-    MyAccount(),
     Cart(),
+    MyAccount(),
   ];
 
   int currentIndex;
-  Auth auth = Auth();
 
   void changePage(int index) {
     setState(() => currentIndex = index);
@@ -56,31 +54,20 @@ class _CustomerState extends State<Customer> {
             ),
           ),
           BottomNavigationBarItem(
-            title: Text('MyAccount'),
-            icon: Icon(
-              Icons.person_outline,
-            ),
-          ),
-          BottomNavigationBarItem(
             title: Text('Cart'),
             icon: Icon(
               Icons.shopping_cart,
             ),
           ),
+          BottomNavigationBarItem(
+            title: Text('MyAccount'),
+            icon: Icon(
+              Icons.person_outline,
+            ),
+          ),
         ],
       ),
       body: _screenIndex.elementAt(currentIndex),
-
-      // Column(
-      //   children: <Widget>[
-      //     Center(
-      //       child: RaisedButton(
-      //         child: Text('customer'),
-      //         onPressed: () => auth.signOutWithGoogle(context),
-      //       ),
-      //     ),
-      //   ],
-      // ),
     );
   }
 }

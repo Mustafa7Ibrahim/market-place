@@ -14,12 +14,14 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   SharedPreferences pref = await SharedPreferences.getInstance();
 
-  var currentUser = pref.getString('user');
+  var currentUserId = pref.getString('user');
   var type = pref.getString('type');
-  runApp(Home(
-    currentUser: currentUser,
-    type: type,
-  ));
+  runApp(
+    Home(
+      currentUser: currentUserId,
+      type: type,
+    ),
+  );
 }
 
 class Home extends StatefulWidget {

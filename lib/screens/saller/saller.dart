@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:market_place/auth/auth.dart';
@@ -13,6 +14,7 @@ class Saller extends StatefulWidget {
 class _SallerState extends State<Saller> {
   Auth auth = Auth();
   var currentIndex;
+  FirebaseUser thisUser;
 
   @override
   void initState() {
@@ -23,6 +25,8 @@ class _SallerState extends State<Saller> {
   void changePage(int index) {
     setState(() => currentIndex = index);
   }
+
+  
 
   List<Widget> _screenIndex = <Widget>[
     SallerProducts(),
@@ -53,8 +57,8 @@ class _SallerState extends State<Saller> {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       bottomNavigationBar: BottomNavigationBar(
-        selectedIconTheme: IconThemeData(color: Colors.deepPurpleAccent),
-        selectedLabelStyle: TextStyle(color: Colors.deepPurpleAccent),
+        selectedIconTheme: IconThemeData(color: Theme.of(context).primaryColor),
+        selectedLabelStyle: TextStyle(color: Theme.of(context).primaryColor),
         unselectedIconTheme: IconThemeData(color: Colors.black87),
         unselectedLabelStyle: TextStyle(color: Colors.black87),
         currentIndex: currentIndex,

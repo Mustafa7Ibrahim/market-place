@@ -1,5 +1,6 @@
 class Product {
   String productId;
+  String sallerId;
   String companyName;
   String productName;
   String productType;
@@ -10,6 +11,7 @@ class Product {
   List productImages;
 
   Product({
+    this.sallerId,
     this.companyName,
     this.productId,
     this.productType,

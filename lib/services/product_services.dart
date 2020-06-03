@@ -2,11 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:market_place/constant/constant.dart';
 import 'package:market_place/models/product.dart';
-import 'package:uuid/uuid.dart';
 
 class ProductServices {
-  var productId = Uuid().v1();
-
   addNewProduct({
     String productName,
     String productType,
@@ -18,6 +15,7 @@ class ProductServices {
   }) async {
     FirebaseUser currentUser = await FirebaseAuth.instance.currentUser();
     return await productCollection.document().setData({
+      'sallerId': currentUser.uid,
       'productName': productName,
       'productType': productType,
       'price': price,
@@ -41,6 +39,7 @@ class ProductServices {
   }) async {
     FirebaseUser currentUser = await FirebaseAuth.instance.currentUser();
     return await productCollection.document(proId).updateData({
+      'sallerId': currentUser.uid,
       'productName': productName,
       'productType': productType,
       'price': price,

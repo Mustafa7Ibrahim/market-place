@@ -72,7 +72,7 @@ class Auth {
         assert(await user.getIdToken() != null);
 
         final FirebaseUser currentUser = await firebaseAuth.currentUser();
-        sharedPreferences.setString('user', currentUser.displayName);
+        sharedPreferences.setString('user', currentUser.uid);
         sharedPreferences.setString('type', type);
 
         if (type == 'Saller') {
@@ -114,7 +114,7 @@ class Auth {
           },
         ).whenComplete(() {
           if (userType == type) {
-            sharedPreferences.setString('user', currentUser.displayName);
+            sharedPreferences.setString('user', currentUser.uid);
             sharedPreferences.setString('type', userType);
             if (userType == 'Saller') {
               Navigator.pushReplacement(

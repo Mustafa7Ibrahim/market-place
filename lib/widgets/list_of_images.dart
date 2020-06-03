@@ -5,7 +5,6 @@ import 'package:market_place/widgets/image_network.dart';
 class ListOfImages extends StatelessWidget {
   const ListOfImages({
     this.width,
-    this.index,
     this.images,
     this.onTap,
     this.height,
@@ -14,7 +13,6 @@ class ListOfImages extends StatelessWidget {
   final double width;
   final double height;
   final Function onTap;
-  final int index;
   final List images;
 
   @override
@@ -26,20 +24,28 @@ class ListOfImages extends StatelessWidget {
       waitDuration: Duration(seconds: 7),
       child: InkWell(
         onTap: onTap,
-        child: Container(
-          margin: EdgeInsets.all(12.0),
-          width: width / 2 + 34,
-          decoration: BoxDecoration(
-            boxShadow: [shadow],
-          ),
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(12.0),
-            child: ImageNetwork(
-              image: images[index],
-              width: width,
-              height: height,
-            ),
-          ),
+        child: ListView.builder(
+          itemBuilder: (context, index) {
+            return Container(
+              margin: EdgeInsets.all(12.0),
+              width: width / 2 + 34,
+              decoration: BoxDecoration(
+                boxShadow: [shadow],
+              ),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(12.0),
+                child: ImageNetwork(
+                  image: images[index],
+                  width: width,
+                  height: height,
+                ),
+              ),
+            );
+          },
+          physics: ClampingScrollPhysics(),
+          shrinkWrap: true,
+          scrollDirection: Axis.horizontal,
+          itemCount: images.length ?? 0,
         ),
       ),
     );

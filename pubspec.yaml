@@ -32,7 +32,6 @@ dependencies:
   file_picker: ^1.8.0+2
   multi_image_picker: ^4.6.5
   flutter_spinkit: ^4.1.2+1
-  uuid: ^2.0.4
   firebase_storage: ^3.1.6
 
 dev_dependencies:
@@ -53,9 +52,7 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-   - assets/images/des.png
-   - assets/images/log.png
-   - assets/images/beach.jpeg
+   - assets/images/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

@@ -51,6 +51,8 @@ class _AddNewProductState extends State<AddNewProduct> {
   String type;
   bool loading;
 
+  //TODO fix this saller thing
+
   //faild controller
   String name;
   String price;
@@ -122,7 +124,7 @@ class _AddNewProductState extends State<AddNewProduct> {
                                 height: height,
                                 width: width,
                                 images: widget.proImages,
-                                index: index,
+                                // index: index,
                                 onTap: () {},
                               );
                             },
@@ -238,61 +240,62 @@ class _AddNewProductState extends State<AddNewProduct> {
                   maxLines: 5,
                 ),
               ),
-              widget.proImages.isNotEmpty
-                  ? WidthButton(
-                      title: 'Update',
-                      loading: loading,
-                      width: width,
-                      onTap: () async {
-                        if (images.isEmpty) {
-                          // show the loading screen
-                          setState(() => loading = true);
-                          // start with uploading the images
-                          await uploadImages().then((onComplete) async {
-                            // whene complete add the product data
-                            await productServices.updateNewProduct(
-                              proId: widget.proId,
-                              productName: name ?? widget.proName,
-                              price: price ?? widget.proPrice,
-                              productType: type ?? widget.proType,
-                              description: description ?? widget.proDes,
-                              quantity: quantity ?? widget.proQuantity,
-                              specification: specifications ?? widget.proSpecif,
-                              productImages: widget.proImages,
-                            );
+              // widget.proImages.isNotEmpty
+              //     ? WidthButton(
+              //         title: 'Update',
+              //         loading: loading,
+              //         width: width,
+              //         onTap: () async {
+              //           if (images.isEmpty) {
+              //             // show the loading screen
+              //             setState(() => loading = true);
+              //             // start with uploading the images
+              //             await uploadImages().then((onComplete) async {
+              //               // whene complete add the product data
+              //               await productServices.updateNewProduct(
+              //                 proId: widget.proId,
+              //                 productName: name ?? widget.proName,
+              //                 price: price ?? widget.proPrice,
+              //                 productType: type ?? widget.proType,
+              //                 description: description ?? widget.proDes,
+              //                 quantity: quantity ?? widget.proQuantity,
+              //                 specification: specifications ?? widget.proSpecif,
+              //                 productImages: widget.proImages,
+              //               );
 
-                            // if an error happened
-                          }).catchError((onError) {
-                            setState(() => loading = false);
-                            Fluttertoast.showToast(
-                              msg: 'Somthing went wrong: $onError',
-                            );
-                            // when it finshed clear everything and navigate to home
-                          }).whenComplete(() {
-                            setState(() {
-                              loading = false;
-                              name = '';
-                              price = '';
-                              description = '';
-                              quantity = '';
-                              specifications = '';
-                              images.clear();
-                              type = null;
-                            });
-                            Fluttertoast.showToast(
-                              msg: 'Product updated Successfuly',
-                            );
-                            Navigator.push(
-                              context,
-                              CupertinoPageRoute(
-                                builder: (context) => Saller(),
-                              ),
-                            );
-                          });
-                        }
-                      },
-                    )
-                  : WidthButton(
+              //               // if an error happened
+              //             }).catchError((onError) {
+              //               setState(() => loading = false);
+              //               Fluttertoast.showToast(
+              //                 msg: 'Somthing went wrong: $onError',
+              //               );
+              //               // when it finshed clear everything and navigate to home
+              //             }).whenComplete(() {
+              //               setState(() {
+              //                 loading = false;
+              //                 name = '';
+              //                 price = '';
+              //                 description = '';
+              //                 quantity = '';
+              //                 specifications = '';
+              //                 images.clear();
+              //                 type = null;
+              //               });
+              //               Fluttertoast.showToast(
+              //                 msg: 'Product updated Successfuly',
+              //               );
+              //               Navigator.push(
+              //                 context,
+              //                 CupertinoPageRoute(
+              //                   builder: (context) => Saller(),
+              //                 ),
+              //               );
+              //             });
+              //           }
+              //         },
+              //       )
+              //     : 
+                  WidthButton(
                       loading: loading,
                       width: width,
                       title: 'Add Product',
@@ -308,6 +311,7 @@ class _AddNewProductState extends State<AddNewProduct> {
                               if (_imageUrls.isNotEmpty) {
                                 // whene complete add the product data
                                 await productServices.addNewProduct(
+                                  
                                   productName: name,
                                   price: price,
                                   productType: type,

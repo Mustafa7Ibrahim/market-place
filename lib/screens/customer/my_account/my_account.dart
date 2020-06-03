@@ -1,12 +1,14 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:market_place/auth/auth.dart';
 import 'package:market_place/constant/constant.dart';
 import 'package:market_place/models/customer_user.dart';
 import 'package:market_place/services/customer_services.dart';
 import 'package:market_place/widgets/address.dart';
 import 'package:market_place/widgets/loading.dart';
 import 'package:market_place/widgets/my_acc_info.dart';
+import 'package:market_place/widgets/width_button.dart';
 
 import 'edit_info/edit_info.dart';
 
@@ -17,6 +19,7 @@ class MyAccount extends StatefulWidget {
 
 class _MyAccountState extends State<MyAccount> {
   CustomerServices _customerServices = CustomerServices();
+  Auth auth = Auth();
   String id;
 
   loadUser() async {
@@ -102,6 +105,11 @@ class _MyAccountState extends State<MyAccount> {
                       address: snapshot.data.address,
                       phoneNumber: snapshot.data.phoneNamber,
                     ),
+                    WidthButton(
+                      width: size.width,
+                      onTap: () => auth.signOutWithGoogle(context),
+                      title: 'SignOut',
+                    )
                   ],
                 ),
               );
