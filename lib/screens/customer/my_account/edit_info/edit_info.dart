@@ -46,7 +46,31 @@ class _EditInfoState extends State<EditInfo> {
               .copyWith(color: Theme.of(context).primaryColor),
         ),
         centerTitle: true,
-        
+      ),
+      bottomSheet: WidthButton(
+        width: size.width,
+        title: 'Update',
+        onTap: () async {
+          if (_formKey.currentState.validate()) {
+            setState(() => loading = true);
+            await _customerServices
+                .updateCustomerInfo(
+              widget.customer.customerId,
+              _name ?? widget.customer.customerName,
+              _address ?? widget.customer.address,
+              _phoneNumber ?? widget.customer.phoneNamber,
+              widget.customer.customerImg,
+              _radioGender ?? widget.customer.gender,
+              _email ?? widget.customer.email,
+              widget.customer.type,
+            )
+                .whenComplete(() {
+              setState(() => loading = false);
+              Navigator.pop(context);
+            });
+          }
+        },
+        loading: loading,
       ),
       body: ListView(
         children: <Widget>[
@@ -136,31 +160,6 @@ class _EditInfoState extends State<EditInfo> {
                     ),
                     Text('Female'),
                   ],
-                ),
-                WidthButton(
-                  width: size.width,
-                  title: 'Update',
-                  onTap: () async {
-                    if (_formKey.currentState.validate()) {
-                      setState(() => loading = true);
-                      await _customerServices
-                          .updateCustomerInfo(
-                        widget.customer.customerId,
-                        _name ?? widget.customer.customerName,
-                        _address ?? widget.customer.address,
-                        _phoneNumber ?? widget.customer.phoneNamber,
-                        widget.customer.customerImg,
-                        _radioGender ?? widget.customer.gender,
-                        _email ?? widget.customer.email,
-                        widget.customer.type,
-                      )
-                          .whenComplete(() {
-                        setState(() => loading = false);
-                        Navigator.pop(context);
-                      });
-                    }
-                  },
-                  loading: loading,
                 ),
               ],
             ),

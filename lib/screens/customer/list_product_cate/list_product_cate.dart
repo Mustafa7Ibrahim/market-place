@@ -14,16 +14,14 @@ class ListProductCategories extends StatelessWidget {
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    final orientation = MediaQuery.of(context).orientation;
-    final width = MediaQuery.of(context).size.width;
-    final height = MediaQuery.of(context).size.height;
+    final size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
         title: Text(
           productCat,
           style: Theme.of(context)
               .textTheme
-              .headline5
+              .headline6
               .copyWith(color: Theme.of(context).primaryColor),
         ),
         centerTitle: true,
@@ -32,25 +30,23 @@ class ListProductCategories extends StatelessWidget {
         stream: ProductServices().productListstrm,
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            return GridView.builder(
+            return ListView.builder(
               itemCount: snapshot.data.length,
-              itemBuilder: (BuildContext context, int index) {
-                if (snapshot.data[index].productType == productCat) {
-                  return Item(
-                    height: height,
-                    width: width,
-                    product: snapshot.data[index],
-                  );
-                }
-                return Container();
+              itemBuilder: (context, index) {
+                return snapshot.data[index].productType == productCat
+                    ? Item(
+                        size: size,
+                        product: snapshot.data[index],
+                      )
+                    : Container();
               },
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: (orientation == Orientation.portrait) ? 2 : 3,
-                childAspectRatio: width / height,
-              ),
             );
           }
-          return Loading(color: Theme.of(context).primaryColor);
+          return Loading(
+            color: Theme.of(context).primaryColor,
+            height: size.height,
+            width: size.width,
+          );
         },
       ),
     );

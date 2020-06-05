@@ -6,6 +6,9 @@ final CollectionReference productCollection =
 final CollectionReference userCollection =
     Firestore.instance.collection('users');
 
+final CollectionReference cartCollection =
+    Firestore.instance.collection('cart');
+
 List<String> types = <String>[
   'Supermarket',
   'Fashion',

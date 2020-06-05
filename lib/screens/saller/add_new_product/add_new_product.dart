@@ -77,7 +77,7 @@ class _AddNewProductState extends State<AddNewProduct> {
           'Add New Product',
           style: Theme.of(context)
               .textTheme
-              .headline5
+              .headline6
               .copyWith(color: Theme.of(context).primaryColor),
         ),
         centerTitle: true,
@@ -294,71 +294,70 @@ class _AddNewProductState extends State<AddNewProduct> {
               //           }
               //         },
               //       )
-              //     : 
-                  WidthButton(
-                      loading: loading,
-                      width: width,
-                      title: 'Add Product',
-                      onTap: () async {
-                        if (formKey.currentState.validate()) {
-                          // checking if images is not empty
-                          if (images.isNotEmpty) {
-                            // show the loading screen
-                            setState(() => loading = true);
-                            // start with uploading the images
-                            await uploadImages().then((onComplete) async {
-                              // checking if the urls is empty
-                              if (_imageUrls.isNotEmpty) {
-                                // whene complete add the product data
-                                await productServices.addNewProduct(
-                                  
-                                  productName: name,
-                                  price: price,
-                                  productType: type,
-                                  description: description,
-                                  quantity: quantity,
-                                  specification: specifications,
-                                  productImages: _imageUrls,
-                                );
-                              } else {
-                                // show that there is somthing went wrong
-                                setState(() => loading = false);
-                                Fluttertoast.showToast(
-                                  msg: 'Somthing went wrong',
-                                );
-                              }
-                              // if an error happened
-                            }).catchError((onError) {
-                              setState(() => loading = false);
-                              Fluttertoast.showToast(
-                                msg: 'Somthing went wrong: $onError',
-                              );
-                              // when it finshed clear everything and navigate to home
-                            }).whenComplete(() {
-                              setState(() {
-                                loading = false;
-                                name = '';
-                                price = '';
-                                description = '';
-                                quantity = '';
-                                specifications = '';
-                                images.clear();
-                                type = null;
-                              });
-                              Fluttertoast.showToast(
-                                msg: 'Product add Successfuly',
-                              );
-                              Navigator.push(
-                                context,
-                                CupertinoPageRoute(
-                                  builder: (context) => Saller(),
-                                ),
-                              );
-                            });
-                          }
+              //     :
+              WidthButton(
+                loading: loading,
+                width: width,
+                title: 'Add Product',
+                onTap: () async {
+                  if (formKey.currentState.validate()) {
+                    // checking if images is not empty
+                    if (images.isNotEmpty) {
+                      // show the loading screen
+                      setState(() => loading = true);
+                      // start with uploading the images
+                      await uploadImages().then((onComplete) async {
+                        // checking if the urls is empty
+                        if (_imageUrls.isNotEmpty) {
+                          // whene complete add the product data
+                          await productServices.addNewProduct(
+                            productName: name,
+                            price: '\$$price',
+                            productType: type,
+                            description: description,
+                            quantity: quantity,
+                            specification: specifications,
+                            productImages: _imageUrls,
+                          );
+                        } else {
+                          // show that there is somthing went wrong
+                          setState(() => loading = false);
+                          Fluttertoast.showToast(
+                            msg: 'Somthing went wrong',
+                          );
                         }
-                      },
-                    ),
+                        // if an error happened
+                      }).catchError((onError) {
+                        setState(() => loading = false);
+                        Fluttertoast.showToast(
+                          msg: 'Somthing went wrong: $onError',
+                        );
+                        // when it finshed clear everything and navigate to home
+                      }).whenComplete(() {
+                        setState(() {
+                          loading = false;
+                          name = '';
+                          price = '';
+                          description = '';
+                          quantity = '';
+                          specifications = '';
+                          images.clear();
+                          type = null;
+                        });
+                        Fluttertoast.showToast(
+                          msg: 'Product add Successfuly',
+                        );
+                        Navigator.push(
+                          context,
+                          CupertinoPageRoute(
+                            builder: (context) => Saller(),
+                          ),
+                        );
+                      });
+                    }
+                  }
+                },
+              ),
             ],
           ),
         ),
@@ -379,7 +378,11 @@ class _AddNewProductState extends State<AddNewProduct> {
           asset: images[index],
           width: 300,
           height: 300,
-          spinner: Loading(color: Theme.of(context).primaryColor),
+          spinner: Loading(
+            color: Theme.of(context).primaryColor,
+            height: 300,
+            width: 300,
+          ),
         ),
       ),
     );

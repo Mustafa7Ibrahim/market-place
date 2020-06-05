@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:market_place/auth/auth.dart';
 import 'package:market_place/constant/constant.dart';
 import 'package:market_place/constant/decoration.dart';
 import 'package:market_place/models/saller_user.dart';
@@ -15,6 +16,7 @@ class Profile extends StatefulWidget {
 
 class _ProfileState extends State<Profile> {
   SallerServices _sallerServices = SallerServices();
+  Auth auth = Auth();
   final formKey = GlobalKey<FormState>();
 
   TextEditingController nameController = TextEditingController();
@@ -35,26 +37,25 @@ class _ProfileState extends State<Profile> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          'Profile',
-          style: Theme.of(context)
-              .textTheme
-              .headline5
-              .copyWith(color: Theme.of(context).primaryColor),
-        ),
-        centerTitle: true,
-      ),
-      body: StreamBuilder<SallerUser>(
-        stream: userCollection
-            .document(id)
-            .snapshots()
-            .map(_sallerServices.getCurrentUser),
-        builder: (context, snapshot) {
-          return !snapshot.hasData
-              ? Loading(color: Theme.of(context).primaryColor)
-              : Form(
+    return StreamBuilder<SallerUser>(
+      stream: userCollection
+          .document(id)
+          .snapshots()
+          .map(_sallerServices.getCurrentUser),
+      builder: (context, snapshot) {
+        return Scaffold(
+          appBar: AppBar(
+            title: Text(
+              'Profile',
+              style: Theme.of(context)
+                  .textTheme
+                  .headline6
+                  .copyWith(color: Theme.of(context).primaryColor),
+            ),
+            centerTitle: true,
+          ),
+          body: snapshot.hasData
+              ? Form(
                   key: formKey,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
@@ -127,12 +128,22 @@ class _ProfileState extends State<Profile> {
                                 );
                           }
                         },
-                      )
+                      ),
+                      WidthButton(
+                        width: size.width,
+                        onTap: () => auth.signOutWithGoogle(context),
+                        title: 'Sign Out',
+                      ),
                     ],
                   ),
-                );
-        },
-      ),
+                )
+              : Loading(
+                  color: Theme.of(context).primaryColor,
+                  width: size.width,
+                  height: size.height,
+                ),
+        );
+      },
     );
   }
 

@@ -1,11 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:market_place/models/product.dart';
+import 'package:market_place/screens/customer/cart/cart.dart';
+import 'package:market_place/services/cart_services.dart';
 import 'package:market_place/widgets/list_of_images.dart';
 import 'package:market_place/widgets/width_button.dart';
 
-class ProductOverView extends StatelessWidget {
+class ProductOverView extends StatefulWidget {
   final Product product;
   ProductOverView({this.product});
+
+  @override
+  _ProductOverViewState createState() => _ProductOverViewState();
+}
+
+class _ProductOverViewState extends State<ProductOverView> {
+  CartServices _cartServices = CartServices();
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +23,7 @@ class ProductOverView extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          product.productName,
+          widget.product.productName,
           style: Theme.of(context)
               .textTheme
               .headline6
@@ -23,10 +33,12 @@ class ProductOverView extends StatelessWidget {
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.add_shopping_cart),
-            onPressed: () {
-              //TODO add the function for that
-              // here when the user click it add to the cart
-            },
+            onPressed: () => Navigator.push(
+              context,
+              CupertinoPageRoute(
+                builder: (context) => Cart(),
+              ),
+            ),
           )
         ],
       ),
@@ -40,7 +52,7 @@ class ProductOverView extends StatelessWidget {
               child: ListOfImages(
                 height: size.height,
                 width: size.width,
-                images: product.productImages,
+                images: widget.product.productImages,
                 onTap: () {},
               ),
             ),
@@ -48,7 +60,7 @@ class ProductOverView extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20.0),
               child: Text(
-                product.productName,
+                widget.product.productName,
                 style: Theme.of(context).textTheme.headline6,
               ),
             ),
@@ -56,7 +68,7 @@ class ProductOverView extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20.0),
               child: Text(
-                product.price,
+                widget.product.price,
                 style: Theme.of(context)
                     .textTheme
                     .headline5
@@ -65,7 +77,14 @@ class ProductOverView extends StatelessWidget {
             ),
             WidthButton(
               width: size.width,
-              onTap: () {},
+              onTap: () => _cartServices.addNewItemToCart(
+                itemId: widget.product.productId,
+                itemImg: widget.product.productImages.first,
+                numberOfItems: '1',
+                itemName: widget.product.productName,
+                itemPrice: widget.product.price,
+                sallerName: widget.product.companyName,
+              ),
               title: 'ADD TO THE CART',
             ),
             Padding(
@@ -78,7 +97,7 @@ class ProductOverView extends StatelessWidget {
                       style: Theme.of(context).textTheme.bodyText2,
                     ),
                     TextSpan(
-                      text: '${product.companyName}',
+                      text: '${widget.product.companyName}',
                       style: Theme.of(context).textTheme.bodyText1.copyWith(
                             decoration: TextDecoration.underline,
                             color: Theme.of(context).primaryColor,
@@ -101,7 +120,7 @@ class ProductOverView extends StatelessWidget {
             SizedBox(height: 6.0),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20.0),
-              child: Text(product.description),
+              child: Text(widget.product.description),
             ),
             SizedBox(height: 12.0),
             Container(
@@ -116,7 +135,10 @@ class ProductOverView extends StatelessWidget {
             SizedBox(height: 6.0),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20.0),
-              child: Text(product.specification),
+              child: Text(widget.product.specification),
+            ),
+            SizedBox(
+              height: 25,
             )
           ],
         ),

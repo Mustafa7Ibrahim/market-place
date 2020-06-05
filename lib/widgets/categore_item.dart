@@ -31,7 +31,7 @@ class CategoreItem extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             SizedBox(
-              height: 150.0,
+              height: 140.0,
               width: size.width,
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(12.0),

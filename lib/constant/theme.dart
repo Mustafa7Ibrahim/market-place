@@ -4,7 +4,7 @@ ThemeData theme = ThemeData(
   primarySwatch: Colors.green,
   accentColor: Colors.greenAccent,
   floatingActionButtonTheme: FloatingActionButtonThemeData(
-    backgroundColor: Colors.greenAccent,
+    backgroundColor: Colors.green,
     elevation: 0.0,
   ),
   appBarTheme: AppBarTheme(

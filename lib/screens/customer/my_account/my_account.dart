@@ -43,7 +43,11 @@ class _MyAccountState extends State<MyAccount> {
           .map(_customerServices.getCurrentUser),
       builder: (context, snapshot) {
         return !snapshot.hasData
-            ? Loading(color: Theme.of(context).primaryColor)
+            ? Loading(
+                color: Theme.of(context).primaryColor,
+                height: size.height,
+                width: size.width,
+              )
             : Scaffold(
                 appBar: AppBar(
                   title: Text(
@@ -67,6 +71,11 @@ class _MyAccountState extends State<MyAccount> {
                       child: Text('EDIT'),
                     )
                   ],
+                ),
+                bottomNavigationBar: WidthButton(
+                  width: size.width,
+                  onTap: () => auth.signOutWithGoogle(context),
+                  title: 'SignOut',
                 ),
                 body: ListView(
                   children: <Widget>[
@@ -105,11 +114,6 @@ class _MyAccountState extends State<MyAccount> {
                       address: snapshot.data.address,
                       phoneNumber: snapshot.data.phoneNamber,
                     ),
-                    WidthButton(
-                      width: size.width,
-                      onTap: () => auth.signOutWithGoogle(context),
-                      title: 'SignOut',
-                    )
                   ],
                 ),
               );

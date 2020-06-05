@@ -26,8 +26,6 @@ class _SallerState extends State<Saller> {
     setState(() => currentIndex = index);
   }
 
-  
-
   List<Widget> _screenIndex = <Widget>[
     SallerProducts(),
     Profile(),
@@ -38,7 +36,7 @@ class _SallerState extends State<Saller> {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         tooltip: 'To add a new Product',
-        child: Icon(Icons.add),
+        child: Icon(Icons.add, color: Colors.white),
         onPressed: () => Navigator.push(
           context,
           CupertinoPageRoute(

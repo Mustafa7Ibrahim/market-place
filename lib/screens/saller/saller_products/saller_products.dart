@@ -39,7 +39,7 @@ class _SallerProductsState extends State<SallerProducts> {
           'Products',
           style: Theme.of(context)
               .textTheme
-              .headline5
+              .headline6
               .copyWith(color: Theme.of(context).primaryColor),
         ),
         centerTitle: true,
@@ -62,7 +62,11 @@ class _SallerProductsState extends State<SallerProducts> {
               },
             );
           }
-          return Loading(color: Theme.of(context).primaryColor);
+          return Loading(
+            color: Theme.of(context).primaryColor,
+            height: height,
+            width: width,
+          );
         },
       ),
     );
