@@ -23,7 +23,7 @@ class _ProductOverViewState extends State<ProductOverView> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          widget.product.productName,
+          widget.product.productType,
           style: Theme.of(context)
               .textTheme
               .headline6
@@ -32,7 +32,7 @@ class _ProductOverViewState extends State<ProductOverView> {
         centerTitle: true,
         actions: <Widget>[
           IconButton(
-            icon: Icon(Icons.add_shopping_cart),
+            icon: Icon(Icons.shopping_cart),
             onPressed: () => Navigator.push(
               context,
               CupertinoPageRoute(
@@ -80,7 +80,7 @@ class _ProductOverViewState extends State<ProductOverView> {
               onTap: () => _cartServices.addNewItemToCart(
                 itemId: widget.product.productId,
                 itemImg: widget.product.productImages.first,
-                numberOfItems: '1',
+                numberOfItems: 1,
                 itemName: widget.product.productName,
                 itemPrice: widget.product.price,
                 sallerName: widget.product.companyName,

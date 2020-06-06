@@ -5,7 +5,7 @@ class CartModel {
   String itemImg;
   String sallerName;
   String itemPrice;
-  String numberOfItems;
+  int numberOfItems;
 
   CartModel({
     this.userId,

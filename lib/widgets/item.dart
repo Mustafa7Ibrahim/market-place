@@ -30,6 +30,7 @@ class _ItemState extends State<Item> {
   @override
   void initState() {
     taped = false;
+
     super.initState();
   }
 
@@ -106,22 +107,34 @@ class _ItemState extends State<Item> {
         color: taped == false ? Colors.black26 : Theme.of(context).primaryColor,
       ),
       onPressed: () {
-        _cartServices.addNewItemToCart(
-          itemId: widget.product.productId,
-          itemImg: widget.product.productImages.first,
-          numberOfItems: '1',
-          itemName: widget.product.productName,
-          itemPrice: widget.product.price,
-          sallerName: widget.product.companyName,
-        );
-        setState(
-          () {
-            taped = true;
-            Fluttertoast.showToast(
-              msg: '${widget.product.productName} Add to the cart',
-            );
-          },
-        );
+        if (taped == false) {
+          _cartServices.addNewItemToCart(
+            itemId: widget.product.productId,
+            itemImg: widget.product.productImages.first,
+            numberOfItems: 1,
+            itemName: widget.product.productName,
+            itemPrice: widget.product.price,
+            sallerName: widget.product.companyName,
+          );
+          setState(
+            () {
+              taped = true;
+              Fluttertoast.showToast(
+                msg: '${widget.product.productName} Added',
+              );
+            },
+          );
+        } else {
+          _cartServices.removeItemFromCart(itemId: widget.product.productId);
+          setState(
+            () {
+              taped = false;
+              Fluttertoast.showToast(
+                msg: '${widget.product.productName} removed',
+              );
+            },
+          );
+        }
       },
     );
   }
