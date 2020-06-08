@@ -7,6 +7,8 @@ class Categories extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
+    final imageHeight = size.height / 5 * 1.0;
+    final sizedBoxH = 8.0;
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -20,9 +22,11 @@ class Categories extends StatelessWidget {
       ),
       body: GridView.count(
         crossAxisCount: 2,
-        crossAxisSpacing: 4.0,
+        shrinkWrap: true,
         children: <Widget>[
           CategoreItem(
+            sizedBoxHeight: sizedBoxH,
+            imageHeight: imageHeight,
             size: size,
             image: 'assets/images/supermarket.jpg',
             lable: 'Super Market',
@@ -35,6 +39,8 @@ class Categories extends StatelessWidget {
             ),
           ),
           CategoreItem(
+            sizedBoxHeight: sizedBoxH,
+            imageHeight: imageHeight,
             size: size,
             image: 'assets/images/fashion.jpg',
             lable: 'Fashion',
@@ -47,6 +53,8 @@ class Categories extends StatelessWidget {
             ),
           ),
           CategoreItem(
+            sizedBoxHeight: sizedBoxH,
+            imageHeight: imageHeight,
             size: size,
             image: 'assets/images/mobile&tablets.jpg',
             lable: 'Mobile & Tablets',
@@ -59,6 +67,8 @@ class Categories extends StatelessWidget {
             ),
           ),
           CategoreItem(
+            sizedBoxHeight: sizedBoxH,
+            imageHeight: imageHeight,
             size: size,
             image: 'assets/images/electronics.jpg',
             lable: 'Electronics',
@@ -71,6 +81,8 @@ class Categories extends StatelessWidget {
             ),
           ),
           CategoreItem(
+            sizedBoxHeight: sizedBoxH,
+            imageHeight: imageHeight,
             size: size,
             image: 'assets/images/healthandbeauty.jpg',
             lable: 'Health & Beauty',
@@ -83,6 +95,8 @@ class Categories extends StatelessWidget {
             ),
           ),
           CategoreItem(
+            sizedBoxHeight: sizedBoxH,
+            imageHeight: imageHeight,
             size: size,
             image: 'assets/images/houseandkitchen.jpg',
             lable: 'Home & Kitchen',
@@ -95,6 +109,8 @@ class Categories extends StatelessWidget {
             ),
           ),
           CategoreItem(
+            sizedBoxHeight: sizedBoxH,
+            imageHeight: imageHeight,
             size: size,
             image: 'assets/images/babies.jpg',
             lable: 'Babies',
@@ -107,6 +123,8 @@ class Categories extends StatelessWidget {
             ),
           ),
           CategoreItem(
+            sizedBoxHeight: sizedBoxH,
+            imageHeight: imageHeight,
             size: size,
             image: 'assets/images/toys.jpg',
             lable: 'Toys',
@@ -118,6 +136,8 @@ class Categories extends StatelessWidget {
             ),
           ),
           CategoreItem(
+            sizedBoxHeight: sizedBoxH,
+            imageHeight: imageHeight,
             size: size,
             image: 'assets/images/appliances.jpg',
             lable: 'Appliances',
@@ -130,6 +150,8 @@ class Categories extends StatelessWidget {
             ),
           ),
           CategoreItem(
+            sizedBoxHeight: sizedBoxH,
+            imageHeight: imageHeight,
             size: size,
             image: 'assets/images/sports.jpg',
             lable: 'Sports',
@@ -142,6 +164,8 @@ class Categories extends StatelessWidget {
             ),
           ),
           CategoreItem(
+            sizedBoxHeight: sizedBoxH,
+            imageHeight: imageHeight,
             size: size,
             image: 'assets/images/automotive.jpg',
             lable: 'Automotive',
@@ -154,6 +178,8 @@ class Categories extends StatelessWidget {
             ),
           ),
           CategoreItem(
+            sizedBoxHeight: sizedBoxH,
+            imageHeight: imageHeight,
             size: size,
             image: 'assets/images/tools.jpg',
             lable: 'Tools',

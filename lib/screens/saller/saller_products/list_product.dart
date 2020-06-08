@@ -15,16 +15,7 @@ class ListProduct extends StatelessWidget {
       onTap: () => Navigator.push(
         context,
         CupertinoPageRoute(
-          builder: (context) => AddNewProduct(
-            proId: product.productId,
-            proImages: product.productImages,
-            proName: product.productName,
-            proQuantity: product.quantity,
-            proType: product.productType,
-            proDes: product.description,
-            proSpecif: product.specification,
-            proPrice: product.price,
-          ),
+          builder: (context) => AddNewProduct(product: product),
         ),
       ),
       child: Container(

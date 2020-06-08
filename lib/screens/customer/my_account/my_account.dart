@@ -2,15 +2,13 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:market_place/auth/auth.dart';
-import 'package:market_place/constant/constant.dart';
-import 'package:market_place/models/customer_user.dart';
-import 'package:market_place/services/customer_services.dart';
+import 'package:market_place/models/user_model.dart';
+import 'package:market_place/screens/profile.dart/edit_profile.dart';
+import 'package:market_place/services/user_services.dart';
 import 'package:market_place/widgets/address.dart';
 import 'package:market_place/widgets/loading.dart';
 import 'package:market_place/widgets/my_acc_info.dart';
 import 'package:market_place/widgets/width_button.dart';
-
-import 'edit_info/edit_info.dart';
 
 class MyAccount extends StatefulWidget {
   @override
@@ -18,7 +16,6 @@ class MyAccount extends StatefulWidget {
 }
 
 class _MyAccountState extends State<MyAccount> {
-  CustomerServices _customerServices = CustomerServices();
   Auth auth = Auth();
   String id;
 
@@ -36,11 +33,8 @@ class _MyAccountState extends State<MyAccount> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    return StreamBuilder<CustomerUser>(
-      stream: userCollection
-          .document(id)
-          .snapshots()
-          .map(_customerServices.getCurrentUser),
+    return StreamBuilder<UserModel>(
+      stream: UserServices().currentUserData,
       builder: (context, snapshot) {
         return !snapshot.hasData
             ? Loading(
@@ -63,9 +57,7 @@ class _MyAccountState extends State<MyAccount> {
                       onPressed: () => Navigator.push(
                         context,
                         CupertinoPageRoute(
-                          builder: (context) => EditInfo(
-                            customer: snapshot.data,
-                          ),
+                          builder: (context) => EditProfile(),
                         ),
                       ),
                       child: Text('EDIT'),
@@ -91,9 +83,9 @@ class _MyAccountState extends State<MyAccount> {
                     ),
                     SizedBox(height: 12.0),
                     MyAccountInfo(
-                      customerName: snapshot.data.customerName,
-                      email: snapshot.data.email,
-                      gender: snapshot.data.gender,
+                      customerName: snapshot.data.sallerCompanyName,
+                      email: snapshot.data.userEmail,
+                      gender: snapshot.data.userGender,
                       size: size,
                     ),
                     SizedBox(height: 12.0),
@@ -110,8 +102,8 @@ class _MyAccountState extends State<MyAccount> {
                     SizedBox(height: 12.0),
                     Address(
                       size: size,
-                      name: snapshot.data.customerName,
-                      address: snapshot.data.address,
+                      name: snapshot.data.userName,
+                      address: snapshot.data.userAddress,
                       phoneNumber: snapshot.data.phoneNamber,
                     ),
                   ],

@@ -2,11 +2,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:market_place/auth/auth.dart';
+import 'package:market_place/screens/profile.dart/edit_profile.dart';
 import 'package:market_place/screens/saller/add_new_product/add_new_product.dart';
-import 'package:market_place/screens/saller/profile/profile.dart';
 import 'package:market_place/screens/saller/saller_products/saller_products.dart';
 
 class Saller extends StatefulWidget {
+ 
   @override
   _SallerState createState() => _SallerState();
 }
@@ -28,7 +29,7 @@ class _SallerState extends State<Saller> {
 
   List<Widget> _screenIndex = <Widget>[
     SallerProducts(),
-    Profile(),
+    EditProfile(),
   ];
 
   @override
@@ -40,16 +41,7 @@ class _SallerState extends State<Saller> {
         onPressed: () => Navigator.push(
           context,
           CupertinoPageRoute(
-            builder: (context) => AddNewProduct(
-              proId: null,
-              proImages: null,
-              proName: null,
-              proQuantity: null,
-              proType: null,
-              proDes: null,
-              proSpecif: null,
-              proPrice: null,
-            ),
+            builder: (context) => AddNewProduct(product: null),
           ),
         ),
       ),

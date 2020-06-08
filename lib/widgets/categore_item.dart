@@ -8,12 +8,16 @@ class CategoreItem extends StatelessWidget {
     this.onTap,
     this.image,
     this.lable,
+    @required this.imageHeight,
+    this.sizedBoxHeight,
   }) : super(key: key);
 
   final Size size;
+  final double imageHeight;
   final Function onTap;
   final String image;
   final String lable;
+  final double sizedBoxHeight;
 
   @override
   Widget build(BuildContext context) {
@@ -30,24 +34,20 @@ class CategoreItem extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-            SizedBox(
-              height: 140.0,
-              width: size.width,
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(12.0),
-                child: Image.asset(
-                  image,
-                  fit: BoxFit.cover,
-                ),
+            ClipRRect(
+              borderRadius: BorderRadius.circular(12.0),
+              child: Image.asset(
+                image,
+                fit: BoxFit.cover,
+                height: imageHeight,
+                width: size.width,
               ),
             ),
-            SizedBox(height: 4.0),
+            SizedBox(height: sizedBoxHeight),
             Text(
               lable,
-              style: Theme.of(context)
-                  .textTheme
-                  .subtitle1
-                  .copyWith(color: Colors.black54),
+              maxLines: 1,
+              style: Theme.of(context).textTheme.bodyText2,
             ),
           ],
         ),
