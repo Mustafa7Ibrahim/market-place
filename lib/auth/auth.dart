@@ -5,7 +5,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:market_place/screens/customer/customer.dart';
 import 'package:market_place/screens/saller/saller.dart';
-import 'package:market_place/screens/wrapper.dart';
+import 'package:market_place/screens/sign_in/sign_in.dart';
 import 'package:market_place/services/user_services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -171,7 +171,7 @@ class Auth {
           Navigator.pushReplacement(
             context,
             CupertinoPageRoute(
-              builder: (context) => Wrapper(),
+              builder: (context) => SignIn(),
             ),
           );
         },

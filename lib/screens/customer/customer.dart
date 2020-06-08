@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:market_place/screens/customer/cart/cart.dart';
 import 'package:market_place/screens/customer/categories/categories.dart';
-import 'package:market_place/screens/customer/my_account/my_account.dart';
+import 'package:market_place/screens/my_account/my_account.dart';
 
 import 'home/home.dart';
 
