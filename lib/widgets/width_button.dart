@@ -23,7 +23,7 @@ class WidthButton extends StatelessWidget {
       width: width,
       child: RaisedButton(
         padding: EdgeInsets.all(12.0),
-        color: Theme.of(context).primaryColor,
+        color: Theme.of(context).accentColor,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(8.0),
         ),

@@ -17,7 +17,7 @@ class _SignInState extends State<SignIn> {
       body: Column(
         children: <Widget>[
           Image.asset(
-            'assets/images/Logo.jpg',
+            'assets/images/logo.png',
             fit: BoxFit.fitWidth,
           ),
           Spacer(),

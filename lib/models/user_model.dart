@@ -7,8 +7,7 @@ class UserModel {
   final String userGender;
   final String phoneNamber;
   final String sallerCompanyName;
-  final bool customer;
-  final bool saller;
+
 
   UserModel({
     this.userId,
@@ -19,7 +18,6 @@ class UserModel {
     this.userGender,
     this.phoneNamber,
     this.sallerCompanyName,
-    this.customer,
-    this.saller,
+
   });
 }

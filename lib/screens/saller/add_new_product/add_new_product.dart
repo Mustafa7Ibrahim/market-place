@@ -9,7 +9,6 @@ import 'package:market_place/constant/constant.dart';
 import 'package:market_place/constant/decoration.dart';
 import 'package:market_place/screens/saller/saller.dart';
 import 'package:market_place/services/product_services.dart';
-import 'package:market_place/widgets/add_images.dart';
 import 'package:market_place/widgets/list_of_assets.dart';
 import 'package:market_place/widgets/list_of_images.dart';
 import 'package:market_place/widgets/loading.dart';
@@ -70,50 +69,15 @@ class _AddNewProductState extends State<AddNewProduct> {
           key: formKey,
           child: Column(
             children: <Widget>[
-              images == null ||
-                      images.isEmpty && widget.product.productImages == null
-                  ? AddImages(
-                      height: height,
-                      width: width,
-                      onTap: loadAssets,
-                    )
-                  : widget.product.productImages == null
-                      ? SizedBox(
-                          height: height / 2,
-                          child: ListView.builder(
-                            itemCount: images?.length ?? 0,
-                            physics: ClampingScrollPhysics(),
-                            shrinkWrap: true,
-                            scrollDirection: Axis.horizontal,
-                            itemBuilder: (context, index) {
-                              return ListOfAssets(
-                                onTap: loadAssets,
-                                height: height,
-                                width: width,
-                                images: images,
-                                index: index,
-                              );
-                            },
-                          ),
+              images.isNotEmpty && widget.product == null
+                  ? assetsImages(height, width)
+                  : images.isEmpty && widget.product == null
+                      ? WidthButton(
+                          width: width,
+                          onTap: loadAssets,
+                          title: 'Add Product Images',
                         )
-                      : SizedBox(
-                          height: height / 2,
-                          child: ListView.builder(
-                            itemCount:
-                                widget.product.productImages?.length ?? 0,
-                            physics: ClampingScrollPhysics(),
-                            shrinkWrap: true,
-                            scrollDirection: Axis.horizontal,
-                            itemBuilder: (context, index) {
-                              return ListOfImages(
-                                height: height,
-                                width: width,
-                                images: widget.product.productImages,
-                                onTap: () {},
-                              );
-                            },
-                          ),
-                        ),
+                      : networkImages(height, width),
               Container(
                 margin: EdgeInsets.symmetric(horizontal: 12.0, vertical: 6.0),
                 decoration: textFaildDecoration,
@@ -172,13 +136,11 @@ class _AddNewProductState extends State<AddNewProduct> {
                   hint: Text('Product Type'),
                   isExpanded: true,
                   focusColor: Colors.white,
-                  value: widget.product.productType != null
-                      ? widget.product.productType
-                      : type,
+                  value: widget?.product?.productType ?? type,
                   underline: SizedBox(),
                   style: TextStyle(color: Colors.black87, fontSize: 18.0),
                   icon: Icon(
-                    Icons.arrow_drop_down,
+                    Icons.arrow_drop_down_circle,
                     color: Theme.of(context).primaryColor,
                   ),
                   onChanged: (String onChange) => setState(
@@ -226,11 +188,53 @@ class _AddNewProductState extends State<AddNewProduct> {
                   maxLines: 5,
                 ),
               ),
-              // updateProduct(width, context),
-              addProduct(width, context),
+              widget.product == null
+                  ? addProduct(width, context)
+                  : updateProduct(width, context),
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  SizedBox networkImages(double height, double width) {
+    return SizedBox(
+      height: height / 2,
+      child: ListView.builder(
+        itemCount: widget.product.productImages?.length ?? 0,
+        physics: ClampingScrollPhysics(),
+        shrinkWrap: true,
+        scrollDirection: Axis.horizontal,
+        itemBuilder: (context, index) {
+          return ListOfImages(
+            height: height,
+            width: width,
+            images: widget.product.productImages,
+            onTap: () {},
+          );
+        },
+      ),
+    );
+  }
+
+  SizedBox assetsImages(double height, double width) {
+    return SizedBox(
+      height: height / 2,
+      child: ListView.builder(
+        itemCount: images?.length ?? 0,
+        physics: ClampingScrollPhysics(),
+        shrinkWrap: true,
+        scrollDirection: Axis.horizontal,
+        itemBuilder: (context, index) {
+          return ListOfAssets(
+            onTap: loadAssets,
+            height: height,
+            width: width,
+            images: images,
+            index: index,
+          );
+        },
       ),
     );
   }
@@ -291,7 +295,7 @@ class _AddNewProductState extends State<AddNewProduct> {
     );
   }
 
-  addProduct(double width, BuildContext context) async {
+  addProduct(double width, BuildContext context) {
     return WidthButton(
       loading: loading,
       width: width,
@@ -343,10 +347,6 @@ class _AddNewProductState extends State<AddNewProduct> {
               });
               Fluttertoast.showToast(
                 msg: 'Product add Successfuly',
-              );
-              Navigator.push(
-                context,
-                CupertinoPageRoute(builder: (context) => Saller()),
               );
             });
           }

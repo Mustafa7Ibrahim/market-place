@@ -1,14 +1,17 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:market_place/auth/auth.dart';
+import 'package:market_place/constant/constant.dart';
 import 'package:market_place/constant/decoration.dart';
 import 'package:market_place/models/user_model.dart';
 import 'package:market_place/screens/my_account/edit_profile.dart';
+import 'package:market_place/services/user_services.dart';
 import 'package:market_place/widgets/image_network.dart';
 import 'package:market_place/widgets/info_row.dart';
+import 'package:market_place/widgets/loading.dart';
 import 'package:market_place/widgets/row_edit.dart';
 import 'package:market_place/widgets/width_button.dart';
-import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class MyAccount extends StatefulWidget {
   @override
@@ -17,30 +20,73 @@ class MyAccount extends StatefulWidget {
 
 class _MyAccountState extends State<MyAccount> {
   Auth auth = Auth();
+  var currentUserId;
+
+  getCurrentUserId() async {
+    // get the current user id if the user is alredy loged in
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    setState(() => currentUserId = sharedPreferences.getString('user'));
+    // return the current user id
+    return currentUserId;
+  }
+
+  @override
+  void initState() {
+    getCurrentUserId();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    final user = Provider.of<UserModel>(context);
-    return Scaffold(
-      appBar: appBar(context, user),
-      bottomNavigationBar: WidthButton(
-        width: size.width,
-        onTap: () => auth.signOutWithGoogle(context),
-        title: 'Sign Out',
-      ),
-      body: ListView(
-        children: <Widget>[
-          SizedBox(height: 12.0),
-          titleLine(context, 'My Account'),
-          SizedBox(height: 12.0),
-          personalInfo(user, context, size),
-          SizedBox(height: 12.0),
-          titleLine(context, 'Address'),
-          SizedBox(height: 12.0),
-          addressInfo(size, user),
-        ],
-      ),
+    // final user = Provider.of<UserModel>(context);
+    return StreamBuilder<UserModel>(
+      stream: userCollection
+          .document(currentUserId)
+          .snapshots()
+          .map(UserServices().getUserData),
+      builder: (context, snapshot) {
+        final user = snapshot.data;
+        if (snapshot.connectionState == ConnectionState.active) {
+          if (snapshot.hasData) {
+            return Scaffold(
+              appBar: appBar(context, user),
+              bottomNavigationBar: WidthButton(
+                width: size.width,
+                onTap: () => auth.signOutWithGoogle(context),
+                title: 'Sign Out',
+              ),
+              body: ListView(
+                children: <Widget>[
+                  SizedBox(height: 12.0),
+                  titleLine(context, 'My Account'),
+                  SizedBox(height: 12.0),
+                  personalInfo(user, context, size),
+                  SizedBox(height: 12.0),
+                  titleLine(context, 'Address'),
+                  SizedBox(height: 12.0),
+                  addressInfo(size, user),
+                ],
+              ),
+            );
+          } else if (snapshot.hasError) {
+            return Center(
+              child: Text(snapshot.error),
+            );
+          } else {
+            return Loading(
+              color: Theme.of(context).accentColor,
+              height: size.height,
+              width: size.width,
+            );
+          }
+        } else {
+          return Container();
+        }
+        // else if (snapshot.connectionState == ConnectionState.waiting) {
+        //   return Center(child: Text('wait..'));
+        // }
+      },
     );
   }
 
@@ -150,7 +196,7 @@ class _MyAccountState extends State<MyAccount> {
                   text: TextSpan(
                     children: [
                       TextSpan(
-                        text: '${user?.userName?? ""}\n' ,
+                        text: '${user?.userName ?? ""}\n',
                         style: Theme.of(context)
                             .textTheme
                             .headline5

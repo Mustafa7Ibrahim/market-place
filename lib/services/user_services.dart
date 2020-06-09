@@ -23,8 +23,6 @@ class UserServices {
     String userGender,
     String phoneNumber,
     String sallerCompanyName,
-    bool customer,
-    bool saller,
   }) async {
     // get the correct data path
     final path = userCollection.document(userId);
@@ -37,8 +35,7 @@ class UserServices {
     */
     if (user.exists == true) {
       return path.updateData({
-        'customer': customer,
-        'saller': saller,
+        'userId': userId,
       });
 
       /*
@@ -54,8 +51,6 @@ class UserServices {
         'userGender': userGender,
         'PhoneNumber': phoneNumber,
         'sallerCompanyName': sallerCompanyName,
-        'customer': customer,
-        'saller': saller,
       });
     }
   }
@@ -85,20 +80,18 @@ class UserServices {
   // get the current user data
   UserModel getUserData(DocumentSnapshot snapshot) {
     return UserModel(
-      userId: snapshot.data['userId'],
-      userName: snapshot.data['userName'],
-      userEmail: snapshot.data['userEmail'],
-      userImg: snapshot.data['userImg'],
-      userAddress: snapshot.data['userAddress'],
-      userGender: snapshot.data['userGender'],
-      phoneNamber: snapshot.data['PhoneNumber'],
-      sallerCompanyName: snapshot.data['sallerCompanyName'],
-      saller: snapshot.data['saller'],
-      customer: snapshot.data['customer'],
+      userId: snapshot?.data['userId'] ?? '',
+      userName: snapshot?.data['userName'] ?? '',
+      userEmail: snapshot?.data['userEmail'] ?? '',
+      userImg: snapshot?.data['userImg'] ?? '',
+      userAddress: snapshot?.data['userAddress'] ?? '',
+      userGender: snapshot?.data['userGender'] ?? '',
+      phoneNamber: snapshot?.data['PhoneNumber'] ?? '',
+      sallerCompanyName: snapshot?.data['sallerCompanyName'] ?? '',
     );
   }
 
-  // get the current user data as a stream of data
+  // // get the current user data as a stream of data
   Stream<UserModel> get currentUserData {
     getCurrentUserId();
     return userCollection.document(currentUserId).snapshots().map(getUserData);

@@ -22,7 +22,7 @@ InputDecoration inputDecoration = InputDecoration(
 );
 
 BoxDecoration textFaildDecoration = BoxDecoration(
-  borderRadius: BorderRadius.circular(24.0),
+  borderRadius: BorderRadius.circular(12.0),
   boxShadow: [shadow],
 );
 

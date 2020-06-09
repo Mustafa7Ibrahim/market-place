@@ -28,24 +28,14 @@ class _SallerState extends State<Saller> {
 
   List<Widget> _screenIndex = <Widget>[
     SallerProducts(),
+    AddNewProduct(),
     MyAccount(),
   ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        tooltip: 'To add a new Product',
-        child: Icon(Icons.add, color: Colors.white),
-        onPressed: () => Navigator.push(
-          context,
-          CupertinoPageRoute(
-            builder: (context) => AddNewProduct(product: null),
-          ),
-        ),
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      bottomNavigationBar: BottomNavigationBar(
+        bottomNavigationBar: BottomNavigationBar(
         selectedIconTheme: IconThemeData(color: Theme.of(context).primaryColor),
         selectedLabelStyle: TextStyle(color: Theme.of(context).primaryColor),
         unselectedIconTheme: IconThemeData(color: Colors.black87),
@@ -55,8 +45,12 @@ class _SallerState extends State<Saller> {
         elevation: 0.0,
         items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            title: Text('Home'),
+            title: Text('My Products'),
             icon: Icon(Icons.home),
+          ),
+          BottomNavigationBarItem(
+            title: Text('Add Products'),
+            icon: Icon(Icons.add),
           ),
           BottomNavigationBarItem(
             title: Text('My Account'),
