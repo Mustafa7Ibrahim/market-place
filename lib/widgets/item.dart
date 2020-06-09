@@ -4,7 +4,6 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:market_place/constant/decoration.dart';
 import 'package:market_place/models/product.dart';
 import 'package:market_place/services/cart_services.dart';
-import 'package:market_place/widgets/product_overview.dart';
 
 import 'image_network.dart';
 
@@ -13,10 +12,12 @@ class Item extends StatefulWidget {
     Key key,
     @required this.size,
     this.product,
+    @required this.onTap,
   }) : super(key: key);
 
   final Size size;
   final Product product;
+  final Function onTap;
 
   @override
   _ItemState createState() => _ItemState();
@@ -37,12 +38,7 @@ class _ItemState extends State<Item> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => Navigator.push(
-        context,
-        CupertinoPageRoute(
-          builder: (context) => ProductOverView(product: widget.product),
-        ),
-      ),
+      onTap: widget.onTap,
       child: Container(
         padding: EdgeInsets.all(12.0),
         margin: EdgeInsets.all(6.0),

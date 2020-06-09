@@ -55,6 +55,7 @@ class ProductServices {
     return snapshot.documents.map((pro) {
       return Product(
         productId: pro.documentID,
+        sallerId: pro.data['sallerId'],
         productName: pro.data['productName'],
         productType: pro.data['productType'],
         price: pro.data['price'],

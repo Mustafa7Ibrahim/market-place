@@ -42,18 +42,19 @@ class _SallerState extends State<Saller> {
         unselectedLabelStyle: TextStyle(color: Colors.black87),
         currentIndex: currentIndex,
         onTap: changePage,
+        type: BottomNavigationBarType.fixed,
         elevation: 0.0,
         items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            title: Text('My Products'),
+            title: Text('Products'),
             icon: Icon(Icons.home),
           ),
           BottomNavigationBarItem(
-            title: Text('Add Products'),
+            title: Text('Post'),
             icon: Icon(Icons.add),
           ),
           BottomNavigationBarItem(
-            title: Text('My Account'),
+            title: Text('Account'),
             icon: Icon(Icons.person),
           ),
         ],

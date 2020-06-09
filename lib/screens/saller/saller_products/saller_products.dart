@@ -1,8 +1,10 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:market_place/constant/constant.dart';
 import 'package:market_place/models/product.dart';
-import 'package:market_place/screens/saller/saller_products/list_product.dart';
+import 'package:market_place/screens/saller/add_new_product/add_new_product.dart';
 import 'package:market_place/services/product_services.dart';
+import 'package:market_place/widgets/item.dart';
 import 'package:market_place/widgets/loading.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -29,10 +31,7 @@ class _SallerProductsState extends State<SallerProducts> {
 
   @override
   Widget build(BuildContext context) {
-    final orientation = MediaQuery.of(context).orientation;
-    final width = MediaQuery.of(context).size.width;
-    final height = MediaQuery.of(context).size.height;
-
+    final size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -48,24 +47,30 @@ class _SallerProductsState extends State<SallerProducts> {
         stream: productCollection.snapshots().map(_productServices.productList),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            return GridView.builder(
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: (orientation == Orientation.portrait) ? 2 : 3,
-                childAspectRatio: width / height,
-              ),
+            return ListView.builder(
               itemCount: snapshot.data.length,
-              itemBuilder: (BuildContext context, int index) {
-                if (snapshot.data[index].sallerId == thisUserId) {
-                  return ListProduct(product: snapshot.data.elementAt(index));
-                }
-                return Container();
+              itemBuilder: (context, index) {
+                return snapshot.data[index].sallerId == thisUserId
+                    ? Item(
+                        size: size,
+                        product: snapshot.data[index],
+                        onTap: () => Navigator.push(
+                          context,
+                          CupertinoPageRoute(
+                            builder: (context) => AddNewProduct(
+                              product: snapshot.data[index],
+                            ),
+                          ),
+                        ),
+                      )
+                    : Container();
               },
             );
           }
           return Loading(
             color: Theme.of(context).primaryColor,
-            height: height,
-            width: width,
+            height: size.height,
+            width: size.width,
           );
         },
       ),
