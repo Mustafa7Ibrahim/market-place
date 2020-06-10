@@ -36,8 +36,8 @@ class ListOfImages extends StatelessWidget {
                 borderRadius: BorderRadius.circular(12.0),
                 child: ImageNetwork(
                   image: images[index],
-                  width: width,
                   height: height,
+                  width: width,
                 ),
               ),
             );

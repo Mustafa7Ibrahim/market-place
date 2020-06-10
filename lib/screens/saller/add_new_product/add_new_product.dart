@@ -69,7 +69,7 @@ class _AddNewProductState extends State<AddNewProduct> {
           key: formKey,
           child: Column(
             children: <Widget>[
-              images.isNotEmpty && widget.product == null
+              images?.isNotEmpty ?? true && widget.product == null
                   ? assetsImages(height, width)
                   : images.isEmpty && widget.product == null
                       ? WidthButton(
@@ -201,6 +201,7 @@ class _AddNewProductState extends State<AddNewProduct> {
   SizedBox networkImages(double height, double width) {
     return SizedBox(
       height: height / 2,
+      width: width,
       child: ListView.builder(
         itemCount: widget.product.productImages?.length ?? 0,
         physics: ClampingScrollPhysics(),

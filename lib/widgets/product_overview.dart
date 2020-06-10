@@ -49,6 +49,7 @@ class _ProductOverViewState extends State<ProductOverView> {
           children: <Widget>[
             SizedBox(
               height: size.height / 2,
+              width: size.width,
               child: ListOfImages(
                 height: size.height,
                 width: size.width,
@@ -71,7 +72,7 @@ class _ProductOverViewState extends State<ProductOverView> {
                 widget.product.price,
                 style: Theme.of(context)
                     .textTheme
-                    .headline5
+                    .headline6
                     .copyWith(fontWeight: FontWeight.bold),
               ),
             ),
