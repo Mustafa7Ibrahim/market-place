@@ -7,7 +7,7 @@ class Categories extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    final imageHeight = size.height / 5 * 1.0;
+    final imageHeight = size.height / 5 * 0.9;
     final sizedBoxH = 8.0;
     return Scaffold(
       appBar: AppBar(
