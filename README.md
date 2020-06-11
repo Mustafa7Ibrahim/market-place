@@ -4,9 +4,9 @@ An E-commerce project build with flutter and firebase
 
 # Content
 
-## Saller Side
+## Seller Side
 
-* Saller products list
+* Seller products list
 * Add new product
 * Saller Account
 
@@ -19,8 +19,8 @@ An E-commerce project build with flutter and firebase
 
 # Screenshots
 
-![Home](assets/Screenshots/home.png)
-![cart](assets/Screenshots/cart.png)
+![Home](assets/Screenshots/home.png) ![cart](assets/Screenshots/cart.png)
+
 ![category](assets/Screenshots/category.png)
 ![profile](assets/Screenshots/profile.png)
 ![product_opened](assets/Screenshots/product_opened.png)
