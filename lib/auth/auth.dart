@@ -1,3 +1,4 @@
+import 'package:apple_sign_in/apple_sign_in.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -176,6 +177,89 @@ class Auth {
     } catch (e) {
       Fluttertoast.showToast(msg: e.toString());
       return null;
+    }
+  }
+
+  Future signInWithApple({@required BuildContext context, String type}) async {
+    // an instace of shared preferences
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+
+    try {
+      final AuthorizationResult result = await AppleSignIn.performRequests([
+        AppleIdRequest(requestedScopes: [Scope.email, Scope.fullName])
+      ]);
+
+      switch (result.status) {
+        case AuthorizationStatus.authorized:
+          try {
+            print("successfull sign in");
+            final AppleIdCredential appleIdCredential = result.credential;
+
+            OAuthProvider oAuthProvider =
+                OAuthProvider(providerId: "apple.com");
+            final AuthCredential credential = oAuthProvider.getCredential(
+              idToken: String.fromCharCodes(appleIdCredential.identityToken),
+              accessToken:
+                  String.fromCharCodes(appleIdCredential.authorizationCode),
+            );
+
+            final AuthResult _res =
+                await FirebaseAuth.instance.signInWithCredential(credential);
+
+            FirebaseAuth.instance.currentUser().then((val) async {
+              UserUpdateInfo updateUser = UserUpdateInfo();
+              updateUser.displayName =
+                  "${appleIdCredential.fullName.givenName} ${appleIdCredential.fullName.familyName}";
+              updateUser.photoUrl =
+                  "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png";
+              await val.updateProfile(updateUser);
+            });
+
+            // add new user to firestore
+            _userServices.addNewUser(
+              userId: _res.user.uid,
+              userName: _res.user.displayName,
+              userEmail: _res.user.email,
+              userImg: _res.user.photoUrl,
+              phoneNumber: '',
+              sallerCompanyName: '',
+              userAddress: '',
+              userGender: '',
+            );
+
+            final FirebaseUser currentUser = await firebaseAuth.currentUser();
+            sharedPreferences.setString('user', currentUser.uid);
+            sharedPreferences.setString('type', type);
+
+            if (type == 'Saller') {
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => Saller(),
+                ),
+              );
+            } else {
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => Customer(),
+                ),
+              );
+            }
+          } catch (e) {
+            Fluttertoast.showToast(msg: e.toString());
+          }
+          break;
+        case AuthorizationStatus.error:
+          Fluttertoast.showToast(msg: 'somthing went wrong!');
+          break;
+
+        case AuthorizationStatus.cancelled:
+          print('User cancelled');
+          break;
+      }
+    } catch (error) {
+      print("error with apple sign in");
     }
   }
 }
