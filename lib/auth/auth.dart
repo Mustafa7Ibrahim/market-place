@@ -206,9 +206,6 @@ class Auth {
         AppleIdRequest(requestedScopes: [Scope.email, Scope.fullName])
       ]);
 
-      print(
-          "email: ${Scope.email.toString()} fullname: ${Scope.fullName.toString()}");
-
       switch (result.status) {
         case AuthorizationStatus.authorized:
           try {
