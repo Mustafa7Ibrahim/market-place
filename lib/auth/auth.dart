@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:apple_sign_in/apple_sign_in.dart';
+import 'package:device_info/device_info.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -13,6 +16,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 class Auth {
   final GoogleSignIn googleSignIn = GoogleSignIn();
   final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
+
+  // Contains the bool value whether if the IOS support apple sign in or not
+  bool supportsAppleSignIn = false;
 
   // get an object of the services
   final UserServices _userServices = UserServices();
@@ -183,6 +189,17 @@ class Auth {
   Future signInWithApple({@required BuildContext context, String type}) async {
     // an instace of shared preferences
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+
+    if (Platform.isIOS) {
+      var iosInfo = await DeviceInfoPlugin().iosInfo;
+      var version = iosInfo.systemVersion;
+
+      if (version.contains('13') == true) {
+        supportsAppleSignIn = true;
+      }
+    } else {
+      Fluttertoast.showToast(msg: 'Platform is not supported!');
+    }
 
     try {
       final AuthorizationResult result = await AppleSignIn.performRequests([

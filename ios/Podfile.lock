@@ -217,6 +217,8 @@ PODS:
     - AppAuth/ExternalUserAgent (= 1.4.0)
   - AppAuth/Core (1.4.0)
   - AppAuth/ExternalUserAgent (1.4.0)
+  - apple_sign_in (0.0.1):
+    - Flutter
   - BoringSSL-GRPC (0.0.7):
     - BoringSSL-GRPC/Implementation (= 0.0.7)
     - BoringSSL-GRPC/Interface (= 0.0.7)
@@ -233,6 +235,8 @@ PODS:
     - Firebase/Firestore (~> 6.0)
     - Flutter
   - cloud_firestore_web (0.1.0):
+    - Flutter
+  - device_info (0.0.1):
     - Flutter
   - DKImagePickerController/Core (4.3.2):
     - DKImagePickerController/ImageDataManager
@@ -443,8 +447,10 @@ PODS:
   - SwiftyGif (5.3.0)
 
 DEPENDENCIES:
+  - apple_sign_in (from `.symlinks/plugins/apple_sign_in/ios`)
   - cloud_firestore (from `.symlinks/plugins/cloud_firestore/ios`)
   - cloud_firestore_web (from `.symlinks/plugins/cloud_firestore_web/ios`)
+  - device_info (from `.symlinks/plugins/device_info/ios`)
   - file_picker (from `.symlinks/plugins/file_picker/ios`)
   - firebase_auth (from `.symlinks/plugins/firebase_auth/ios`)
   - firebase_auth_web (from `.symlinks/plugins/firebase_auth_web/ios`)
@@ -497,10 +503,14 @@ SPEC REPOS:
     - SwiftyGif
 
 EXTERNAL SOURCES:
+  apple_sign_in:
+    :path: ".symlinks/plugins/apple_sign_in/ios"
   cloud_firestore:
     :path: ".symlinks/plugins/cloud_firestore/ios"
   cloud_firestore_web:
     :path: ".symlinks/plugins/cloud_firestore_web/ios"
+  device_info:
+    :path: ".symlinks/plugins/device_info/ios"
   file_picker:
     :path: ".symlinks/plugins/file_picker/ios"
   firebase_auth:
@@ -535,12 +545,14 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   abseil: 6c8eb7892aefa08d929b39f9bb108e5367e3228f
   AppAuth: 31bcec809a638d7bd2f86ea8a52bd45f6e81e7c7
+  apple_sign_in: 7716c7ddfa195aeab7dec0dc374ef4ff45d1adb4
   BoringSSL-GRPC: 8edf627ee524575e2f8d19d56f068b448eea3879
   BSGridCollectionViewLayout: 333dcb457a5a3bdd9212607ab5756553dcfe06cb
   BSImagePicker: 07404254f2fcdaf5a2eb403c0f8c337267ce8738
   BSImageView: a149459433a2687157d034c78e059d30ac7f2544
   cloud_firestore: 4cc700e236ebfe2d5d980e49cb066d202cfee0e9
   cloud_firestore_web: 9ec3dc7f5f98de5129339802d491c1204462bfec
+  device_info: d7d233b645a32c40dfdc212de5cf646ca482f175
   DKImagePickerController: b5eb7f7a388e4643264105d648d01f727110fc3d
   DKPhotoGallery: fdfad5125a9fdda9cc57df834d49df790dbb4179
   file_picker: 3e6c3790de664ccf9b882732d9db5eaf6b8d4eb1
