@@ -209,8 +209,6 @@ class _AddNewProductState extends State<AddNewProduct> {
         scrollDirection: Axis.horizontal,
         itemBuilder: (context, index) {
           return ListOfImages(
-            height: height,
-            width: width,
             images: widget.product.productImages,
             onTap: () {},
           );
@@ -370,9 +368,7 @@ class _AddNewProductState extends State<AddNewProduct> {
           width: 300,
           height: 300,
           spinner: Loading(
-            color: Theme.of(context).primaryColor,
-            height: 300,
-            width: 300,
+            color: Theme.of(context).primaryColor
           ),
         ),
       ),

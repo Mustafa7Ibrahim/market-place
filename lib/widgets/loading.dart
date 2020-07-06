@@ -3,14 +3,11 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class Loading extends StatelessWidget {
   final Color color;
-  final double height;
-  final double width;
-  Loading({@required this.color, @required this.height, @required this.width});
+
+  Loading({@required this.color});
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: height,
-      width: width,
+    return Center(
       child: SpinKitDoubleBounce(
         color: color,
         size: 54,

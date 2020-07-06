@@ -68,9 +68,7 @@ class _SallerProductsState extends State<SallerProducts> {
             );
           }
           return Loading(
-            color: Theme.of(context).primaryColor,
-            height: size.height,
-            width: size.width,
+            color: Theme.of(context).primaryColor
           );
         },
       ),

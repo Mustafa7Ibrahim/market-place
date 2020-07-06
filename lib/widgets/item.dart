@@ -49,10 +49,12 @@ class _ItemState extends State<Item> {
         ),
         child: Row(
           children: <Widget>[
-            ImageNetwork(
-              image: widget.product.productImages.first,
-              height: widget.size.height / 7,
-              width: widget.size.height / 7,
+            SizedBox(
+              height: 75,
+              width: 75,
+              child: ImageNetwork(
+                image: widget.product.productImages.first,
+              ),
             ),
             SizedBox(width: 12.0),
             Expanded(

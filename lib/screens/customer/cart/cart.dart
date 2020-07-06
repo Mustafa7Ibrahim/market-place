@@ -62,9 +62,7 @@ class _CartState extends State<Cart> {
           //=======================================================//
           body: !snapshot.hasData
               ? Loading(
-                  color: Theme.of(context).primaryColor,
-                  height: size.height,
-                  width: size.width,
+                  color: Theme.of(context).primaryColor
                 )
               : Stack(
                   children: <Widget>[

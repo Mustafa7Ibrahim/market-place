@@ -4,7 +4,7 @@ import 'package:market_place/models/product.dart';
 import 'package:market_place/services/product_services.dart';
 import 'package:market_place/widgets/item.dart';
 import 'package:market_place/widgets/loading.dart';
-import 'package:market_place/widgets/product_overview.dart';
+import 'package:market_place/widgets/product_viewing.dart';
 
 class ListProductCategories extends StatelessWidget {
   final String productCat;
@@ -39,20 +39,20 @@ class ListProductCategories extends StatelessWidget {
                         size: size,
                         product: snapshot.data[index],
                         onTap: () => Navigator.push(
-                              context,
-                              CupertinoPageRoute(
-                                builder: (context) => ProductOverView(
-                                    product: snapshot.data[index]),
-                              ),
-                            ),)
+                          context,
+                          CupertinoPageRoute(
+                            builder: (context) => ProductViewing(
+                              product: snapshot.data[index],
+                            ),
+                          ),
+                        ),
+                      )
                     : Container();
               },
             );
           }
           return Loading(
-            color: Theme.of(context).primaryColor,
-            height: size.height,
-            width: size.width,
+            color: Theme.of(context).primaryColor
           );
         },
       ),

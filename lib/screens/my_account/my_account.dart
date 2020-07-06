@@ -75,9 +75,7 @@ class _MyAccountState extends State<MyAccount> {
             );
           } else {
             return Loading(
-              color: Theme.of(context).accentColor,
-              height: size.height,
-              width: size.width,
+              color: Theme.of(context).accentColor
             );
           }
         } else {
@@ -186,8 +184,7 @@ class _MyAccountState extends State<MyAccount> {
               ImageNetwork(
                 image: user?.userImg ??
                     'https://images.unsplash.com/photo-1532276269954-64188308dcb3?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80',
-                width: size.width / 8,
-                height: size.width / 8,
+              
               ),
               SizedBox(width: 6.0),
               Padding(

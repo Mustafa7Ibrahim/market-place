@@ -4,14 +4,10 @@ import 'package:market_place/widgets/image_network.dart';
 
 class ListOfImages extends StatelessWidget {
   const ListOfImages({
-    this.width,
     this.images,
     this.onTap,
-    this.height,
   });
 
-  final double width;
-  final double height;
   final Function onTap;
   final List images;
 
@@ -27,18 +23,13 @@ class ListOfImages extends StatelessWidget {
         child: ListView.builder(
           itemBuilder: (context, index) {
             return Container(
-              margin: EdgeInsets.all(12.0),
-              width: width / 2 + 34,
+              margin: EdgeInsets.only(right: 8.0, left: 8),
               decoration: BoxDecoration(
                 boxShadow: [shadow],
               ),
               child: ClipRRect(
-                borderRadius: BorderRadius.circular(12.0),
-                child: ImageNetwork(
-                  image: images[index],
-                  height: height,
-                  width: width,
-                ),
+                borderRadius: BorderRadius.circular(24.0),
+                child: ImageNetwork(image: images[index]),
               ),
             );
           },

@@ -41,9 +41,7 @@ class ListOfAssets extends StatelessWidget {
               width: 300,
               height: 300,
               spinner: Loading(
-                color: Theme.of(context).primaryColor,
-                height: 300,
-                width: 300,
+                color: Theme.of(context).primaryColor
               ),
             ),
           ),

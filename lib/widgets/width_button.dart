@@ -28,11 +28,7 @@ class WidthButton extends StatelessWidget {
           borderRadius: BorderRadius.circular(8.0),
         ),
         child: loading == true
-            ? Loading(
-                color: Colors.white,
-                height: 54,
-                width: width,
-              )
+            ? Loading(color: Colors.white)
             : Text(
                 title,
                 style: TextStyle(color: Colors.white),

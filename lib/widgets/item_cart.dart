@@ -150,8 +150,7 @@ class _CartItemState extends State<CartItem> {
           children: <Widget>[
             ImageNetwork(
               image: widget.cart.itemImg,
-              width: 70,
-              height: 70,
+          
             ),
             IconButton(
               icon: Icon(

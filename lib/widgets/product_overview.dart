@@ -51,8 +51,6 @@ class _ProductOverViewState extends State<ProductOverView> {
               height: size.height / 2,
               width: size.width,
               child: ListOfImages(
-                height: size.height,
-                width: size.width,
                 images: widget.product.productImages,
                 onTap: () {},
               ),

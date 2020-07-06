@@ -10,7 +10,6 @@ class ListProduct extends StatelessWidget {
   ListProduct({@required this.product});
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
     return GestureDetector(
       onTap: () => Navigator.push(
         context,
@@ -27,11 +26,7 @@ class ListProduct extends StatelessWidget {
         ),
         child: Column(
           children: <Widget>[
-            ImageNetwork(
-              image: product.productImages.first,
-              height: size.height / 3,
-              width: size.width,
-            ),
+            ImageNetwork(image: product.productImages.first),
             SizedBox(height: 4.0),
             Text(
               product.productName,
