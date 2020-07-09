@@ -1,10 +1,11 @@
 import 'package:market_place/screens/sign_in/sign_in.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/material.dart';
 
+import 'constant/theme.dart';
 import 'screens/customer/customer.dart';
 import 'screens/saller/saller.dart';
-import 'constant/theme.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -12,15 +13,30 @@ void main() async {
 
   var currentUserId = pref.getString('user');
   var type = pref.getString('type');
+  var darkTheme = pref.getBool('DarkTheme');
 
-  runApp(Home(currentUser: currentUserId, type: type));
+  runApp(
+    ChangeNotifierProvider<ThemeChanger>(
+      create: (_) => ThemeChanger(
+        themeData: darkTheme == null || darkTheme == false
+            ? ThemeChanger.lightTheme
+            : ThemeChanger.darkTheme,
+      ),
+      child: Home(
+        currentUser: currentUserId,
+        type: type,
+        darkTheme: darkTheme,
+      ),
+    ),
+  );
 }
 
 class Home extends StatefulWidget {
   final currentUser;
   final type;
+  final darkTheme;
 
-  Home({this.currentUser, this.type});
+  Home({this.currentUser, this.type, this.darkTheme});
 
   @override
   _HomeState createState() => _HomeState();
@@ -29,10 +45,17 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
+    final theme = Provider.of<ThemeChanger>(context);
     return MaterialApp(
       title: 'Market Place',
       debugShowCheckedModeBanner: false,
-      theme: theme,
+      theme: theme.getTheme(),
+//      darkTheme: ThemeChanger.darkTheme,
+//      themeMode: theme.getTheme() == null
+//          ? ThemeMode.system
+//          : theme.getTheme() == ThemeChanger.lightTheme
+//              ? ThemeMode.light
+//              : ThemeMode.dark,
       home: widget.currentUser == null
           ? SignIn()
           : widget.type == 'Customer' ? Customer() : Saller(),

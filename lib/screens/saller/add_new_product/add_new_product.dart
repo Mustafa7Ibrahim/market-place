@@ -20,6 +20,7 @@ class AddNewProduct extends StatefulWidget {
   final Product product;
 
   AddNewProduct({this.product});
+
   @override
   _AddNewProductState createState() => _AddNewProductState();
 }
@@ -27,6 +28,7 @@ class AddNewProduct extends StatefulWidget {
 class _AddNewProductState extends State<AddNewProduct> {
   final formKey = GlobalKey<FormState>();
   final ProductServices productServices = ProductServices();
+  FlutterToast flutterToast;
 
   List<Asset> images = List<Asset>();
   List<String> _imageUrls = List();
@@ -264,9 +266,12 @@ class _AddNewProductState extends State<AddNewProduct> {
             // if an error happened
           }).catchError((onError) {
             setState(() => loading = false);
-            Fluttertoast.showToast(
-              msg: 'Somthing went wrong: $onError',
+            flutterToast.showToast(
+              toastDuration: Duration(seconds: 15),
+              gravity: ToastGravity.BOTTOM,
+              child: Text('Something went wrong: $onError'),
             );
+
             // when it finshed clear everything and navigate to home
           }).whenComplete(() {
             setState(() {
@@ -279,9 +284,12 @@ class _AddNewProductState extends State<AddNewProduct> {
               images.clear();
               type = null;
             });
-            Fluttertoast.showToast(
-              msg: 'Product updated Successfuly',
+            flutterToast.showToast(
+              toastDuration: Duration(seconds: 15),
+              gravity: ToastGravity.BOTTOM,
+              child: Text('Product updated Successfuly'),
             );
+
             Navigator.pushReplacement(
               context,
               CupertinoPageRoute(
@@ -309,7 +317,7 @@ class _AddNewProductState extends State<AddNewProduct> {
             await uploadImages().then((onComplete) async {
               // checking if the urls is empty
               if (_imageUrls.isNotEmpty) {
-                // whene complete add the product data
+                // when complete add the product data
                 await productServices.addNewProduct(
                   productName: name,
                   price: '\$$price',
@@ -320,18 +328,24 @@ class _AddNewProductState extends State<AddNewProduct> {
                   productImages: _imageUrls,
                 );
               } else {
-                // show that there is somthing went wrong
+                // show that there is something went wrong
                 setState(() => loading = false);
-                Fluttertoast.showToast(
-                  msg: 'Somthing went wrong',
+
+                flutterToast.showToast(
+                  toastDuration: Duration(seconds: 15),
+                  gravity: ToastGravity.BOTTOM,
+                  child: Text('Something went wrong'),
                 );
               }
               // if an error happened
             }).catchError((onError) {
               setState(() => loading = false);
-              Fluttertoast.showToast(
-                msg: 'Somthing went wrong: $onError',
+              flutterToast.showToast(
+                toastDuration: Duration(seconds: 15),
+                gravity: ToastGravity.BOTTOM,
+                child: Text('Somthing went wrong: $onError'),
               );
+
               // when it finshed clear everything and navigate to home
             }).whenComplete(() {
               setState(() {
@@ -344,8 +358,10 @@ class _AddNewProductState extends State<AddNewProduct> {
                 images.clear();
                 type = null;
               });
-              Fluttertoast.showToast(
-                msg: 'Product add Successfuly',
+              flutterToast.showToast(
+                toastDuration: Duration(seconds: 15),
+                gravity: ToastGravity.BOTTOM,
+                child: Text('Product add Successfully'),
               );
             });
           }
@@ -367,9 +383,7 @@ class _AddNewProductState extends State<AddNewProduct> {
           asset: images[index],
           width: 300,
           height: 300,
-          spinner: Loading(
-            color: Theme.of(context).primaryColor
-          ),
+          spinner: Loading(color: Theme.of(context).primaryColor),
         ),
       ),
     );

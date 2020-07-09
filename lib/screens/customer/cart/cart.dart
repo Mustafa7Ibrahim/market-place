@@ -16,6 +16,7 @@ class Cart extends StatefulWidget {
 
 class _CartState extends State<Cart> {
   CartServices _cartServices = CartServices();
+  FlutterToast flutterToast;
   var currentUserId;
 
   @override
@@ -25,7 +26,7 @@ class _CartState extends State<Cart> {
     super.initState();
   }
 
-  // this function geting the current user id from shared prefrences
+  // this function geting the current user id from sharedPreferences
   getCurrentUserId() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     print(sharedPreferences.getString('user'));
@@ -117,7 +118,11 @@ class _CartState extends State<Cart> {
         WidthButton(
           width: 75,
           onTap: () {
-            Fluttertoast.showToast(msg: 'Thank you for using Market Place');
+            flutterToast.showToast(
+              toastDuration: Duration(seconds: 15),
+              gravity: ToastGravity.BOTTOM,
+              child: Text('Thank you for using Market Place'),
+            );
             Navigator.pop(context);
           },
           title: 'Yes',

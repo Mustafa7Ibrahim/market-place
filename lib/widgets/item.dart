@@ -24,6 +24,7 @@ class Item extends StatefulWidget {
 }
 
 class _ItemState extends State<Item> {
+  FlutterToast flutterToast;
   bool taped;
 
   CartServices _cartServices = CartServices();
@@ -115,20 +116,24 @@ class _ItemState extends State<Item> {
             sallerName: widget.product.companyName,
           );
           setState(
-            () {
+                () {
               taped = true;
-              Fluttertoast.showToast(
-                msg: '${widget.product.productName} Added',
+              flutterToast.showToast(
+                toastDuration: Duration(seconds: 15),
+                gravity: ToastGravity.BOTTOM,
+                child: Text('${widget.product.productName} Added'),
               );
             },
           );
         } else {
           _cartServices.removeItemFromCart(itemId: widget.product.productId);
           setState(
-            () {
+                () {
               taped = false;
-              Fluttertoast.showToast(
-                msg: '${widget.product.productName} removed',
+              flutterToast.showToast(
+                toastDuration: Duration(seconds: 15),
+                gravity: ToastGravity.BOTTOM,
+                child: Text('${widget.product.productName} removed'),
               );
             },
           );

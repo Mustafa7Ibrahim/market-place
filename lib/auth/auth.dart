@@ -20,6 +20,8 @@ class Auth {
   // Contains the bool value whether if the IOS support apple sign in or not
   bool supportsAppleSignIn = false;
 
+  FlutterToast flutterToast;
+
   // get an object of the services
   final UserServices _userServices = UserServices();
 
@@ -27,10 +29,14 @@ class Auth {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     try {
       // try to sign in with google account
-      final GoogleSignInAccount googleSignInAccount = await googleSignIn
-          .signIn()
-          .catchError(
-              (onError) => Fluttertoast.showToast(msg: onError.toString()));
+      final GoogleSignInAccount googleSignInAccount =
+          await googleSignIn.signIn().catchError(
+                (onError) => flutterToast.showToast(
+                  toastDuration: Duration(seconds: 15),
+                  gravity: ToastGravity.BOTTOM,
+                  child: Text(onError.toString()),
+                ),
+              );
 
       final GoogleSignInAuthentication googleSignInAuthentication =
           await googleSignInAccount.authentication;
@@ -155,7 +161,11 @@ class Auth {
       //   return userAuth;
       // }
     } catch (e) {
-      Fluttertoast.showToast(msg: e.toString());
+      flutterToast.showToast(
+        toastDuration: Duration(seconds: 15),
+        gravity: ToastGravity.BOTTOM,
+        child: Text(e.toString()),
+      );
       return null;
     }
   }
@@ -166,7 +176,13 @@ class Auth {
       await googleSignIn
           .signOut()
           .catchError(
-              (onError) => Fluttertoast.showToast(msg: onError.toString()))
+            (onError) =>
+            flutterToast.showToast(
+              toastDuration: Duration(seconds: 15),
+              gravity: ToastGravity.BOTTOM,
+              child: Text(onError.toString()),
+            ),
+      )
           .whenComplete(
         () {
           pref.remove('user');
@@ -179,9 +195,17 @@ class Auth {
           );
         },
       );
-      Fluttertoast.showToast(msg: 'Sign out Successfuly');
+      flutterToast.showToast(
+        toastDuration: Duration(seconds: 15),
+        gravity: ToastGravity.BOTTOM,
+        child: Text('Sign out Successfuly'),
+      );
     } catch (e) {
-      Fluttertoast.showToast(msg: e.toString());
+      flutterToast.showToast(
+        toastDuration: Duration(seconds: 15),
+        gravity: ToastGravity.BOTTOM,
+        child: Text(e.toString()),
+      );
       return null;
     }
   }
@@ -198,7 +222,11 @@ class Auth {
         supportsAppleSignIn = true;
       }
     } else {
-      Fluttertoast.showToast(msg: 'Platform is not supported!');
+      flutterToast.showToast(
+        toastDuration: Duration(seconds: 15),
+        gravity: ToastGravity.BOTTOM,
+        child: Text('Platform is not supported!'),
+      );
     }
 
     try {
@@ -264,11 +292,19 @@ class Auth {
               );
             }
           } catch (e) {
-            Fluttertoast.showToast(msg: e.toString());
+            flutterToast.showToast(
+              toastDuration: Duration(seconds: 15),
+              gravity: ToastGravity.BOTTOM,
+              child: Text(e.toString()),
+            );
           }
           break;
         case AuthorizationStatus.error:
-          Fluttertoast.showToast(msg: 'somthing went wrong!');
+          flutterToast.showToast(
+            toastDuration: Duration(seconds: 15),
+            gravity: ToastGravity.BOTTOM,
+            child: Text('something went wrong!'),
+          );
           break;
 
         case AuthorizationStatus.cancelled:

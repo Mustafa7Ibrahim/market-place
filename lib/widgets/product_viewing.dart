@@ -18,6 +18,7 @@ class ProductViewing extends StatefulWidget {
 }
 
 class _ProductViewingState extends State<ProductViewing> {
+  FlutterToast flutterToast;
   CartServices _cartServices = CartServices();
 
   @override
@@ -92,9 +93,10 @@ class _ProductViewingState extends State<ProductViewing> {
                 itemPrice: widget.product.price,
                 sallerName: widget.product.companyName,
               );
-              Fluttertoast.showToast(
-                msg: 'Product Added to Cart',
-                toastLength: Toast.LENGTH_LONG,
+              flutterToast.showToast(
+                toastDuration: Duration(seconds: 15),
+                gravity: ToastGravity.BOTTOM,
+                child: Text('Product Added to Cart'),
               );
             },
           ),
@@ -249,9 +251,9 @@ class _ProductViewingState extends State<ProductViewing> {
             widget.product.productName,
             maxLines: 2,
             style: Theme.of(context).textTheme.headline6.copyWith(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                ),
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+            ),
           ),
           SizedBox(height: 18.0),
           Row(
@@ -264,9 +266,9 @@ class _ProductViewingState extends State<ProductViewing> {
                     TextSpan(
                       text: '${widget.product.price}',
                       style: Theme.of(context).textTheme.headline4.copyWith(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                          ),
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ],
                 ),
