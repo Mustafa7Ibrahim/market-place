@@ -14,11 +14,18 @@ class ThemeChanger extends ChangeNotifier {
 
   static ThemeData lightTheme = ThemeData(
     primarySwatch: Colors.red,
+    primaryColor: Colors.red,
     accentColor: Colors.redAccent,
     brightness: Brightness.light,
+    iconTheme: IconThemeData(color: Colors.grey[900]),
     floatingActionButtonTheme: FloatingActionButtonThemeData(
       backgroundColor: Colors.redAccent,
       elevation: 0.0,
+    ),
+    snackBarTheme: SnackBarThemeData(
+      backgroundColor: Colors.white,
+      actionTextColor: Colors.redAccent,
+      contentTextStyle: TextStyle(color: Colors.grey[900]),
     ),
     appBarTheme: AppBarTheme(
       color: Colors.white,
@@ -34,9 +41,15 @@ class ThemeChanger extends ChangeNotifier {
   static ThemeData darkTheme = ThemeData(
     primarySwatch: Colors.red,
     accentColor: Colors.redAccent,
+    iconTheme: IconThemeData(color: Colors.white),
     floatingActionButtonTheme: FloatingActionButtonThemeData(
       backgroundColor: Colors.redAccent,
       elevation: 0.0,
+    ),
+    snackBarTheme: SnackBarThemeData(
+      backgroundColor: Colors.grey[900],
+      actionTextColor: Colors.redAccent,
+      contentTextStyle: TextStyle(color: Colors.white),
     ),
     brightness: Brightness.dark,
     appBarTheme: AppBarTheme(

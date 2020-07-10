@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/material.dart';
 
-import 'constant/theme.dart';
+import 'constant/theme_changer.dart';
 import 'screens/customer/customer.dart';
 import 'screens/saller/saller.dart';
 
@@ -50,12 +50,6 @@ class _HomeState extends State<Home> {
       title: 'Market Place',
       debugShowCheckedModeBanner: false,
       theme: theme.getTheme(),
-//      darkTheme: ThemeChanger.darkTheme,
-//      themeMode: theme.getTheme() == null
-//          ? ThemeMode.system
-//          : theme.getTheme() == ThemeChanger.lightTheme
-//              ? ThemeMode.light
-//              : ThemeMode.dark,
       home: widget.currentUser == null
           ? SignIn()
           : widget.type == 'Customer' ? Customer() : Saller(),

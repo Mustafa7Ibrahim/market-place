@@ -37,8 +37,6 @@ class _CustomerState extends State<Customer> {
         showSelectedLabels: true,
         showUnselectedLabels: true,
         type: BottomNavigationBarType.fixed,
-        selectedItemColor: Theme.of(context).primaryColor,
-        unselectedItemColor: Colors.black.withOpacity(0.6),
         currentIndex: currentIndex,
         onTap: changePage,
         elevation: 0.0,

@@ -4,15 +4,12 @@ import 'package:market_place/models/product.dart';
 import 'package:market_place/services/product_services.dart';
 import 'package:market_place/widgets/item.dart';
 import 'package:market_place/widgets/loading.dart';
-import 'package:market_place/widgets/product_viewing.dart';
+import 'package:market_place/screens/customer/product_viewing/product_viewing.dart';
 
 class ListProductCategories extends StatelessWidget {
   final String productCat;
+  const ListProductCategories({@required this.productCat});
 
-  const ListProductCategories({
-    Key key,
-    @required this.productCat,
-  }) : super(key: key);
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -23,7 +20,7 @@ class ListProductCategories extends StatelessWidget {
           style: Theme.of(context)
               .textTheme
               .headline6
-              .copyWith(color: Theme.of(context).primaryColor),
+              .copyWith(color: Theme.of(context).accentColor),
         ),
         centerTitle: true,
       ),
@@ -31,6 +28,22 @@ class ListProductCategories extends StatelessWidget {
         stream: ProductServices().productListstrm,
         builder: (context, snapshot) {
           if (snapshot.hasData) {
+            // return GridView.builder(
+            //   addSemanticIndexes: true,
+            //   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            //     crossAxisCount: 2,
+            //     crossAxisSpacing: 12.0,
+            //     mainAxisSpacing: 12.0,
+            //   ),
+            //   itemBuilder: (context, index) {
+            //     return snapshot.data[index].productType == productCat
+            //         ? Item(
+            //             size: size,
+            //             onTap: () {},
+            //           )
+            //         : Container();
+            //   },
+            // );
             return ListView.builder(
               itemCount: snapshot.data.length,
               itemBuilder: (context, index) {
@@ -51,9 +64,7 @@ class ListProductCategories extends StatelessWidget {
               },
             );
           }
-          return Loading(
-            color: Theme.of(context).primaryColor
-          );
+          return Loading(color: Theme.of(context).primaryColor);
         },
       ),
     );

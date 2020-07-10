@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:market_place/constant/decoration.dart';
+import 'package:market_place/constant/toast.dart';
 import 'package:market_place/models/product.dart';
 import 'package:market_place/services/cart_services.dart';
 
@@ -9,11 +9,10 @@ import 'image_network.dart';
 
 class Item extends StatefulWidget {
   Item({
-    Key key,
     @required this.size,
     this.product,
     @required this.onTap,
-  }) : super(key: key);
+  });
 
   final Size size;
   final Product product;
@@ -24,7 +23,6 @@ class Item extends StatefulWidget {
 }
 
 class _ItemState extends State<Item> {
-  FlutterToast flutterToast;
   bool taped;
 
   CartServices _cartServices = CartServices();
@@ -32,7 +30,6 @@ class _ItemState extends State<Item> {
   @override
   void initState() {
     taped = false;
-
     super.initState();
   }
 
@@ -45,7 +42,7 @@ class _ItemState extends State<Item> {
         margin: EdgeInsets.all(6.0),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12.0),
-          color: Colors.white,
+          color: Theme.of(context).appBarTheme.color,
           boxShadow: [shadow],
         ),
         child: Row(
@@ -84,10 +81,10 @@ class _ItemState extends State<Item> {
                         style: Theme.of(context)
                             .textTheme
                             .headline6
-                            .copyWith(color: Theme.of(context).primaryColor),
+                            .copyWith(color: Theme.of(context).accentColor),
                       ),
-                      Spacer(),
-                      addToCartButton(context),
+                      // Spacer(),
+                      // addToCartButton(context),
                     ],
                   ),
                 ],
@@ -116,25 +113,17 @@ class _ItemState extends State<Item> {
             sallerName: widget.product.companyName,
           );
           setState(
-                () {
+            () {
               taped = true;
-              flutterToast.showToast(
-                toastDuration: Duration(seconds: 15),
-                gravity: ToastGravity.BOTTOM,
-                child: Text('${widget.product.productName} Added'),
-              );
+              showToast(context, '${widget.product.productName} Added');
             },
           );
         } else {
           _cartServices.removeItemFromCart(itemId: widget.product.productId);
           setState(
-                () {
+            () {
               taped = false;
-              flutterToast.showToast(
-                toastDuration: Duration(seconds: 15),
-                gravity: ToastGravity.BOTTOM,
-                child: Text('${widget.product.productName} removed'),
-              );
+              showToast(context, '${widget.product.productName} removed');
             },
           );
         }

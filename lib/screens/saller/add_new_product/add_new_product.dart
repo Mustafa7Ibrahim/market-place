@@ -4,9 +4,9 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:market_place/constant/constant.dart';
 import 'package:market_place/constant/decoration.dart';
+import 'package:market_place/constant/toast.dart';
 import 'package:market_place/screens/saller/saller.dart';
 import 'package:market_place/services/product_services.dart';
 import 'package:market_place/widgets/list_of_assets.dart';
@@ -28,7 +28,6 @@ class AddNewProduct extends StatefulWidget {
 class _AddNewProductState extends State<AddNewProduct> {
   final formKey = GlobalKey<FormState>();
   final ProductServices productServices = ProductServices();
-  FlutterToast flutterToast;
 
   List<Asset> images = List<Asset>();
   List<String> _imageUrls = List();
@@ -266,11 +265,7 @@ class _AddNewProductState extends State<AddNewProduct> {
             // if an error happened
           }).catchError((onError) {
             setState(() => loading = false);
-            flutterToast.showToast(
-              toastDuration: Duration(seconds: 15),
-              gravity: ToastGravity.BOTTOM,
-              child: Text('Something went wrong: $onError'),
-            );
+            showToast(context, 'Something went wrong: $onError');
 
             // when it finshed clear everything and navigate to home
           }).whenComplete(() {
@@ -284,11 +279,7 @@ class _AddNewProductState extends State<AddNewProduct> {
               images.clear();
               type = null;
             });
-            flutterToast.showToast(
-              toastDuration: Duration(seconds: 15),
-              gravity: ToastGravity.BOTTOM,
-              child: Text('Product updated Successfuly'),
-            );
+            showToast(context, 'Product updated Successfuly');
 
             Navigator.pushReplacement(
               context,
@@ -330,21 +321,12 @@ class _AddNewProductState extends State<AddNewProduct> {
               } else {
                 // show that there is something went wrong
                 setState(() => loading = false);
-
-                flutterToast.showToast(
-                  toastDuration: Duration(seconds: 15),
-                  gravity: ToastGravity.BOTTOM,
-                  child: Text('Something went wrong'),
-                );
+                showToast(context, 'Something went wrong');
               }
               // if an error happened
             }).catchError((onError) {
               setState(() => loading = false);
-              flutterToast.showToast(
-                toastDuration: Duration(seconds: 15),
-                gravity: ToastGravity.BOTTOM,
-                child: Text('Somthing went wrong: $onError'),
-              );
+              showToast(context, ('Somthing went wrong: $onError'));
 
               // when it finshed clear everything and navigate to home
             }).whenComplete(() {
@@ -358,11 +340,7 @@ class _AddNewProductState extends State<AddNewProduct> {
                 images.clear();
                 type = null;
               });
-              flutterToast.showToast(
-                toastDuration: Duration(seconds: 15),
-                gravity: ToastGravity.BOTTOM,
-                child: Text('Product add Successfully'),
-              );
+              showToast(context, ('Product add Successfully'));
             });
           }
         }

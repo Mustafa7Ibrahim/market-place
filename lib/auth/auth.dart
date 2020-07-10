@@ -5,8 +5,8 @@ import 'package:device_info/device_info.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:market_place/constant/toast.dart';
 import 'package:market_place/screens/customer/customer.dart';
 import 'package:market_place/screens/saller/saller.dart';
 import 'package:market_place/screens/sign_in/sign_in.dart';
@@ -20,8 +20,6 @@ class Auth {
   // Contains the bool value whether if the IOS support apple sign in or not
   bool supportsAppleSignIn = false;
 
-  FlutterToast flutterToast;
-
   // get an object of the services
   final UserServices _userServices = UserServices();
 
@@ -31,11 +29,7 @@ class Auth {
       // try to sign in with google account
       final GoogleSignInAccount googleSignInAccount =
           await googleSignIn.signIn().catchError(
-                (onError) => flutterToast.showToast(
-                  toastDuration: Duration(seconds: 15),
-                  gravity: ToastGravity.BOTTOM,
-                  child: Text(onError.toString()),
-                ),
+                (onError) => showToast(context, onError.toString()),
               );
 
       final GoogleSignInAuthentication googleSignInAuthentication =
@@ -112,60 +106,9 @@ class Auth {
       }
 
       return user;
-      // } else {
-      //   var userType;
-      //   // if it's an exesting user
-      //   final FirebaseUser userAuth = authResult.user;
-      //   // make sure that this user has a right into
-      //   assert(userAuth.displayName != null);
-      //   assert(userAuth.email != null);
-      //   assert(userAuth.photoUrl != null);
-      //   assert(userAuth.uid != null);
-      //   // make sure that the user is not an anonymous
-      //   assert(!userAuth.isAnonymous);
-      //   // make sure that the user id token is not null
-      //   assert(await userAuth.getIdToken() != null);
-
-      //   final FirebaseUser currentUser = await firebaseAuth.currentUser();
-
-      //   userCollection.document(userAuth.uid).get().then(
-      //     (DocumentSnapshot snapshot) {
-      //       userType = snapshot.data['type'];
-      //     },
-      //   ).whenComplete(() {
-      //     if (userType == type) {
-      //       sharedPreferences.setString('user', currentUser.uid);
-      //       sharedPreferences.setString('type', userType);
-      //       if (userType == 'Saller') {
-      //         Navigator.pushReplacement(
-      //           context,
-      //           MaterialPageRoute(
-      //             builder: (context) => Saller(),
-      //           ),
-      //         );
-      //       } else {
-      //         Navigator.pushReplacement(
-      //           context,
-      //           MaterialPageRoute(
-      //             builder: (context) => Customer(),
-      //           ),
-      //         );
-      //       }
-      //     } else {
-      //       Fluttertoast.showToast(
-      //         msg: 'You are note a $type please sign in as a $userType',
-      //       );
-      //     }
-      //   });
-
-      //   return userAuth;
-      // }
     } catch (e) {
-      flutterToast.showToast(
-        toastDuration: Duration(seconds: 15),
-        gravity: ToastGravity.BOTTOM,
-        child: Text(e.toString()),
-      );
+      showToast(context, e.toString());
+
       return null;
     }
   }
@@ -176,13 +119,8 @@ class Auth {
       await googleSignIn
           .signOut()
           .catchError(
-            (onError) =>
-            flutterToast.showToast(
-              toastDuration: Duration(seconds: 15),
-              gravity: ToastGravity.BOTTOM,
-              child: Text(onError.toString()),
-            ),
-      )
+            (onError) => showToast(context, onError.toString()),
+          )
           .whenComplete(
         () {
           pref.remove('user');
@@ -195,17 +133,10 @@ class Auth {
           );
         },
       );
-      flutterToast.showToast(
-        toastDuration: Duration(seconds: 15),
-        gravity: ToastGravity.BOTTOM,
-        child: Text('Sign out Successfuly'),
-      );
+      showToast(context, 'Sign out Successfuly');
     } catch (e) {
-      flutterToast.showToast(
-        toastDuration: Duration(seconds: 15),
-        gravity: ToastGravity.BOTTOM,
-        child: Text(e.toString()),
-      );
+      showToast(context, e.toString());
+
       return null;
     }
   }
@@ -222,11 +153,7 @@ class Auth {
         supportsAppleSignIn = true;
       }
     } else {
-      flutterToast.showToast(
-        toastDuration: Duration(seconds: 15),
-        gravity: ToastGravity.BOTTOM,
-        child: Text('Platform is not supported!'),
-      );
+      showToast(context, 'Platform is not supported!');
     }
 
     try {
@@ -292,19 +219,12 @@ class Auth {
               );
             }
           } catch (e) {
-            flutterToast.showToast(
-              toastDuration: Duration(seconds: 15),
-              gravity: ToastGravity.BOTTOM,
-              child: Text(e.toString()),
-            );
+            showToast(context, e.toString());
           }
           break;
         case AuthorizationStatus.error:
-          flutterToast.showToast(
-            toastDuration: Duration(seconds: 15),
-            gravity: ToastGravity.BOTTOM,
-            child: Text('something went wrong!'),
-          );
+          showToast(context, 'something went wrong!');
+
           break;
 
         case AuthorizationStatus.cancelled:

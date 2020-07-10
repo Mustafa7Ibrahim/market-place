@@ -20,7 +20,7 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    double imageHeight = size.width / 4;
+    double imageHeight = size.height * 0.12;
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -28,7 +28,7 @@ class _HomeState extends State<Home> {
           style: Theme.of(context)
               .textTheme
               .headline6
-              .copyWith(color: Theme.of(context).primaryColor),
+              .copyWith(color: Theme.of(context).accentColor),
         ),
         centerTitle: true,
       ),
@@ -63,7 +63,7 @@ class _HomeState extends State<Home> {
                 ),
               ),
               FlatButton(
-                textColor: Theme.of(context).primaryColor,
+                textColor: Theme.of(context).accentColor,
                 onPressed: () => Navigator.push(
                   context,
                   CupertinoPageRoute(
@@ -78,12 +78,15 @@ class _HomeState extends State<Home> {
             flex: 2,
             child: GridView.count(
               crossAxisCount: 3,
+              padding: EdgeInsets.symmetric(horizontal: 12.0, vertical: 6.0),
+              crossAxisSpacing: 12.0,
+              mainAxisSpacing: 12.0,
+              shrinkWrap: true,
               children: <Widget>[
                 CategoreItem(
-                  imageHeight: imageHeight,
-                  size: size / 3,
                   image: 'assets/images/supermarket.jpg',
                   lable: 'Super Market',
+                  imageHeight: imageHeight,
                   onTap: () => Navigator.push(
                     context,
                     CupertinoPageRoute(
@@ -93,10 +96,9 @@ class _HomeState extends State<Home> {
                   ),
                 ),
                 CategoreItem(
-                  imageHeight: imageHeight,
-                  size: size,
                   image: 'assets/images/fashion.jpg',
                   lable: 'Fashion',
+                  imageHeight: imageHeight,
                   onTap: () => Navigator.push(
                     context,
                     CupertinoPageRoute(
@@ -106,10 +108,9 @@ class _HomeState extends State<Home> {
                   ),
                 ),
                 CategoreItem(
-                  imageHeight: imageHeight,
-                  size: size,
                   image: 'assets/images/mobile&tablets.jpg',
                   lable: 'Mobile & Tablets',
+                  imageHeight: imageHeight,
                   onTap: () => Navigator.push(
                     context,
                     CupertinoPageRoute(
@@ -119,10 +120,9 @@ class _HomeState extends State<Home> {
                   ),
                 ),
                 CategoreItem(
-                  imageHeight: imageHeight,
-                  size: size,
                   image: 'assets/images/electronics.jpg',
                   lable: 'Electronics',
+                  imageHeight: imageHeight,
                   onTap: () => Navigator.push(
                     context,
                     CupertinoPageRoute(
@@ -132,28 +132,28 @@ class _HomeState extends State<Home> {
                   ),
                 ),
                 CategoreItem(
-                  imageHeight: imageHeight,
-                  size: size,
                   image: 'assets/images/healthandbeauty.jpg',
                   lable: 'Health & Beauty',
+                  imageHeight: imageHeight,
                   onTap: () => Navigator.push(
                     context,
                     CupertinoPageRoute(
-                      builder: (context) =>
-                          ListProductCategories(productCat: 'Health & Beauty'),
+                      builder: (context) => ListProductCategories(
+                        productCat: 'Health & Beauty',
+                      ),
                     ),
                   ),
                 ),
                 CategoreItem(
-                  imageHeight: imageHeight,
-                  size: size,
                   image: 'assets/images/houseandkitchen.jpg',
                   lable: 'Home & Kitchen',
+                  imageHeight: imageHeight,
                   onTap: () => Navigator.push(
                     context,
                     CupertinoPageRoute(
-                      builder: (context) =>
-                          ListProductCategories(productCat: 'Home & Kitchen'),
+                      builder: (context) => ListProductCategories(
+                        productCat: 'Home & Kitchen',
+                      ),
                     ),
                   ),
                 ),

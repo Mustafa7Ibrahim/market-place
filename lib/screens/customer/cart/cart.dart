@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:market_place/constant/constant.dart';
+import 'package:market_place/constant/toast.dart';
 import 'package:market_place/models/cart_model.dart';
 import 'package:market_place/services/cart_services.dart';
 import 'package:market_place/widgets/loading.dart';
@@ -16,7 +16,7 @@ class Cart extends StatefulWidget {
 
 class _CartState extends State<Cart> {
   CartServices _cartServices = CartServices();
-  FlutterToast flutterToast;
+
   var currentUserId;
 
   @override
@@ -62,9 +62,7 @@ class _CartState extends State<Cart> {
           // if the data not ready yet, we showing a loading screan//
           //=======================================================//
           body: !snapshot.hasData
-              ? Loading(
-                  color: Theme.of(context).primaryColor
-                )
+              ? Loading(color: Theme.of(context).primaryColor)
               : Stack(
                   children: <Widget>[
                     ListView.builder(
@@ -118,11 +116,8 @@ class _CartState extends State<Cart> {
         WidthButton(
           width: 75,
           onTap: () {
-            flutterToast.showToast(
-              toastDuration: Duration(seconds: 15),
-              gravity: ToastGravity.BOTTOM,
-              child: Text('Thank you for using Market Place'),
-            );
+            showToast(context, 'Thank you for using Market Place');
+
             Navigator.pop(context);
           },
           title: 'Yes',

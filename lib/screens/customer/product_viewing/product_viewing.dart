@@ -1,12 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 
-import '../models/product.dart';
-import '../screens/customer/cart/cart.dart';
-import '../services/cart_services.dart';
-import 'list_of_images.dart';
-import '../widgets/cart_counter.dart';
+import '../../../models/product.dart';
+import '../cart/cart.dart';
+import '../../../services/cart_services.dart';
+import '../../../widgets/list_of_images.dart';
+import '../../../widgets/cart_counter.dart';
+import 'components/add_to_cart.dart';
 
 class ProductViewing extends StatefulWidget {
   final Product product;
@@ -18,14 +18,13 @@ class ProductViewing extends StatefulWidget {
 }
 
 class _ProductViewingState extends State<ProductViewing> {
-  FlutterToast flutterToast;
   CartServices _cartServices = CartServices();
 
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     return Scaffold(
-      backgroundColor: Theme.of(context).primaryColor,
+      backgroundColor: Theme.of(context).accentColor,
       appBar: buildAppBar(context),
       body: SingleChildScrollView(
         child: Column(
@@ -40,7 +39,7 @@ class _ProductViewingState extends State<ProductViewing> {
                     left: 18.0,
                   ),
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: Theme.of(context).appBarTheme.color,
                     borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(24),
                       topRight: Radius.circular(24),
@@ -54,7 +53,10 @@ class _ProductViewingState extends State<ProductViewing> {
                       SizedBox(height: 9.0),
                       buildCounterWithFavBtn(),
                       SizedBox(height: 9.0),
-                      buildAddToCartOrBuy(context),
+                      AddToCartAndBuy(
+                        product: widget.product,
+                        cartServices: _cartServices,
+                      ),
                       SizedBox(height: 9.0),
                     ],
                   ),
@@ -68,7 +70,7 @@ class _ProductViewingState extends State<ProductViewing> {
     );
   }
 
-  Row buildAddToCartOrBuy(BuildContext context) {
+  buildAddToCartOrBuy(BuildContext context) {
     return Row(
       children: <Widget>[
         Container(
@@ -77,12 +79,12 @@ class _ProductViewingState extends State<ProductViewing> {
           width: 58,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(18.0),
-            border: Border.all(color: Theme.of(context).primaryColor),
+            border: Border.all(color: Theme.of(context).accentColor),
           ),
           child: IconButton(
             icon: Icon(
               Icons.add_shopping_cart,
-              color: Theme.of(context).primaryColor,
+              color: Theme.of(context).accentColor,
             ),
             onPressed: () {
               _cartServices.addNewItemToCart(
@@ -93,11 +95,12 @@ class _ProductViewingState extends State<ProductViewing> {
                 itemPrice: widget.product.price,
                 sallerName: widget.product.companyName,
               );
-              flutterToast.showToast(
-                toastDuration: Duration(seconds: 15),
-                gravity: ToastGravity.BOTTOM,
-                child: Text('Product Added to Cart'),
-              );
+              // _showToast(context);
+              // flutterToast.showToast(
+              //   child: Text('Product Added to Cart'),
+              //   toastDuration: Duration(seconds: 5),
+              //   gravity: ToastGravity.BOTTOM,
+              // );
             },
           ),
         ),
@@ -108,7 +111,7 @@ class _ProductViewingState extends State<ProductViewing> {
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(18.0),
               ),
-              color: Theme.of(context).primaryColor,
+              color: Theme.of(context).accentColor,
               onPressed: () {
                 _cartServices.addNewItemToCart(
                   itemId: widget.product.productId,
@@ -216,7 +219,7 @@ class _ProductViewingState extends State<ProductViewing> {
   AppBar buildAppBar(BuildContext context) {
     return AppBar(
       elevation: 0.0,
-      backgroundColor: Theme.of(context).primaryColor,
+      backgroundColor: Theme.of(context).accentColor,
       leading: IconButton(
         color: Colors.white,
         icon: Icon(Icons.arrow_back_ios),
@@ -251,9 +254,9 @@ class _ProductViewingState extends State<ProductViewing> {
             widget.product.productName,
             maxLines: 2,
             style: Theme.of(context).textTheme.headline6.copyWith(
-              color: Colors.white,
-              fontWeight: FontWeight.bold,
-            ),
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                ),
           ),
           SizedBox(height: 18.0),
           Row(
@@ -266,9 +269,9 @@ class _ProductViewingState extends State<ProductViewing> {
                     TextSpan(
                       text: '${widget.product.price}',
                       style: Theme.of(context).textTheme.headline4.copyWith(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                      ),
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                          ),
                     ),
                   ],
                 ),

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:market_place/auth/auth.dart';
 import 'package:market_place/constant/constant.dart';
 import 'package:market_place/constant/decoration.dart';
-import 'package:market_place/constant/theme.dart';
+import 'package:market_place/constant/theme_changer.dart';
 import 'package:market_place/models/user_model.dart';
 import 'package:market_place/screens/my_account/edit_profile.dart';
 import 'package:market_place/services/user_services.dart';
@@ -110,6 +110,8 @@ class _MyAccountState extends State<MyAccount> {
                         children: <Widget>[
                           Text('Dark Theme'),
                           Switch(
+                            activeColor: Theme.of(context).accentColor,
+                            activeTrackColor: Theme.of(context).accentColor,
                             value: isSwitched,
                             onChanged: (value) => switchChange(value),
                           ),
@@ -133,9 +135,7 @@ class _MyAccountState extends State<MyAccount> {
               child: Text(snapshot.error),
             );
           } else {
-            return Loading(color: Theme
-                .of(context)
-                .accentColor);
+            return Loading(color: Theme.of(context).accentColor);
           }
         } else {
           return Container();
@@ -154,7 +154,7 @@ class _MyAccountState extends State<MyAccount> {
         style: Theme.of(context)
             .textTheme
             .headline6
-            .copyWith(color: Theme.of(context).primaryColor),
+            .copyWith(color: Theme.of(context).accentColor),
       ),
       centerTitle: true,
       actions: <Widget>[
@@ -178,7 +178,7 @@ class _MyAccountState extends State<MyAccount> {
         title,
         style: Theme.of(context).textTheme.headline6.copyWith(
               fontWeight: FontWeight.bold,
-              color: Colors.black.withOpacity(0.6),
+              color: Theme.of(context).iconTheme.color,
             ),
       ),
     );
@@ -190,7 +190,7 @@ class _MyAccountState extends State<MyAccount> {
       margin: EdgeInsets.symmetric(horizontal: 12.0, vertical: 6.0),
       decoration: BoxDecoration(
         boxShadow: [shadow],
-        color: Colors.white,
+        color: Theme.of(context).appBarTheme.color,
         borderRadius: BorderRadius.circular(12.0),
       ),
       child: Column(
@@ -226,7 +226,7 @@ class _MyAccountState extends State<MyAccount> {
       margin: EdgeInsets.symmetric(horizontal: 12.0, vertical: 6.0),
       decoration: BoxDecoration(
         boxShadow: [shadow],
-        color: Colors.white,
+        color: Theme.of(context).appBarTheme.color,
         borderRadius: BorderRadius.circular(12.0),
       ),
       child: Column(
@@ -240,9 +240,13 @@ class _MyAccountState extends State<MyAccount> {
           SizedBox(height: 12.0),
           Row(
             children: <Widget>[
-              ImageNetwork(
-                image: user?.userImg ??
-                    'https://images.unsplash.com/photo-1532276269954-64188308dcb3?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80',
+              SizedBox(
+                height: size.width * 0.13,
+                width: size.width * 0.13,
+                child: ImageNetwork(
+                  image: user?.userImg ??
+                      'https://images.unsplash.com/photo-1532276269954-64188308dcb3?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80',
+                ),
               ),
               SizedBox(width: 6.0),
               Padding(

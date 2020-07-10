@@ -23,11 +23,12 @@ class _CartItemState extends State<CartItem> {
       padding: EdgeInsets.all(6.0),
       decoration: BoxDecoration(
         boxShadow: [shadow],
-        color: Colors.white,
+        color: Theme.of(context).appBarTheme.color,
         borderRadius: BorderRadius.circular(12.0),
       ),
       child: Row(
         children: <Widget>[
+          SizedBox(width: 14.0),
           itemImage(context),
           SizedBox(width: 14.0),
           itemInfo(context),
@@ -44,12 +45,13 @@ class _CartItemState extends State<CartItem> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
+          SizedBox(height: 12.0),
           Text(
             widget.cart.itemName,
             maxLines: 2,
             overflow: TextOverflow.ellipsis,
             style: Theme.of(context).textTheme.subtitle1.copyWith(
-                  color: Colors.grey[700],
+                  color: Theme.of(context).iconTheme.color,
                   fontWeight: FontWeight.bold,
                 ),
           ),
@@ -64,7 +66,7 @@ class _CartItemState extends State<CartItem> {
                   text: '${widget.cart.sallerName}',
                   style: Theme.of(context).textTheme.caption.copyWith(
                         decoration: TextDecoration.underline,
-                        color: Theme.of(context).primaryColor,
+                        color: Theme.of(context).accentColor,
                       ),
                 ),
               ],
@@ -87,7 +89,7 @@ class _CartItemState extends State<CartItem> {
           icon: Icon(
             Icons.remove_circle,
             size: 30.0,
-            color: Theme.of(context).primaryColor,
+            color: Theme.of(context).accentColor,
           ),
           disabledColor: Colors.grey,
           onPressed: widget.cart.numberOfItems <= 1
@@ -111,7 +113,7 @@ class _CartItemState extends State<CartItem> {
           icon: Icon(
             Icons.add_circle,
             size: 30.0,
-            color: Theme.of(context).primaryColor,
+            color: Theme.of(context).accentColor,
           ),
           onPressed: () {
             _cartServices.addNewItemToCart(
@@ -136,7 +138,7 @@ class _CartItemState extends State<CartItem> {
         style: Theme.of(context)
             .textTheme
             .subtitle1
-            .copyWith(color: Theme.of(context).primaryColor),
+            .copyWith(color: Theme.of(context).accentColor),
       ),
     );
   }
@@ -150,13 +152,12 @@ class _CartItemState extends State<CartItem> {
           children: <Widget>[
             ImageNetwork(
               image: widget.cart.itemImg,
-          
             ),
             IconButton(
               icon: Icon(
                 Icons.remove_shopping_cart,
                 size: 34.0,
-                color: Theme.of(context).primaryColor,
+                color: Theme.of(context).accentColor,
               ),
               onPressed: () => _cartServices.removeItemFromCart(
                 itemId: widget.cart.itemId,

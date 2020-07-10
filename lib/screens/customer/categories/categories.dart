@@ -7,8 +7,9 @@ class Categories extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    final imageHeight = size.height / 5 * 0.9;
-    final sizedBoxH = 8.0;
+
+    double imageHeight = size.height * 0.2;
+
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -16,20 +17,21 @@ class Categories extends StatelessWidget {
           style: Theme.of(context)
               .textTheme
               .headline6
-              .copyWith(color: Theme.of(context).primaryColor),
+              .copyWith(color: Theme.of(context).accentColor),
         ),
         centerTitle: true,
       ),
       body: GridView.count(
+        padding: EdgeInsets.symmetric(horizontal: 12.0, vertical: 6.0),
+        crossAxisSpacing: 12.0,
+        mainAxisSpacing: 12.0,
         crossAxisCount: 2,
         shrinkWrap: true,
         children: <Widget>[
           CategoreItem(
-            sizedBoxHeight: sizedBoxH,
-            imageHeight: imageHeight,
-            size: size,
             image: 'assets/images/supermarket.jpg',
             lable: 'Super Market',
+            imageHeight: imageHeight,
             onTap: () => Navigator.push(
               context,
               CupertinoPageRoute(
@@ -39,11 +41,9 @@ class Categories extends StatelessWidget {
             ),
           ),
           CategoreItem(
-            sizedBoxHeight: sizedBoxH,
-            imageHeight: imageHeight,
-            size: size,
             image: 'assets/images/fashion.jpg',
             lable: 'Fashion',
+            imageHeight: imageHeight,
             onTap: () => Navigator.push(
               context,
               CupertinoPageRoute(
@@ -53,11 +53,9 @@ class Categories extends StatelessWidget {
             ),
           ),
           CategoreItem(
-            sizedBoxHeight: sizedBoxH,
-            imageHeight: imageHeight,
-            size: size,
             image: 'assets/images/mobile&tablets.jpg',
             lable: 'Mobile & Tablets',
+            imageHeight: imageHeight,
             onTap: () => Navigator.push(
               context,
               CupertinoPageRoute(
@@ -67,11 +65,9 @@ class Categories extends StatelessWidget {
             ),
           ),
           CategoreItem(
-            sizedBoxHeight: sizedBoxH,
-            imageHeight: imageHeight,
-            size: size,
             image: 'assets/images/electronics.jpg',
             lable: 'Electronics',
+            imageHeight: imageHeight,
             onTap: () => Navigator.push(
               context,
               CupertinoPageRoute(
@@ -81,11 +77,9 @@ class Categories extends StatelessWidget {
             ),
           ),
           CategoreItem(
-            sizedBoxHeight: sizedBoxH,
-            imageHeight: imageHeight,
-            size: size,
             image: 'assets/images/healthandbeauty.jpg',
             lable: 'Health & Beauty',
+            imageHeight: imageHeight,
             onTap: () => Navigator.push(
               context,
               CupertinoPageRoute(
@@ -95,11 +89,9 @@ class Categories extends StatelessWidget {
             ),
           ),
           CategoreItem(
-            sizedBoxHeight: sizedBoxH,
-            imageHeight: imageHeight,
-            size: size,
             image: 'assets/images/houseandkitchen.jpg',
             lable: 'Home & Kitchen',
+            imageHeight: imageHeight,
             onTap: () => Navigator.push(
               context,
               CupertinoPageRoute(
@@ -109,11 +101,9 @@ class Categories extends StatelessWidget {
             ),
           ),
           CategoreItem(
-            sizedBoxHeight: sizedBoxH,
-            imageHeight: imageHeight,
-            size: size,
             image: 'assets/images/babies.jpg',
             lable: 'Babies',
+            imageHeight: imageHeight,
             onTap: () => Navigator.push(
               context,
               CupertinoPageRoute(
@@ -123,11 +113,9 @@ class Categories extends StatelessWidget {
             ),
           ),
           CategoreItem(
-            sizedBoxHeight: sizedBoxH,
-            imageHeight: imageHeight,
-            size: size,
             image: 'assets/images/toys.jpg',
             lable: 'Toys',
+            imageHeight: imageHeight,
             onTap: () => Navigator.push(
               context,
               CupertinoPageRoute(
@@ -136,11 +124,9 @@ class Categories extends StatelessWidget {
             ),
           ),
           CategoreItem(
-            sizedBoxHeight: sizedBoxH,
-            imageHeight: imageHeight,
-            size: size,
             image: 'assets/images/appliances.jpg',
             lable: 'Appliances',
+            imageHeight: imageHeight,
             onTap: () => Navigator.push(
               context,
               CupertinoPageRoute(
@@ -150,11 +136,9 @@ class Categories extends StatelessWidget {
             ),
           ),
           CategoreItem(
-            sizedBoxHeight: sizedBoxH,
-            imageHeight: imageHeight,
-            size: size,
             image: 'assets/images/sports.jpg',
             lable: 'Sports',
+            imageHeight: imageHeight,
             onTap: () => Navigator.push(
               context,
               CupertinoPageRoute(
@@ -164,30 +148,28 @@ class Categories extends StatelessWidget {
             ),
           ),
           CategoreItem(
-            sizedBoxHeight: sizedBoxH,
-            imageHeight: imageHeight,
-            size: size,
             image: 'assets/images/automotive.jpg',
             lable: 'Automotive',
+            imageHeight: imageHeight,
             onTap: () => Navigator.push(
               context,
               CupertinoPageRoute(
-                builder: (context) =>
-                    ListProductCategories(productCat: 'Automotive'),
+                builder: (context) => ListProductCategories(
+                  productCat: 'Automotive',
+                ),
               ),
             ),
           ),
           CategoreItem(
-            sizedBoxHeight: sizedBoxH,
-            imageHeight: imageHeight,
-            size: size,
             image: 'assets/images/tools.jpg',
             lable: 'Tools',
+            imageHeight: imageHeight,
             onTap: () => Navigator.push(
               context,
               CupertinoPageRoute(
-                builder: (context) =>
-                    ListProductCategories(productCat: 'Tools'),
+                builder: (context) => ListProductCategories(
+                  productCat: 'Tools',
+                ),
               ),
             ),
           ),

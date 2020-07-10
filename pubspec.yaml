@@ -14,7 +14,6 @@ dependencies:
   cloud_firestore: ^0.13.6
   google_sign_in: ^4.5.1
   shared_preferences: ^0.5.7
-  fluttertoast: ^6.0.1
   provider: ^4.0.5
   file_picker: ^1.8.0+2
   multi_image_picker: ^4.6.5

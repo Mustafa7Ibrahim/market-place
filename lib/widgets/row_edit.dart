@@ -19,7 +19,7 @@ class RowEdit extends StatelessWidget {
       children: <Widget>[
         Icon(
           iconRow,
-          color: Theme.of(context).primaryColor,
+          color: Theme.of(context).accentColor,
           size: 20.0,
         ),
         SizedBox(width: 4.0),

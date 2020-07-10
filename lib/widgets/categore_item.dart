@@ -4,46 +4,45 @@ import 'package:market_place/constant/decoration.dart';
 class CategoreItem extends StatelessWidget {
   const CategoreItem({
     Key key,
-    @required this.size,
     this.onTap,
     this.image,
     this.lable,
-    @required this.imageHeight,
-    this.sizedBoxHeight,
-  }) : super(key: key);
+    this.imageHeight,
+  });
 
-  final Size size;
-  final double imageHeight;
   final Function onTap;
   final String image;
   final String lable;
-  final double sizedBoxHeight;
+  final double imageHeight;
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        margin: EdgeInsets.symmetric(horizontal: 12.0, vertical: 6.0),
         decoration: BoxDecoration(
           boxShadow: [shadow],
-          color: Colors.white,
+          color: Theme.of(context).appBarTheme.color,
           borderRadius: BorderRadius.circular(12.0),
         ),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
+          // mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             ClipRRect(
-              borderRadius: BorderRadius.circular(12.0),
+              borderRadius: BorderRadius.only(
+                topRight: Radius.circular(12.0),
+                topLeft: Radius.circular(12.0),
+              ),
               child: Image.asset(
                 image,
                 fit: BoxFit.cover,
-                height: imageHeight,
                 width: size.width,
+                height: imageHeight,
               ),
             ),
-            SizedBox(height: sizedBoxHeight),
+            SizedBox(height: 6.0),
             Text(
               lable,
               maxLines: 1,

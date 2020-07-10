@@ -38,10 +38,10 @@ class _EditMyAccountState extends State<EditMyAccount> {
     final size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: appBar(context),
-      body: SingleChildScrollView(
-        child: Column(
-          children: <Widget>[
-            Form(
+      body: Column(
+        children: <Widget>[
+          SingleChildScrollView(
+            child: Form(
               key: _formKey,
               child: Column(
                 children: <Widget>[
@@ -52,12 +52,14 @@ class _EditMyAccountState extends State<EditMyAccount> {
                     child: TextFormField(
                       decoration: inputDecoration.copyWith(
                         hintText: 'Your Company Name',
+                        fillColor: Theme.of(context).appBarTheme.color,
+                        border: InputBorder.none,
                       ),
                       validator: (value) =>
                           value.isEmpty ? 'Enter Your Company Name' : null,
                       initialValue: widget.userModel.sallerCompanyName ?? '',
                       onChanged: (value) => sallerCompanyName = value,
-                      cursorColor: Theme.of(context).primaryColor,
+                      cursorColor: Theme.of(context).accentColor,
                       keyboardType: TextInputType.text,
                     ),
                   ),
@@ -68,12 +70,14 @@ class _EditMyAccountState extends State<EditMyAccount> {
                     child: TextFormField(
                       decoration: inputDecoration.copyWith(
                         hintText: 'Your Name',
+                        fillColor: Theme.of(context).appBarTheme.color,
+                        border: InputBorder.none,
                       ),
                       validator: (value) =>
                           value.isEmpty ? 'Enter Your Name..' : null,
                       initialValue: widget.userModel.userName ?? '',
                       onChanged: (value) => userName = value,
-                      cursorColor: Theme.of(context).primaryColor,
+                      cursorColor: Theme.of(context).accentColor,
                       keyboardType: TextInputType.text,
                     ),
                   ),
@@ -84,12 +88,14 @@ class _EditMyAccountState extends State<EditMyAccount> {
                     child: TextFormField(
                       decoration: inputDecoration.copyWith(
                         hintText: 'Your Email',
+                        fillColor: Theme.of(context).appBarTheme.color,
+                        border: InputBorder.none,
                       ),
                       validator: (value) =>
                           value.isEmpty ? 'Enter Your Email..' : null,
                       initialValue: widget.userModel.userEmail ?? '',
                       onChanged: (value) => userEmail = value,
-                      cursorColor: Theme.of(context).primaryColor,
+                      cursorColor: Theme.of(context).accentColor,
                       keyboardType: TextInputType.text,
                     ),
                   ),
@@ -100,12 +106,14 @@ class _EditMyAccountState extends State<EditMyAccount> {
                     child: TextFormField(
                       decoration: inputDecoration.copyWith(
                         hintText: 'Address',
+                        fillColor: Theme.of(context).appBarTheme.color,
+                        border: InputBorder.none,
                       ),
                       validator: (value) =>
                           value.isEmpty ? 'Enter Your Address..' : null,
                       initialValue: widget.userModel.userAddress ?? '',
                       onChanged: (value) => userAddress = value,
-                      cursorColor: Theme.of(context).primaryColor,
+                      cursorColor: Theme.of(context).accentColor,
                       keyboardType: TextInputType.text,
                     ),
                   ),
@@ -116,12 +124,14 @@ class _EditMyAccountState extends State<EditMyAccount> {
                     child: TextFormField(
                       decoration: inputDecoration.copyWith(
                         hintText: 'Phone Number',
+                        fillColor: Theme.of(context).appBarTheme.color,
+                        border: InputBorder.none,
                       ),
                       validator: (value) =>
                           value.isEmpty ? 'Enter Your Phone Nummber..' : null,
                       initialValue: widget.userModel.phoneNamber ?? '',
                       onChanged: (value) => phoneNumber = value,
-                      cursorColor: Theme.of(context).primaryColor,
+                      cursorColor: Theme.of(context).accentColor,
                       keyboardType: TextInputType.text,
                     ),
                   ),
@@ -134,7 +144,7 @@ class _EditMyAccountState extends State<EditMyAccount> {
                         onChanged: (inValue) => setState(
                           () => radioGender = inValue,
                         ),
-                        activeColor: Theme.of(context).primaryColor,
+                        activeColor: Theme.of(context).accentColor,
                       ),
                       Text('Male'),
                       Radio(
@@ -143,7 +153,7 @@ class _EditMyAccountState extends State<EditMyAccount> {
                         onChanged: (inValue) => setState(
                           () => radioGender = inValue,
                         ),
-                        activeColor: Theme.of(context).primaryColor,
+                        activeColor: Theme.of(context).accentColor,
                       ),
                       Text('Female'),
                     ],
@@ -151,37 +161,37 @@ class _EditMyAccountState extends State<EditMyAccount> {
                 ],
               ),
             ),
-            Align(
-              alignment: Alignment.bottomCenter,
-              child: WidthButton(
-                width: size.width,
-                title: 'Update',
-                onTap: () async {
-                  if (_formKey.currentState.validate()) {
-                    setState(() => loading = true);
-                    await _userServices
-                        .updateUserData(
-                      userName: userName ?? widget.userModel.userName,
-                      phoneNumber: phoneNumber ?? widget.userModel.phoneNamber,
-                      sallerCompanyName: sallerCompanyName ??
-                          widget.userModel.sallerCompanyName,
-                      userEmail: userEmail ?? widget.userModel.userEmail,
-                      userAddress: userAddress ?? widget.userModel.userAddress,
-                      userGender: radioGender ?? widget.userModel.userGender,
-                    )
-                        .whenComplete(
-                      () {
-                        setState(() => loading = false);
-                        Navigator.pop(context);
-                      },
-                    );
-                  }
-                },
-                loading: loading,
-              ),
+          ),
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: WidthButton(
+              width: size.width,
+              title: 'Update',
+              onTap: () async {
+                if (_formKey.currentState.validate()) {
+                  setState(() => loading = true);
+                  await _userServices
+                      .updateUserData(
+                    userName: userName ?? widget.userModel.userName,
+                    phoneNumber: phoneNumber ?? widget.userModel.phoneNamber,
+                    sallerCompanyName:
+                        sallerCompanyName ?? widget.userModel.sallerCompanyName,
+                    userEmail: userEmail ?? widget.userModel.userEmail,
+                    userAddress: userAddress ?? widget.userModel.userAddress,
+                    userGender: radioGender ?? widget.userModel.userGender,
+                  )
+                      .whenComplete(
+                    () {
+                      setState(() => loading = false);
+                      Navigator.pop(context);
+                    },
+                  );
+                }
+              },
+              loading: loading,
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
@@ -193,7 +203,7 @@ class _EditMyAccountState extends State<EditMyAccount> {
         style: Theme.of(context)
             .textTheme
             .headline6
-            .copyWith(color: Theme.of(context).primaryColor),
+            .copyWith(color: Theme.of(context).accentColor),
       ),
       centerTitle: true,
     );
