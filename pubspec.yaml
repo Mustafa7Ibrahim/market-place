@@ -22,6 +22,7 @@ dependencies:
   flutter_swiper: ^1.1.6
   apple_sign_in: ^0.1.0
   device_info: ^0.4.2+4
+  animations: ^1.1.1
   
 
 dev_dependencies:

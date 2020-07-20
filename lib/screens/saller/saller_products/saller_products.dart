@@ -1,3 +1,4 @@
+import 'package:animations/animations.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:market_place/constant/constant.dart';
@@ -16,6 +17,7 @@ class SallerProducts extends StatefulWidget {
 class _SallerProductsState extends State<SallerProducts> {
   var thisUserId;
   ProductServices _productServices = ProductServices();
+  ContainerTransitionType _transitionType = ContainerTransitionType.fade;
 
   @override
   void initState() {
@@ -51,25 +53,27 @@ class _SallerProductsState extends State<SallerProducts> {
               itemCount: snapshot.data.length,
               itemBuilder: (context, index) {
                 return snapshot.data[index].sallerId == thisUserId
-                    ? Item(
-                        size: size,
-                        product: snapshot.data[index],
-                        onTap: () => Navigator.push(
-                          context,
-                          CupertinoPageRoute(
-                            builder: (context) => AddNewProduct(
-                              product: snapshot.data[index],
-                            ),
-                          ),
-                        ),
+                    ? OpenContainer(
+                        onClosed: null,
+                        closedColor: Theme.of(context).scaffoldBackgroundColor,
+                        closedBuilder: (context, action) {
+                          return Item(
+                            size: size,
+                            product: snapshot.data[index],
+                          );
+                        },
+                        transitionType: _transitionType,
+                        openBuilder: (context, action) {
+                          return AddNewProduct(
+                            product: snapshot.data[index],
+                          );
+                        },
                       )
                     : Container();
               },
             );
           }
-          return Loading(
-            color: Theme.of(context).primaryColor
-          );
+          return Loading(color: Theme.of(context).primaryColor);
         },
       ),
     );

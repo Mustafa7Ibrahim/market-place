@@ -8,15 +8,10 @@ import 'package:market_place/services/cart_services.dart';
 import 'image_network.dart';
 
 class Item extends StatefulWidget {
-  Item({
-    @required this.size,
-    this.product,
-    @required this.onTap,
-  });
+  Item({@required this.size, this.product});
 
   final Size size;
   final Product product;
-  final Function onTap;
 
   @override
   _ItemState createState() => _ItemState();
@@ -35,63 +30,60 @@ class _ItemState extends State<Item> {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: widget.onTap,
-      child: Container(
-        padding: EdgeInsets.all(12.0),
-        margin: EdgeInsets.all(6.0),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(12.0),
-          color: Theme.of(context).appBarTheme.color,
-          boxShadow: [shadow],
-        ),
-        child: Row(
-          children: <Widget>[
-            SizedBox(
-              height: 75,
-              width: 75,
-              child: ImageNetwork(
-                image: widget.product.productImages.first,
-              ),
+    return Container(
+      padding: EdgeInsets.all(12.0),
+      margin: EdgeInsets.all(6.0),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(12.0),
+        color: Theme.of(context).appBarTheme.color,
+        boxShadow: [shadow],
+      ),
+      child: Row(
+        children: <Widget>[
+          SizedBox(
+            height: 75,
+            width: 75,
+            child: ImageNetwork(
+              image: widget.product.productImages.first,
             ),
-            SizedBox(width: 12.0),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: <Widget>[
-                  Text(
-                    widget.product.productName,
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                    style: Theme.of(context).textTheme.subtitle1,
-                  ),
-                  SizedBox(height: 6.0),
-                  Text(
-                    widget.product.productType,
-                    style: Theme.of(context)
-                        .textTheme
-                        .overline
-                        .copyWith(color: Theme.of(context).accentColor),
-                  ),
-                  Row(
-                    children: <Widget>[
-                      Text(
-                        widget.product.price,
-                        style: Theme.of(context)
-                            .textTheme
-                            .headline6
-                            .copyWith(color: Theme.of(context).accentColor),
-                      ),
-                      // Spacer(),
-                      // addToCartButton(context),
-                    ],
-                  ),
-                ],
-              ),
+          ),
+          SizedBox(width: 12.0),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: <Widget>[
+                Text(
+                  widget.product.productName,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: Theme.of(context).textTheme.subtitle1,
+                ),
+                SizedBox(height: 6.0),
+                Text(
+                  widget.product.productType,
+                  style: Theme.of(context)
+                      .textTheme
+                      .overline
+                      .copyWith(color: Theme.of(context).accentColor),
+                ),
+                Row(
+                  children: <Widget>[
+                    Text(
+                      widget.product.price,
+                      style: Theme.of(context)
+                          .textTheme
+                          .headline6
+                          .copyWith(color: Theme.of(context).accentColor),
+                    ),
+                    // Spacer(),
+                    // addToCartButton(context),
+                  ],
+                ),
+              ],
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

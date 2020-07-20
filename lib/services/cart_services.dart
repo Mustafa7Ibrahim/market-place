@@ -46,7 +46,7 @@ class CartServices {
         .document(itemId);
 
     final item = await path.get();
-  
+
     if (item.exists == true) {
       return await path.updateData(
         {

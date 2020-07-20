@@ -1,3 +1,4 @@
+import 'package:animations/animations.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -35,7 +36,7 @@ class _SallerState extends State<Saller> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        bottomNavigationBar: BottomNavigationBar(
+      bottomNavigationBar: BottomNavigationBar(
         selectedIconTheme: IconThemeData(color: Theme.of(context).primaryColor),
         selectedLabelStyle: TextStyle(color: Theme.of(context).primaryColor),
         unselectedIconTheme: IconThemeData(color: Colors.black87),
@@ -59,7 +60,16 @@ class _SallerState extends State<Saller> {
           ),
         ],
       ),
-      body: _screenIndex.elementAt(currentIndex),
+      body: PageTransitionSwitcher(
+        transitionBuilder: (child, primaryAnimation, secondaryAnimation) {
+          return FadeThroughTransition(
+            animation: primaryAnimation,
+            secondaryAnimation: secondaryAnimation,
+            child: child,
+          );
+        },
+        child: _screenIndex.elementAt(currentIndex),
+      ),
     );
   }
 }

@@ -1,3 +1,4 @@
+import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:market_place/screens/customer/cart/cart.dart';
 import 'package:market_place/screens/customer/categories/categories.dart';
@@ -65,7 +66,16 @@ class _CustomerState extends State<Customer> {
           ),
         ],
       ),
-      body: _screenIndex.elementAt(currentIndex),
+      body:PageTransitionSwitcher(
+        transitionBuilder: (child, primaryAnimation, secondaryAnimation) {
+          return FadeThroughTransition(
+            animation: primaryAnimation,
+            secondaryAnimation: secondaryAnimation,
+            child: child,
+          );
+        },
+        child: _screenIndex.elementAt(currentIndex),
+      ),
     );
   }
 }

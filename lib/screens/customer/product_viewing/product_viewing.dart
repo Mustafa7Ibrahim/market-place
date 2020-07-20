@@ -5,7 +5,7 @@ import '../../../models/product.dart';
 import '../cart/cart.dart';
 import '../../../services/cart_services.dart';
 import '../../../widgets/list_of_images.dart';
-import '../../../widgets/cart_counter.dart';
+import 'components/cart_counter.dart';
 import 'components/add_to_cart.dart';
 
 class ProductViewing extends StatefulWidget {
@@ -70,81 +70,7 @@ class _ProductViewingState extends State<ProductViewing> {
     );
   }
 
-  buildAddToCartOrBuy(BuildContext context) {
-    return Row(
-      children: <Widget>[
-        Container(
-          margin: EdgeInsets.only(right: 18.0),
-          height: 50,
-          width: 58,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(18.0),
-            border: Border.all(color: Theme.of(context).accentColor),
-          ),
-          child: IconButton(
-            icon: Icon(
-              Icons.add_shopping_cart,
-              color: Theme.of(context).accentColor,
-            ),
-            onPressed: () {
-              _cartServices.addNewItemToCart(
-                itemId: widget.product.productId,
-                itemImg: widget.product.productImages.first,
-                numberOfItems: 1,
-                itemName: widget.product.productName,
-                itemPrice: widget.product.price,
-                sallerName: widget.product.companyName,
-              );
-              // _showToast(context);
-              // flutterToast.showToast(
-              //   child: Text('Product Added to Cart'),
-              //   toastDuration: Duration(seconds: 5),
-              //   gravity: ToastGravity.BOTTOM,
-              // );
-            },
-          ),
-        ),
-        Expanded(
-          child: SizedBox(
-            height: 50,
-            child: FlatButton(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(18.0),
-              ),
-              color: Theme.of(context).accentColor,
-              onPressed: () {
-                _cartServices.addNewItemToCart(
-                  itemId: widget.product.productId,
-                  itemImg: widget.product.productImages.first,
-                  numberOfItems: 1,
-                  itemName: widget.product.productName,
-                  itemPrice: widget.product.price,
-                  sallerName: widget.product.companyName,
-                );
-                Navigator.push(
-                  context,
-                  CupertinoPageRoute(
-                    builder: (context) => Cart(),
-                  ),
-                );
-              },
-              child: Text(
-                'Buy Now',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 18,
-                ),
-              ),
-            ),
-          ),
-        )
-      ],
-    );
-  }
-
   Row buildCounterWithFavBtn() {
-    // TODO add the right num of product
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
