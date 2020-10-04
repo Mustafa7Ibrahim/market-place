@@ -26,8 +26,6 @@ BoxDecoration textFaildDecoration = BoxDecoration(
   boxShadow: [shadow],
 );
 
-// varible for the shadow
-
 // Shadow decoration
 BoxShadow shadow = BoxShadow(
   color: Colors.black.withOpacity(0.06),

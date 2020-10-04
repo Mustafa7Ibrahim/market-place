@@ -4,12 +4,11 @@ import 'loading.dart';
 
 class WidthButton extends StatelessWidget {
   const WidthButton({
-    Key key,
     @required this.width,
     @required this.onTap,
     @required this.title,
     this.loading,
-  }) : super(key: key);
+  });
 
   final bool loading;
   final double width;
@@ -23,16 +22,11 @@ class WidthButton extends StatelessWidget {
       width: width,
       child: RaisedButton(
         padding: EdgeInsets.all(12.0),
-        color: Theme.of(context).accentColor,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(8.0),
-        ),
+        color: Theme.of(context).primaryColor,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
         child: loading == true
             ? Loading(color: Colors.white)
-            : Text(
-                title,
-                style: TextStyle(color: Colors.white),
-              ),
+            : Text(title, style: TextStyle(color: Theme.of(context).appBarTheme.color)),
         onPressed: onTap,
       ),
     );

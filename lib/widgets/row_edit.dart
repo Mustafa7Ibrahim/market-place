@@ -1,12 +1,7 @@
 import 'package:flutter/material.dart';
 
 class RowEdit extends StatelessWidget {
-  const RowEdit({
-    Key key,
-    @required this.title,
-    @required this.iconRow,
-    @required this.onTap,
-  }) : super(key: key);
+  const RowEdit({@required this.title, @required this.iconRow, @required this.onTap});
 
   final String title;
   final IconData iconRow;

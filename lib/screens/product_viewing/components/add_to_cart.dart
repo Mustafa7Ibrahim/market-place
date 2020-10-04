@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:market_place/constant/toast.dart';
 import 'package:market_place/models/product.dart';
-import 'package:market_place/screens/customer/cart/cart.dart';
+import 'package:market_place/screens/cart/cart.dart';
 import 'package:market_place/services/cart_services.dart';
 
 class AddToCartAndBuy extends StatelessWidget {

@@ -37,7 +37,7 @@ class _EditMyAccountState extends State<EditMyAccount> {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     return Scaffold(
-      appBar: appBar(context),
+      appBar: AppBar(title: Text('Edit')),
       body: Column(
         children: <Widget>[
           SingleChildScrollView(
@@ -46,8 +46,7 @@ class _EditMyAccountState extends State<EditMyAccount> {
               child: Column(
                 children: <Widget>[
                   Container(
-                    margin:
-                        EdgeInsets.symmetric(horizontal: 12.0, vertical: 6.0),
+                    margin: EdgeInsets.symmetric(horizontal: 12.0, vertical: 6.0),
                     decoration: textFaildDecoration,
                     child: TextFormField(
                       decoration: inputDecoration.copyWith(
@@ -55,8 +54,7 @@ class _EditMyAccountState extends State<EditMyAccount> {
                         fillColor: Theme.of(context).appBarTheme.color,
                         border: InputBorder.none,
                       ),
-                      validator: (value) =>
-                          value.isEmpty ? 'Enter Your Company Name' : null,
+                      validator: (value) => value.isEmpty ? 'Enter Your Company Name' : null,
                       initialValue: widget.userModel.sallerCompanyName ?? '',
                       onChanged: (value) => sallerCompanyName = value,
                       cursorColor: Theme.of(context).accentColor,
@@ -64,8 +62,7 @@ class _EditMyAccountState extends State<EditMyAccount> {
                     ),
                   ),
                   Container(
-                    margin:
-                        EdgeInsets.symmetric(horizontal: 12.0, vertical: 6.0),
+                    margin: EdgeInsets.symmetric(horizontal: 12.0, vertical: 6.0),
                     decoration: textFaildDecoration,
                     child: TextFormField(
                       decoration: inputDecoration.copyWith(
@@ -73,8 +70,7 @@ class _EditMyAccountState extends State<EditMyAccount> {
                         fillColor: Theme.of(context).appBarTheme.color,
                         border: InputBorder.none,
                       ),
-                      validator: (value) =>
-                          value.isEmpty ? 'Enter Your Name..' : null,
+                      validator: (value) => value.isEmpty ? 'Enter Your Name..' : null,
                       initialValue: widget.userModel.userName ?? '',
                       onChanged: (value) => userName = value,
                       cursorColor: Theme.of(context).accentColor,
@@ -82,8 +78,7 @@ class _EditMyAccountState extends State<EditMyAccount> {
                     ),
                   ),
                   Container(
-                    margin:
-                        EdgeInsets.symmetric(horizontal: 12.0, vertical: 6.0),
+                    margin: EdgeInsets.symmetric(horizontal: 12.0, vertical: 6.0),
                     decoration: textFaildDecoration,
                     child: TextFormField(
                       decoration: inputDecoration.copyWith(
@@ -91,8 +86,7 @@ class _EditMyAccountState extends State<EditMyAccount> {
                         fillColor: Theme.of(context).appBarTheme.color,
                         border: InputBorder.none,
                       ),
-                      validator: (value) =>
-                          value.isEmpty ? 'Enter Your Email..' : null,
+                      validator: (value) => value.isEmpty ? 'Enter Your Email..' : null,
                       initialValue: widget.userModel.userEmail ?? '',
                       onChanged: (value) => userEmail = value,
                       cursorColor: Theme.of(context).accentColor,
@@ -100,8 +94,7 @@ class _EditMyAccountState extends State<EditMyAccount> {
                     ),
                   ),
                   Container(
-                    margin:
-                        EdgeInsets.symmetric(horizontal: 12.0, vertical: 6.0),
+                    margin: EdgeInsets.symmetric(horizontal: 12.0, vertical: 6.0),
                     decoration: textFaildDecoration,
                     child: TextFormField(
                       decoration: inputDecoration.copyWith(
@@ -109,8 +102,7 @@ class _EditMyAccountState extends State<EditMyAccount> {
                         fillColor: Theme.of(context).appBarTheme.color,
                         border: InputBorder.none,
                       ),
-                      validator: (value) =>
-                          value.isEmpty ? 'Enter Your Address..' : null,
+                      validator: (value) => value.isEmpty ? 'Enter Your Address..' : null,
                       initialValue: widget.userModel.userAddress ?? '',
                       onChanged: (value) => userAddress = value,
                       cursorColor: Theme.of(context).accentColor,
@@ -118,8 +110,7 @@ class _EditMyAccountState extends State<EditMyAccount> {
                     ),
                   ),
                   Container(
-                    margin:
-                        EdgeInsets.symmetric(horizontal: 12.0, vertical: 6.0),
+                    margin: EdgeInsets.symmetric(horizontal: 12.0, vertical: 6.0),
                     decoration: textFaildDecoration,
                     child: TextFormField(
                       decoration: inputDecoration.copyWith(
@@ -127,8 +118,7 @@ class _EditMyAccountState extends State<EditMyAccount> {
                         fillColor: Theme.of(context).appBarTheme.color,
                         border: InputBorder.none,
                       ),
-                      validator: (value) =>
-                          value.isEmpty ? 'Enter Your Phone Nummber..' : null,
+                      validator: (value) => value.isEmpty ? 'Enter Your Phone Nummber..' : null,
                       initialValue: widget.userModel.phoneNamber ?? '',
                       onChanged: (value) => phoneNumber = value,
                       cursorColor: Theme.of(context).accentColor,
@@ -174,8 +164,7 @@ class _EditMyAccountState extends State<EditMyAccount> {
                       .updateUserData(
                     userName: userName ?? widget.userModel.userName,
                     phoneNumber: phoneNumber ?? widget.userModel.phoneNamber,
-                    sallerCompanyName:
-                        sallerCompanyName ?? widget.userModel.sallerCompanyName,
+                    sallerCompanyName: sallerCompanyName ?? widget.userModel.sallerCompanyName,
                     userEmail: userEmail ?? widget.userModel.userEmail,
                     userAddress: userAddress ?? widget.userModel.userAddress,
                     userGender: radioGender ?? widget.userModel.userGender,
@@ -193,19 +182,6 @@ class _EditMyAccountState extends State<EditMyAccount> {
           ),
         ],
       ),
-    );
-  }
-
-  AppBar appBar(BuildContext context) {
-    return AppBar(
-      title: Text(
-        'Edit',
-        style: Theme.of(context)
-            .textTheme
-            .headline6
-            .copyWith(color: Theme.of(context).accentColor),
-      ),
-      centerTitle: true,
     );
   }
 }

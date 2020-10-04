@@ -8,7 +8,6 @@ class UserModel {
   final String phoneNamber;
   final String sallerCompanyName;
 
-
   UserModel({
     this.userId,
     this.userName,
@@ -18,6 +17,5 @@ class UserModel {
     this.userGender,
     this.phoneNamber,
     this.sallerCompanyName,
-
   });
 }

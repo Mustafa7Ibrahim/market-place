@@ -1,13 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-final CollectionReference productCollection =
-    Firestore.instance.collection('product');
+final CollectionReference productCollection = Firestore.instance.collection('product');
 
-final CollectionReference userCollection =
-    Firestore.instance.collection('users');
+final CollectionReference userCollection = Firestore.instance.collection('users');
 
-final CollectionReference cartCollection =
-    Firestore.instance.collection('cart');
+final CollectionReference cartCollection = Firestore.instance.collection('cart');
 
 List<String> types = <String>[
   'Supermarket',

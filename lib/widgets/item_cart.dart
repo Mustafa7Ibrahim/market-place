@@ -59,9 +59,7 @@ class _CartItemState extends State<CartItem> {
           RichText(
             text: TextSpan(
               children: [
-                TextSpan(
-                    text: 'Saller By. ',
-                    style: Theme.of(context).textTheme.caption),
+                TextSpan(text: 'Saller By. ', style: Theme.of(context).textTheme.caption),
                 TextSpan(
                   text: '${widget.cart.sallerName}',
                   style: Theme.of(context).textTheme.caption.copyWith(
@@ -135,10 +133,7 @@ class _CartItemState extends State<CartItem> {
       flex: 1,
       child: Text(
         '${widget.cart.itemPrice}',
-        style: Theme.of(context)
-            .textTheme
-            .subtitle1
-            .copyWith(color: Theme.of(context).accentColor),
+        style: Theme.of(context).textTheme.subtitle1.copyWith(color: Theme.of(context).accentColor),
       ),
     );
   }
@@ -150,18 +145,14 @@ class _CartItemState extends State<CartItem> {
         child: Stack(
           alignment: Alignment.center,
           children: <Widget>[
-            ImageNetwork(
-              image: widget.cart.itemImg,
-            ),
+            ImageNetwork(image: widget.cart.itemImg),
             IconButton(
               icon: Icon(
                 Icons.remove_shopping_cart,
                 size: 34.0,
                 color: Theme.of(context).accentColor,
               ),
-              onPressed: () => _cartServices.removeItemFromCart(
-                itemId: widget.cart.itemId,
-              ),
+              onPressed: () => _cartServices.removeItemFromCart(itemId: widget.cart.itemId),
             ),
           ],
         ),

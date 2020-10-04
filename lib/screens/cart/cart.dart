@@ -49,13 +49,7 @@ class _CartState extends State<Cart> {
       builder: (context, snapshot) {
         return Scaffold(
           appBar: AppBar(
-            title: Text(
-              'My Cart',
-              style: Theme.of(context)
-                  .textTheme
-                  .headline6
-                  .copyWith(color: Theme.of(context).primaryColor),
-            ),
+            title: Text('My Cart'),
             centerTitle: true,
           ),
           //=======================================================//

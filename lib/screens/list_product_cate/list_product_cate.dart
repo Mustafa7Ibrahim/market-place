@@ -2,10 +2,10 @@ import 'package:animations/animations.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:market_place/models/product.dart';
+import 'package:market_place/screens/product_viewing/product_viewing.dart';
 import 'package:market_place/services/product_services.dart';
 import 'package:market_place/widgets/item.dart';
 import 'package:market_place/widgets/loading.dart';
-import 'package:market_place/screens/customer/product_viewing/product_viewing.dart';
 
 class ListProductCategories extends StatefulWidget {
   final String productCat;
@@ -16,20 +16,14 @@ class ListProductCategories extends StatefulWidget {
 }
 
 class _ListProductCategoriesState extends State<ListProductCategories> {
-   ContainerTransitionType _transitionType = ContainerTransitionType.fade;
+  ContainerTransitionType _transitionType = ContainerTransitionType.fade;
 
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          widget.productCat,
-          style: Theme.of(context)
-              .textTheme
-              .headline6
-              .copyWith(color: Theme.of(context).accentColor),
-        ),
+        title: Text(widget.productCat),
         centerTitle: true,
       ),
       body: StreamBuilder<List<Product>>(

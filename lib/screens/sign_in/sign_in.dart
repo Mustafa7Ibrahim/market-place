@@ -28,30 +28,8 @@ class _SignInState extends State<SignIn> {
             child: WidthButton(
               width: size.width,
               onTap: () => Platform.isAndroid
-                  ? auth.signInWithGoogle(
-                      context: context,
-                      type: 'Saller',
-                    )
-                  : auth.signInWithApple(
-                      context: context,
-                      type: 'Saller',
-                    ),
-              title: 'Sign In As Saller',
-            ),
-          ),
-          Align(
-            alignment: Alignment.bottomCenter,
-            child: WidthButton(
-              width: size.width,
-              onTap: () => Platform.isAndroid
-                  ? auth.signInWithGoogle(
-                      context: context,
-                      type: 'Customer',
-                    )
-                  : auth.signInWithApple(
-                      context: context,
-                      type: 'Customer',
-                    ),
+                  ? auth.signInWithGoogle(context: context)
+                  : auth.signInWithApple(context: context),
               title: 'Sign In As Customer',
             ),
           ),

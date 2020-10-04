@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:market_place/screens/customer/list_product_cate/list_product_cate.dart';
+import 'package:market_place/screens/list_product_cate/list_product_cate.dart';
 import 'package:market_place/widgets/categore_item.dart';
 
 class Categories extends StatelessWidget {
@@ -12,13 +12,7 @@ class Categories extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          'Categories',
-          style: Theme.of(context)
-              .textTheme
-              .headline6
-              .copyWith(color: Theme.of(context).accentColor),
-        ),
+        title: Text('Categories'),
         centerTitle: true,
       ),
       body: GridView.count(
@@ -35,8 +29,7 @@ class Categories extends StatelessWidget {
             onTap: () => Navigator.push(
               context,
               CupertinoPageRoute(
-                builder: (context) =>
-                    ListProductCategories(productCat: 'Supermarket'),
+                builder: (context) => ListProductCategories(productCat: 'Supermarket'),
               ),
             ),
           ),
@@ -47,8 +40,7 @@ class Categories extends StatelessWidget {
             onTap: () => Navigator.push(
               context,
               CupertinoPageRoute(
-                builder: (context) =>
-                    ListProductCategories(productCat: 'Fashion'),
+                builder: (context) => ListProductCategories(productCat: 'Fashion'),
               ),
             ),
           ),
@@ -59,8 +51,7 @@ class Categories extends StatelessWidget {
             onTap: () => Navigator.push(
               context,
               CupertinoPageRoute(
-                builder: (context) =>
-                    ListProductCategories(productCat: 'Mobile & Tablets'),
+                builder: (context) => ListProductCategories(productCat: 'Mobile & Tablets'),
               ),
             ),
           ),
@@ -71,8 +62,7 @@ class Categories extends StatelessWidget {
             onTap: () => Navigator.push(
               context,
               CupertinoPageRoute(
-                builder: (context) =>
-                    ListProductCategories(productCat: 'Electronics'),
+                builder: (context) => ListProductCategories(productCat: 'Electronics'),
               ),
             ),
           ),
@@ -83,8 +73,7 @@ class Categories extends StatelessWidget {
             onTap: () => Navigator.push(
               context,
               CupertinoPageRoute(
-                builder: (context) =>
-                    ListProductCategories(productCat: 'Health & Beauty'),
+                builder: (context) => ListProductCategories(productCat: 'Health & Beauty'),
               ),
             ),
           ),
@@ -95,8 +84,7 @@ class Categories extends StatelessWidget {
             onTap: () => Navigator.push(
               context,
               CupertinoPageRoute(
-                builder: (context) =>
-                    ListProductCategories(productCat: 'Home & Kitchen'),
+                builder: (context) => ListProductCategories(productCat: 'Home & Kitchen'),
               ),
             ),
           ),
@@ -107,8 +95,7 @@ class Categories extends StatelessWidget {
             onTap: () => Navigator.push(
               context,
               CupertinoPageRoute(
-                builder: (context) =>
-                    ListProductCategories(productCat: 'Babies'),
+                builder: (context) => ListProductCategories(productCat: 'Babies'),
               ),
             ),
           ),
@@ -130,8 +117,7 @@ class Categories extends StatelessWidget {
             onTap: () => Navigator.push(
               context,
               CupertinoPageRoute(
-                builder: (context) =>
-                    ListProductCategories(productCat: 'Appliances'),
+                builder: (context) => ListProductCategories(productCat: 'Appliances'),
               ),
             ),
           ),
@@ -142,8 +128,7 @@ class Categories extends StatelessWidget {
             onTap: () => Navigator.push(
               context,
               CupertinoPageRoute(
-                builder: (context) =>
-                    ListProductCategories(productCat: 'Sports'),
+                builder: (context) => ListProductCategories(productCat: 'Sports'),
               ),
             ),
           ),

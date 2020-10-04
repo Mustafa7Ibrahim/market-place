@@ -75,10 +75,7 @@ class _MyAccountState extends State<MyAccount> {
     }
 
     return StreamBuilder<UserModel>(
-      stream: userCollection
-          .document(currentUserId)
-          .snapshots()
-          .map(UserServices().getUserData),
+      stream: userCollection.document(currentUserId).snapshots().map(UserServices().getUserData),
       builder: (context, snapshot) {
         final user = snapshot.data;
         if (snapshot.connectionState == ConnectionState.active) {
@@ -140,23 +137,13 @@ class _MyAccountState extends State<MyAccount> {
         } else {
           return Container();
         }
-        // else if (snapshot.connectionState == ConnectionState.waiting) {
-        //   return Center(child: Text('wait..'));
-        // }
       },
     );
   }
 
   AppBar appBar(BuildContext context, UserModel user) {
     return AppBar(
-      title: Text(
-        'My Account',
-        style: Theme.of(context)
-            .textTheme
-            .headline6
-            .copyWith(color: Theme.of(context).accentColor),
-      ),
-      centerTitle: true,
+      title: Text('My Account'),
       actions: <Widget>[
         FlatButton(
           onPressed: () => Navigator.push(

@@ -77,7 +77,6 @@ class UserServices {
     });
   }
 
-  // get the current user data
   UserModel getUserData(DocumentSnapshot snapshot) {
     return UserModel(
       userId: snapshot?.data['userId'] ?? '',
@@ -91,7 +90,6 @@ class UserServices {
     );
   }
 
-  // // get the current user data as a stream of data
   Stream<UserModel> get currentUserData {
     getCurrentUserId();
     return userCollection.document(currentUserId).snapshots().map(getUserData);

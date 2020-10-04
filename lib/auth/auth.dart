@@ -7,8 +7,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:market_place/constant/toast.dart';
-import 'package:market_place/screens/customer/customer.dart';
-import 'package:market_place/screens/saller/saller.dart';
+import 'package:market_place/screens/wrapper.dart';
 import 'package:market_place/screens/sign_in/sign_in.dart';
 import 'package:market_place/services/user_services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -23,14 +22,13 @@ class Auth {
   // get an object of the services
   final UserServices _userServices = UserServices();
 
-  Future signInWithGoogle({@required BuildContext context, String type}) async {
+  Future signInWithGoogle({@required BuildContext context}) async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     try {
       // try to sign in with google account
-      final GoogleSignInAccount googleSignInAccount =
-          await googleSignIn.signIn().catchError(
-                (onError) => showToast(context, onError.toString()),
-              );
+      final GoogleSignInAccount googleSignInAccount = await googleSignIn.signIn().catchError(
+            (onError) => showToast(context, onError.toString()),
+          );
 
       final GoogleSignInAuthentication googleSignInAuthentication =
           await googleSignInAccount.authentication;
@@ -40,46 +38,22 @@ class Auth {
         accessToken: googleSignInAuthentication.accessToken,
       );
 
-      final AuthResult authResult =
-          await firebaseAuth.signInWithCredential(authCredential);
+      final AuthResult authResult = await firebaseAuth.signInWithCredential(authCredential);
 
-      // if (authResult.additionalUserInfo.isNewUser) {
       // if it's a new user
       final FirebaseUser user = authResult.user;
 
-      // make sure that this user has a right into
-      assert(user.displayName != null);
-      assert(user.email != null);
-      assert(user.photoUrl != null);
-      assert(user.uid != null);
-
       // add a new user to fireStore
-      if (type == 'Saller') {
-        _userServices.addNewUser(
-          userId: user.uid,
-          userEmail: user.email,
-          userImg: user.photoUrl,
-          userName: user.displayName,
-          phoneNumber: '',
-          sallerCompanyName: '',
-          userAddress: '',
-          userGender: '',
-        );
-      } else {
-        _userServices.addNewUser(
-          userId: user.uid,
-          userEmail: user.email,
-          userImg: user.photoUrl,
-          userName: user.displayName,
-          phoneNumber: '',
-          sallerCompanyName: '',
-          userAddress: '',
-          userGender: '',
-        );
-      }
-
-      // make sure that the user is not an anonymous one
-      assert(!user.isAnonymous);
+      _userServices.addNewUser(
+        userId: user.uid,
+        userEmail: user.email,
+        userImg: user.photoUrl,
+        userName: user.displayName,
+        phoneNumber: '',
+        sallerCompanyName: '',
+        userAddress: '',
+        userGender: '',
+      );
 
       // make sure that the user id token is not null
       assert(await user.getIdToken() != null);
@@ -87,23 +61,13 @@ class Auth {
       final FirebaseUser currentUser = await firebaseAuth.currentUser();
 
       sharedPreferences.setString('user', currentUser.uid);
-      sharedPreferences.setString('type', type);
 
-      if (type == 'Saller') {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-            builder: (context) => Saller(),
-          ),
-        );
-      } else {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-            builder: (context) => Customer(),
-          ),
-        );
-      }
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => Wrapper(),
+        ),
+      );
 
       return user;
     } catch (e) {
@@ -124,7 +88,6 @@ class Auth {
           .whenComplete(
         () {
           pref.remove('user');
-          pref.remove('type');
           Navigator.pushReplacement(
             context,
             CupertinoPageRoute(
@@ -167,25 +130,24 @@ class Auth {
             print("successfull sign in");
             final AppleIdCredential appleIdCredential = result.credential;
 
-            OAuthProvider oAuthProvider =
-                OAuthProvider(providerId: "apple.com");
+            OAuthProvider oAuthProvider = OAuthProvider(providerId: "apple.com");
             final AuthCredential credential = oAuthProvider.getCredential(
               idToken: String.fromCharCodes(appleIdCredential.identityToken),
-              accessToken:
-                  String.fromCharCodes(appleIdCredential.authorizationCode),
+              accessToken: String.fromCharCodes(appleIdCredential.authorizationCode),
             );
 
-            final AuthResult _res =
-                await FirebaseAuth.instance.signInWithCredential(credential);
+            final AuthResult _res = await FirebaseAuth.instance.signInWithCredential(credential);
 
-            FirebaseAuth.instance.currentUser().then((val) async {
-              UserUpdateInfo updateUser = UserUpdateInfo();
-              updateUser.displayName =
-                  "${appleIdCredential.fullName.givenName} ${appleIdCredential.fullName.familyName}";
-              updateUser.photoUrl =
-                  "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png";
-              await val.updateProfile(updateUser);
-            });
+            FirebaseAuth.instance.currentUser().then(
+              (val) async {
+                UserUpdateInfo updateUser = UserUpdateInfo();
+                updateUser.displayName =
+                    "${appleIdCredential.fullName.givenName} ${appleIdCredential.fullName.familyName}";
+                updateUser.photoUrl =
+                    "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png";
+                await val.updateProfile(updateUser);
+              },
+            );
 
             // add new user to firestore
             _userServices.addNewUser(
@@ -201,23 +163,13 @@ class Auth {
 
             final FirebaseUser currentUser = await firebaseAuth.currentUser();
             sharedPreferences.setString('user', currentUser.uid);
-            sharedPreferences.setString('type', type);
 
-            if (type == 'Saller') {
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => Saller(),
-                ),
-              );
-            } else {
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => Customer(),
-                ),
-              );
-            }
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                builder: (context) => Wrapper(),
+              ),
+            );
           } catch (e) {
             showToast(context, e.toString());
           }

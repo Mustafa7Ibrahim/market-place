@@ -1,10 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:market_place/models/product.dart';
+import 'package:market_place/services/cart_services.dart';
+import 'package:market_place/widgets/list_of_images.dart';
 
-import '../../../models/product.dart';
 import '../cart/cart.dart';
-import '../../../services/cart_services.dart';
-import '../../../widgets/list_of_images.dart';
 import 'components/cart_counter.dart';
 import 'components/add_to_cart.dart';
 
@@ -111,9 +111,7 @@ class _ProductViewingState extends State<ProductViewing> {
           child: RichText(
             text: TextSpan(
               children: [
-                TextSpan(
-                    text: 'Seller\n',
-                    style: Theme.of(context).textTheme.subtitle1),
+                TextSpan(text: 'Seller\n', style: Theme.of(context).textTheme.subtitle1),
                 TextSpan(
                   text: '${widget.product.companyName}',
                   style: Theme.of(context).textTheme.headline6,
@@ -127,9 +125,7 @@ class _ProductViewingState extends State<ProductViewing> {
           child: RichText(
             text: TextSpan(
               children: [
-                TextSpan(
-                    text: 'Quantity\n',
-                    style: Theme.of(context).textTheme.subtitle1),
+                TextSpan(text: 'Quantity\n', style: Theme.of(context).textTheme.subtitle1),
                 TextSpan(
                   text: '${widget.product.quantity}',
                   style: Theme.of(context).textTheme.headline6,
