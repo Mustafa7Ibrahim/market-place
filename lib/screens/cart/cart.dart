@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:market_place/constant/constant.dart';
@@ -7,7 +8,6 @@ import 'package:market_place/services/cart_services.dart';
 import 'package:market_place/widgets/loading.dart';
 import 'package:market_place/widgets/item_cart.dart';
 import 'package:market_place/widgets/width_button.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class Cart extends StatefulWidget {
   @override
@@ -16,23 +16,7 @@ class Cart extends StatefulWidget {
 
 class _CartState extends State<Cart> {
   CartServices _cartServices = CartServices();
-
-  var currentUserId;
-
-  @override
-  void initState() {
-    // first thing happen is geting the user id
-    getCurrentUserId();
-    super.initState();
-  }
-
-  // this function geting the current user id from sharedPreferences
-  getCurrentUserId() async {
-    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    print(sharedPreferences.getString('user'));
-    // return the current user id
-    return setState(() => currentUserId = sharedPreferences.getString('user'));
-  }
+  final User currentUser = FirebaseAuth.instance.currentUser;
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +26,7 @@ class _CartState extends State<Cart> {
     //==================================================================//
     return StreamBuilder<List<CartModel>>(
       stream: cartCollection
-          .document(currentUserId)
+          .doc(currentUser.uid)
           .collection('MyCart')
           .snapshots()
           .map(_cartServices.cartListMap),

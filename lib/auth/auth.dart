@@ -33,21 +33,22 @@ class Auth {
       final GoogleSignInAuthentication googleSignInAuthentication =
           await googleSignInAccount.authentication;
 
-      final AuthCredential authCredential = GoogleAuthProvider.getCredential(
+      final AuthCredential authCredential = GoogleAuthProvider.credential(
         idToken: googleSignInAuthentication.idToken,
         accessToken: googleSignInAuthentication.accessToken,
       );
 
-      final AuthResult authResult = await firebaseAuth.signInWithCredential(authCredential);
+      final UserCredential _userCredential =
+          await firebaseAuth.signInWithCredential(authCredential);
 
       // if it's a new user
-      final FirebaseUser user = authResult.user;
+      final User user = _userCredential.user;
 
       // add a new user to fireStore
       _userServices.addNewUser(
         userId: user.uid,
         userEmail: user.email,
-        userImg: user.photoUrl,
+        userImg: user.photoURL,
         userName: user.displayName,
         phoneNumber: '',
         sallerCompanyName: '',
@@ -58,7 +59,7 @@ class Auth {
       // make sure that the user id token is not null
       assert(await user.getIdToken() != null);
 
-      final FirebaseUser currentUser = await firebaseAuth.currentUser();
+      final User currentUser = firebaseAuth.currentUser;
 
       sharedPreferences.setString('user', currentUser.uid);
 
@@ -130,38 +131,35 @@ class Auth {
             print("successfull sign in");
             final AppleIdCredential appleIdCredential = result.credential;
 
-            OAuthProvider oAuthProvider = OAuthProvider(providerId: "apple.com");
-            final AuthCredential credential = oAuthProvider.getCredential(
+            OAuthProvider oAuthProvider = OAuthProvider("apple.com");
+            final AuthCredential credential = oAuthProvider.credential(
               idToken: String.fromCharCodes(appleIdCredential.identityToken),
               accessToken: String.fromCharCodes(appleIdCredential.authorizationCode),
             );
 
-            final AuthResult _res = await FirebaseAuth.instance.signInWithCredential(credential);
+            final UserCredential _res =
+                await FirebaseAuth.instance.signInWithCredential(credential);
 
-            FirebaseAuth.instance.currentUser().then(
-              (val) async {
-                UserUpdateInfo updateUser = UserUpdateInfo();
-                updateUser.displayName =
-                    "${appleIdCredential.fullName.givenName} ${appleIdCredential.fullName.familyName}";
-                updateUser.photoUrl =
-                    "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png";
-                await val.updateProfile(updateUser);
-              },
-            );
+            final User currentUser = firebaseAuth.currentUser;
+
+            String name =
+                "${appleIdCredential.fullName.givenName} ${appleIdCredential.fullName.familyName}";
+            String photoURL =
+                "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png";
+            await currentUser.updateProfile(displayName: name, photoURL: photoURL);
 
             // add new user to firestore
             _userServices.addNewUser(
               userId: _res.user.uid,
               userName: _res.user.displayName,
               userEmail: _res.user.email,
-              userImg: _res.user.photoUrl,
+              userImg: _res.user.photoURL,
               phoneNumber: '',
               sallerCompanyName: '',
               userAddress: '',
               userGender: '',
             );
 
-            final FirebaseUser currentUser = await firebaseAuth.currentUser();
             sharedPreferences.setString('user', currentUser.uid);
 
             Navigator.pushReplacement(

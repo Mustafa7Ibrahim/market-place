@@ -1,10 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-final CollectionReference productCollection = Firestore.instance.collection('product');
+final CollectionReference productCollection = FirebaseFirestore.instance.collection('product');
 
-final CollectionReference userCollection = Firestore.instance.collection('users');
+final CollectionReference userCollection = FirebaseFirestore.instance.collection('users');
 
-final CollectionReference cartCollection = Firestore.instance.collection('cart');
+final CollectionReference cartCollection = FirebaseFirestore.instance.collection('cart');
 
 List<String> types = <String>[
   'Supermarket',
@@ -21,9 +21,7 @@ List<String> types = <String>[
   'Tools',
 ];
 
-/* 
-  images that showing in the home tab 
-*/
+// images that showing in the home tab
 List<String> imageDeals = <String>[
   'assets/images/deal1.png',
   'assets/images/deal2.png',

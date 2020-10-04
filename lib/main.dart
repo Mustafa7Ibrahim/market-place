@@ -1,3 +1,5 @@
+import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/services.dart';
 import 'package:market_place/screens/sign_in/sign_in.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -8,6 +10,10 @@ import 'screens/wrapper.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  SystemChrome.setSystemUIOverlayStyle(
+    SystemUiOverlayStyle(statusBarColor: Colors.transparent),
+  );
   SharedPreferences pref = await SharedPreferences.getInstance();
   var currentUserId = pref.getString('user');
   var darkTheme = pref.getBool('DarkTheme');

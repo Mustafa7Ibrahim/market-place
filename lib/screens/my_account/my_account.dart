@@ -75,7 +75,7 @@ class _MyAccountState extends State<MyAccount> {
     }
 
     return StreamBuilder<UserModel>(
-      stream: userCollection.document(currentUserId).snapshots().map(UserServices().getUserData),
+      stream: userCollection.doc(currentUserId).snapshots().map(UserServices().getUserData),
       builder: (context, snapshot) {
         final user = snapshot.data;
         if (snapshot.connectionState == ConnectionState.active) {

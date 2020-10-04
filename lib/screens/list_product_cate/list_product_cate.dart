@@ -1,4 +1,5 @@
 import 'package:animations/animations.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:market_place/models/product.dart';
@@ -27,7 +28,10 @@ class _ListProductCategoriesState extends State<ListProductCategories> {
         centerTitle: true,
       ),
       body: StreamBuilder<List<Product>>(
-        stream: ProductServices().productListstrm,
+        stream: FirebaseFirestore.instance
+            .collectionGroup(widget.productCat)
+            .snapshots()
+            .map(ProductServices().productList),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             // return GridView.builder(

@@ -1,18 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:market_place/constant/constant.dart';
 import 'package:market_place/models/user_model.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class UserServices {
-  String currentUserId;
-
-  getCurrentUserId() async {
-    // get the current user id if the user is alredy loged in
-    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    currentUserId = sharedPreferences.getString('user');
-    // return the current user id
-    return currentUserId;
-  }
+  final User currentUser = FirebaseAuth.instance.currentUser;
 
   Future addNewUser({
     String userId,
@@ -25,7 +17,7 @@ class UserServices {
     String sallerCompanyName,
   }) async {
     // get the correct data path
-    final path = userCollection.document(userId);
+    final path = userCollection.doc(userId);
     // get the snapshot of this user
     final user = await path.get();
 
@@ -34,15 +26,13 @@ class UserServices {
       then update his data to be both customer and saller
     */
     if (user.exists == true) {
-      return path.updateData({
-        'userId': userId,
-      });
+      return path.update({'userId': userId});
 
       /*
       if it is not exists we add a new document with a new user data
     */
     } else {
-      return await path.setData({
+      return await path.set({
         'userId': userId,
         'userName': userName,
         'userEmail': userEmail,
@@ -64,10 +54,8 @@ class UserServices {
     String phoneNumber,
     String sallerCompanyName,
   }) async {
-    // first calling getCurrentUserId function to get his id
-    await getCurrentUserId();
     // when it get the current user id we path it to get the correct document
-    return await userCollection.document(currentUserId).updateData({
+    return await userCollection.doc(currentUser.uid).update({
       'userName': userName,
       'userEmail': userEmail,
       'userAddress': userAddress,
@@ -79,19 +67,18 @@ class UserServices {
 
   UserModel getUserData(DocumentSnapshot snapshot) {
     return UserModel(
-      userId: snapshot?.data['userId'] ?? '',
-      userName: snapshot?.data['userName'] ?? '',
-      userEmail: snapshot?.data['userEmail'] ?? '',
-      userImg: snapshot?.data['userImg'] ?? '',
-      userAddress: snapshot?.data['userAddress'] ?? '',
-      userGender: snapshot?.data['userGender'] ?? '',
-      phoneNamber: snapshot?.data['PhoneNumber'] ?? '',
-      sallerCompanyName: snapshot?.data['sallerCompanyName'] ?? '',
+      userId: snapshot?.data()['userId'] ?? '',
+      userName: snapshot?.data()['userName'] ?? '',
+      userEmail: snapshot?.data()['userEmail'] ?? '',
+      userImg: snapshot?.data()['userImg'] ?? '',
+      userAddress: snapshot?.data()['userAddress'] ?? '',
+      userGender: snapshot?.data()['userGender'] ?? '',
+      phoneNamber: snapshot?.data()['PhoneNumber'] ?? '',
+      sallerCompanyName: snapshot?.data()['sallerCompanyName'] ?? '',
     );
   }
 
   Stream<UserModel> get currentUserData {
-    getCurrentUserId();
-    return userCollection.document(currentUserId).snapshots().map(getUserData);
+    return userCollection.doc(currentUser.uid).snapshots().map(getUserData);
   }
 }
