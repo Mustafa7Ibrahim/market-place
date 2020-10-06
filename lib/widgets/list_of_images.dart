@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:market_place/constant/decoration.dart';
-import 'package:market_place/widgets/image_network.dart';
+
+import 'loading.dart';
 
 class ListOfImages extends StatelessWidget {
   const ListOfImages({
@@ -13,32 +13,27 @@ class ListOfImages extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Tooltip(
-      message: 'Click Here to Change The Photos',
-      preferBelow: true,
-      showDuration: Duration(seconds: 7),
-      waitDuration: Duration(seconds: 7),
-      child: InkWell(
-        onTap: onTap,
-        child: ListView.builder(
-          itemBuilder: (context, index) {
-            return Container(
-              margin: EdgeInsets.only(right: 8.0, left: 8),
-              decoration: BoxDecoration(
-                boxShadow: [shadow],
-              ),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(24.0),
-                child: ImageNetwork(image: images[index]),
-              ),
-            );
-          },
-          physics: ClampingScrollPhysics(),
-          shrinkWrap: true,
-          scrollDirection: Axis.horizontal,
-          itemCount: images.length ?? 0,
-        ),
-      ),
+    return ListView.builder(
+      itemBuilder: (context, index) {
+        return InkWell(
+          onTap: onTap,
+          child: ClipRRect(
+            borderRadius: BorderRadius.only(bottomLeft: Radius.circular(18.0)),
+            child: Image.network(
+              images[index],
+              fit: BoxFit.cover,
+              loadingBuilder: (context, child, loadingProgress) {
+                return loadingProgress == null
+                    ? child
+                    : Loading(color: Theme.of(context).primaryColor);
+              },
+            ),
+          ),
+        );
+      },
+      physics: BouncingScrollPhysics(),
+      scrollDirection: Axis.horizontal,
+      itemCount: images.length,
     );
   }
 }

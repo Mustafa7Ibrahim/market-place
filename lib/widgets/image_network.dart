@@ -9,17 +9,12 @@ class ImageNetwork extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(6.0),
-      child: Image.network(
-        image,
-        fit: BoxFit.cover,
-        loadingBuilder: (context, child, loadingProgress) {
-          return loadingProgress == null
-              ? child
-              : Loading(color: Theme.of(context).primaryColor);
-        },
-      ),
+    return Image.network(
+      image,
+      fit: BoxFit.cover,
+      loadingBuilder: (context, child, loadingProgress) {
+        return loadingProgress == null ? child : Loading(color: Theme.of(context).primaryColor);
+      },
     );
   }
 }

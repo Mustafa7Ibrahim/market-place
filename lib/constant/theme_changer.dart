@@ -29,8 +29,14 @@ class ThemeChanger extends ChangeNotifier {
     appBarTheme: AppBarTheme(
       color: Colors.white,
       elevation: 0.0,
+      centerTitle: true,
       brightness: Brightness.light,
-      textTheme: TextTheme(headline6: TextStyle(color: Colors.green)),
+      textTheme: TextTheme(
+        headline6: TextStyle(color: Colors.green).copyWith(
+          fontSize: 18,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
       iconTheme: IconThemeData(color: Colors.green),
     ),
     scaffoldBackgroundColor: Colors.white,
@@ -54,8 +60,14 @@ class ThemeChanger extends ChangeNotifier {
     appBarTheme: AppBarTheme(
       brightness: Brightness.dark,
       color: Colors.grey[900],
+      centerTitle: true,
       elevation: 0.0,
-      textTheme: TextTheme(headline6: TextStyle(color: Colors.greenAccent)),
+      textTheme: TextTheme(
+        headline6: TextStyle(color: Colors.greenAccent).copyWith(
+          fontSize: 18,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
       iconTheme: IconThemeData(color: Colors.white),
     ),
     scaffoldBackgroundColor: Colors.grey[850],

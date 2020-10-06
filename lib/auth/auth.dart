@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:apple_sign_in/apple_sign_in.dart';
 import 'package:device_info/device_info.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:market_place/constant/toast.dart';
@@ -91,7 +90,7 @@ class Auth {
           pref.remove('user');
           Navigator.pushReplacement(
             context,
-            CupertinoPageRoute(
+            MaterialPageRoute(
               builder: (context) => SignIn(),
             ),
           );

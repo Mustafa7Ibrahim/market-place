@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:market_place/constant/constant.dart';
@@ -60,7 +59,7 @@ class _HomeState extends State<Home> {
                 textColor: Theme.of(context).accentColor,
                 onPressed: () => Navigator.push(
                   context,
-                  CupertinoPageRoute(
+                  MaterialPageRoute(
                     builder: (context) => Categories(),
                   ),
                 ),
@@ -83,7 +82,7 @@ class _HomeState extends State<Home> {
                   imageHeight: imageHeight,
                   onTap: () => Navigator.push(
                     context,
-                    CupertinoPageRoute(
+                    MaterialPageRoute(
                       builder: (context) => ListProductCategories(productCat: 'Supermarket'),
                     ),
                   ),
@@ -94,7 +93,7 @@ class _HomeState extends State<Home> {
                   imageHeight: imageHeight,
                   onTap: () => Navigator.push(
                     context,
-                    CupertinoPageRoute(
+                    MaterialPageRoute(
                       builder: (context) => ListProductCategories(productCat: 'Fashion'),
                     ),
                   ),
@@ -105,7 +104,7 @@ class _HomeState extends State<Home> {
                   imageHeight: imageHeight,
                   onTap: () => Navigator.push(
                     context,
-                    CupertinoPageRoute(
+                    MaterialPageRoute(
                       builder: (context) => ListProductCategories(productCat: 'Mobile & Tablets'),
                     ),
                   ),
@@ -116,7 +115,7 @@ class _HomeState extends State<Home> {
                   imageHeight: imageHeight,
                   onTap: () => Navigator.push(
                     context,
-                    CupertinoPageRoute(
+                    MaterialPageRoute(
                       builder: (context) => ListProductCategories(productCat: 'Electronics'),
                     ),
                   ),
@@ -127,7 +126,7 @@ class _HomeState extends State<Home> {
                   imageHeight: imageHeight,
                   onTap: () => Navigator.push(
                     context,
-                    CupertinoPageRoute(
+                    MaterialPageRoute(
                       builder: (context) => ListProductCategories(
                         productCat: 'Health & Beauty',
                       ),
@@ -140,7 +139,7 @@ class _HomeState extends State<Home> {
                   imageHeight: imageHeight,
                   onTap: () => Navigator.push(
                     context,
-                    CupertinoPageRoute(
+                    MaterialPageRoute(
                       builder: (context) => ListProductCategories(
                         productCat: 'Home & Kitchen',
                       ),

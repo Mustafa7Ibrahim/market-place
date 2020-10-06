@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:market_place/auth/auth.dart';
 import 'package:market_place/constant/constant.dart';
@@ -148,7 +147,7 @@ class _MyAccountState extends State<MyAccount> {
         FlatButton(
           onPressed: () => Navigator.push(
             context,
-            CupertinoPageRoute(
+            MaterialPageRoute(
               builder: (context) => EditMyAccount(user),
             ),
           ),
