@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:market_place/constant/decoration.dart';
 import 'package:market_place/constant/toast.dart';
@@ -90,6 +91,11 @@ class _ProductItemState extends State<ProductItem> {
   }
 
   void addToCart() {
+    final User currentUser = FirebaseAuth.instance.currentUser;
+    if (currentUser == null) {
+      showToast(context, 'Please Sign in first!');
+      return;
+    }
     if (taped == false) {
       _cartServices.addNewItemToCart(
         itemId: widget.product.productId,

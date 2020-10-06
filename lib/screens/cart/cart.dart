@@ -5,6 +5,7 @@ import 'package:market_place/models/cart_model.dart';
 import 'package:market_place/services/cart_services.dart';
 import 'package:market_place/widgets/loading.dart';
 import 'package:market_place/widgets/item_cart.dart';
+import 'package:market_place/widgets/user_signin.dart';
 import 'package:market_place/widgets/width_button.dart';
 
 class Cart extends StatefulWidget {
@@ -22,55 +23,54 @@ class _CartState extends State<Cart> {
     //==================================================================//
     // using stream builder to get the cart data from firebase firestore//
     //==================================================================//
-    return StreamBuilder<List<CartModel>>(
-      stream: _cartServices.cartProducts,
-      builder: (context, snapshot) {
-        return Scaffold(
-          appBar: AppBar(
-            title: Text('My Cart'),
-            centerTitle: true,
-          ),
-          //=======================================================//
-          // if the data not ready yet, we showing a loading screan//
-          //=======================================================//
-          body: !snapshot.hasData
-              ? Loading(color: Theme.of(context).primaryColor)
-              : Stack(
-                  children: <Widget>[
-                    ListView.builder(
-                      itemCount: snapshot.data.length,
-                      itemBuilder: (context, index) {
-                        /*
+    return currentUser == null
+        ? UserSignIn('Cart')
+        : StreamBuilder<List<CartModel>>(
+            stream: _cartServices.cartProducts,
+            builder: (context, snapshot) {
+              return Scaffold(
+                appBar: AppBar(title: Text('My Cart')),
+                //=======================================================//
+                // if the data not ready yet, we showing a loading screan//
+                //=======================================================//
+                body: !snapshot.hasData
+                    ? Loading(color: Theme.of(context).primaryColor)
+                    : Stack(
+                        children: <Widget>[
+                          ListView.builder(
+                            itemCount: snapshot.data.length,
+                            itemBuilder: (context, index) {
+                              /*
                           when data is ready we pase every item to show in 
                           cart item widget.
                         */
-                        return CartItem(cart: snapshot.data[index]);
-                      },
-                    ),
-                    /*
+                              return CartItem(cart: snapshot.data[index]);
+                            },
+                          ),
+                          /*
                       align the checkout button in the bottom
                       of the screan.
                     */
-                    Align(
-                      alignment: Alignment.bottomCenter,
-                      child: WidthButton(
-                        width: size.width,
-                        onTap: snapshot.data.length > 0
-                            ? () {
-                                showDialog(
-                                  context: context,
-                                  child: confirmDialog(context),
-                                );
-                              }
-                            : null,
-                        title: 'PROCEED TO CHECKOUT',
+                          Align(
+                            alignment: Alignment.bottomCenter,
+                            child: WidthButton(
+                              width: size.width,
+                              onTap: snapshot.data.length > 0
+                                  ? () {
+                                      showDialog(
+                                        context: context,
+                                        child: confirmDialog(context),
+                                      );
+                                    }
+                                  : null,
+                              title: 'PROCEED TO CHECKOUT',
+                            ),
+                          ),
+                        ],
                       ),
-                    ),
-                  ],
-                ),
-        );
-      },
-    );
+              );
+            },
+          );
   }
 
   /*

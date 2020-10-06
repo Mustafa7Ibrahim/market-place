@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:market_place/auth/auth.dart';
 import 'package:market_place/constant/constant.dart';
@@ -10,6 +11,7 @@ import 'package:market_place/widgets/image_network.dart';
 import 'package:market_place/widgets/info_row.dart';
 import 'package:market_place/widgets/loading.dart';
 import 'package:market_place/widgets/row_edit.dart';
+import 'package:market_place/widgets/user_signin.dart';
 import 'package:market_place/widgets/width_button.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -20,24 +22,15 @@ class MyAccount extends StatefulWidget {
 }
 
 class _MyAccountState extends State<MyAccount> {
+  final User currentUser = FirebaseAuth.instance.currentUser;
   Auth auth = Auth();
-  var currentUserId;
   bool isSwitched = false;
   String switchText = 'DarkTheme';
 
   @override
   void initState() {
-    getCurrentUserId();
     getCurrentTheme();
     super.initState();
-  }
-
-  getCurrentUserId() async {
-    // get the current user id if the user is alredy loged in
-    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    setState(() => currentUserId = sharedPreferences.getString('user'));
-    // return the current user id
-    return currentUserId;
   }
 
   getCurrentTheme() async {
@@ -73,76 +66,74 @@ class _MyAccountState extends State<MyAccount> {
       }
     }
 
-    return StreamBuilder<UserModel>(
-      stream: userCollection.doc(currentUserId).snapshots().map(UserServices().getUserData),
-      builder: (context, snapshot) {
-        final user = snapshot.data;
-        if (snapshot.connectionState == ConnectionState.active) {
-          if (snapshot.hasData) {
-            return Scaffold(
-              appBar: appBar(context, user),
-              body: Column(
-                children: <Widget>[
-                  Expanded(
-                    child: ListView(
-                      children: <Widget>[
-                        SizedBox(height: 12.0),
-                        titleLine(context, 'My Account'),
-                        SizedBox(height: 12.0),
-                        personalInfo(user, context, size),
-                        SizedBox(height: 12.0),
-                        titleLine(context, 'Address'),
-                        SizedBox(height: 12.0),
-                        addressInfo(size, user),
-                      ],
-                    ),
-                  ),
-                  Align(
-                    alignment: Alignment.bottomCenter,
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 12.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: <Widget>[
-                          Text('Dark Theme'),
-                          Switch(
-                            activeColor: Theme.of(context).accentColor,
-                            activeTrackColor: Theme.of(context).accentColor,
-                            value: isSwitched,
-                            onChanged: (value) => switchChange(value),
-                          ),
-                        ],
+    return currentUser == null
+        ? UserSignIn('Account')
+        : StreamBuilder<UserModel>(
+            stream: userCollection.doc(currentUser.uid).snapshots().map(UserServices().getUserData),
+            builder: (context, snapshot) {
+              final user = snapshot.data;
+              if (snapshot.hasData) {
+                return Scaffold(
+                  appBar: appBar(context, user),
+                  body: Column(
+                    children: <Widget>[
+                      Expanded(
+                        child: ListView(
+                          children: <Widget>[
+                            SizedBox(height: 12.0),
+                            titleLine(context, 'My Account'),
+                            SizedBox(height: 12.0),
+                            personalInfo(user, context, size),
+                            SizedBox(height: 12.0),
+                            titleLine(context, 'Address'),
+                            SizedBox(height: 12.0),
+                            addressInfo(size, user),
+                          ],
+                        ),
                       ),
-                    ),
+                      Align(
+                        alignment: Alignment.bottomCenter,
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 12.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                              Text('Dark Theme'),
+                              Switch(
+                                activeColor: Theme.of(context).accentColor,
+                                activeTrackColor: Theme.of(context).accentColor,
+                                value: isSwitched,
+                                onChanged: (value) => switchChange(value),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      Align(
+                        alignment: Alignment.bottomCenter,
+                        child: WidthButton(
+                          width: size.width,
+                          onTap: () => auth.signOutWithGoogle(context),
+                          title: 'Sign Out',
+                        ),
+                      ),
+                    ],
                   ),
-                  Align(
-                    alignment: Alignment.bottomCenter,
-                    child: WidthButton(
-                      width: size.width,
-                      onTap: () => auth.signOutWithGoogle(context),
-                      title: 'Sign Out',
-                    ),
-                  ),
-                ],
-              ),
-            );
-          } else if (snapshot.hasError) {
-            return Center(
-              child: Text(snapshot.error),
-            );
-          } else {
-            return Loading(color: Theme.of(context).accentColor);
-          }
-        } else {
-          return Container();
-        }
-      },
-    );
+                );
+              } else if (snapshot.hasError) {
+                return Center(
+                  child: Text(snapshot.error),
+                );
+              } else {
+                return Loading(color: Theme.of(context).accentColor);
+              }
+            },
+          );
   }
 
   AppBar appBar(BuildContext context, UserModel user) {
     return AppBar(
-      title: Text('My Account'),
+      title: Text('Account'),
       actions: <Widget>[
         FlatButton(
           onPressed: () => Navigator.push(

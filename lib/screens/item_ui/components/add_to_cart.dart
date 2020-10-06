@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:market_place/constant/toast.dart';
@@ -6,10 +7,12 @@ import 'package:market_place/screens/item_ui/components/cart_counter.dart';
 import 'package:market_place/services/cart_services.dart';
 
 class AddToCartAndBuy extends StatelessWidget {
-  const AddToCartAndBuy({this.cartServices, this.product});
+  AddToCartAndBuy({this.cartServices, this.product});
 
   final CartServices cartServices;
   final Product product;
+
+  final User currentUser = FirebaseAuth.instance.currentUser;
 
   @override
   Widget build(BuildContext context) {
@@ -28,6 +31,11 @@ class AddToCartAndBuy extends StatelessWidget {
                 ),
                 color: Theme.of(context).accentColor,
                 onPressed: () {
+                  if (currentUser == null) {
+                    showToast(context, 'Please Sign in first!');
+                    return;
+                  }
+
                   cartServices.addNewItemToCart(
                     itemId: product.productId,
                     itemImg: product.productImages.first,

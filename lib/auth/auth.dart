@@ -7,7 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:market_place/constant/toast.dart';
 import 'package:market_place/screens/wrapper.dart';
-import 'package:market_place/screens/sign_in/sign_in.dart';
 import 'package:market_place/services/user_services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -82,24 +81,11 @@ class Auth {
     try {
       await googleSignIn
           .signOut()
-          .catchError(
-            (onError) => showToast(context, onError.toString()),
-          )
-          .whenComplete(
-        () {
-          pref.remove('user');
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(
-              builder: (context) => SignIn(),
-            ),
-          );
-        },
-      );
+          .catchError((onError) => showToast(context, onError.toString()))
+          .whenComplete(() => pref.remove('user'));
       showToast(context, 'Sign out Successfuly');
     } catch (e) {
       showToast(context, e.toString());
-
       return null;
     }
   }

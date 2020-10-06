@@ -51,6 +51,7 @@ class CartServices {
     String itemPrice,
     int numberOfItems,
   }) async {
+    if (currentUser == null) return;
     final path = userCollection.doc(currentUser.uid).collection('cart').doc(itemId);
 
     final item = await path.get();
