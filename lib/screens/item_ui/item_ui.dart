@@ -38,7 +38,9 @@ class ItemUi extends StatelessWidget {
       ),
       bottomNavigationBar: Container(
         margin: EdgeInsets.symmetric(horizontal: 20.0, vertical: 12.0),
-        child: AddToCartAndBuy(),
+        child: AddToCartAndBuy(
+          product: product,
+        ),
       ),
     );
   }

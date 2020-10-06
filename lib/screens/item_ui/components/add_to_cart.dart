@@ -7,12 +7,12 @@ import 'package:market_place/screens/item_ui/components/cart_counter.dart';
 import 'package:market_place/services/cart_services.dart';
 
 class AddToCartAndBuy extends StatelessWidget {
-  AddToCartAndBuy({this.cartServices, this.product});
+  AddToCartAndBuy({this.product});
 
-  final CartServices cartServices;
   final Product product;
 
   final User currentUser = FirebaseAuth.instance.currentUser;
+  final CartServices _cartServices = CartServices();
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +36,7 @@ class AddToCartAndBuy extends StatelessWidget {
                     return;
                   }
 
-                  cartServices.addNewItemToCart(
+                  _cartServices.addNewItemToCart(
                     itemId: product.productId,
                     itemImg: product.productImages.first,
                     numberOfItems: 1,
