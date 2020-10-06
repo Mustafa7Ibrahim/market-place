@@ -41,10 +41,10 @@ class _WrapperState extends State<Wrapper> {
         currentIndex: currentIndex,
         onTap: changePage,
         items: <BottomNavigationBarItem>[
-          BottomNavigationBarItem(title: Text('Home'), icon: Icon(Icons.home)),
-          BottomNavigationBarItem(title: Text('Categories'), icon: Icon(Icons.category)),
-          BottomNavigationBarItem(title: Text('Cart'), icon: Icon(Icons.shopping_cart)),
-          BottomNavigationBarItem(title: Text('MyAccount'), icon: Icon(Icons.person_outline)),
+          BottomNavigationBarItem(label: 'Home', icon: Icon(Icons.home)),
+          BottomNavigationBarItem(label: 'Categories', icon: Icon(Icons.category)),
+          BottomNavigationBarItem(label: 'Cart', icon: Icon(Icons.shopping_cart)),
+          BottomNavigationBarItem(label: 'MyAccount', icon: Icon(Icons.person_outline)),
         ],
       ),
       body: PageTransitionSwitcher(
