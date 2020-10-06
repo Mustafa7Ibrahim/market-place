@@ -8,7 +8,7 @@ class CartServices {
   final User currentUser = FirebaseAuth.instance.currentUser;
 
   removeItemFromCart({@required String itemId}) async {
-    final path = cartCollection.doc(currentUser.uid).collection('MyCart').doc(itemId);
+    final path = userCollection.doc(currentUser.uid).collection('cart').doc(itemId);
     final item = await path.get();
     if (item.exists)
       return await item.reference.delete();
@@ -24,7 +24,7 @@ class CartServices {
     String itemPrice,
     int numberOfItems,
   }) async {
-    final path = cartCollection.doc(currentUser.uid).collection('MyCart').doc(itemId);
+    final path = userCollection.doc(currentUser.uid).collection('cart').doc(itemId);
 
     final item = await path.get();
 
@@ -51,7 +51,7 @@ class CartServices {
     String itemPrice,
     int numberOfItems,
   }) async {
-    final path = cartCollection.doc(currentUser.uid).collection('MyCart').doc(itemId);
+    final path = userCollection.doc(currentUser.uid).collection('cart').doc(itemId);
 
     final item = await path.get();
 
@@ -90,5 +90,9 @@ class CartServices {
         sallerName: i.data()['sallerName'],
       );
     }).toList();
+  }
+
+  Stream<List<CartModel>> get cartProducts {
+    return userCollection.doc(currentUser.uid).collection('cart').snapshots().map(cartListMap);
   }
 }

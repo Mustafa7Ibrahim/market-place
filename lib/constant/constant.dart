@@ -4,8 +4,6 @@ final CollectionReference productCollection = FirebaseFirestore.instance.collect
 
 final CollectionReference userCollection = FirebaseFirestore.instance.collection('users');
 
-final CollectionReference cartCollection = FirebaseFirestore.instance.collection('cart');
-
 List<String> types = <String>[
   'Supermarket',
   'Fashion',

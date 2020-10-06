@@ -1,6 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:market_place/constant/constant.dart';
 import 'package:market_place/constant/toast.dart';
 import 'package:market_place/models/cart_model.dart';
 import 'package:market_place/services/cart_services.dart';
@@ -24,11 +23,7 @@ class _CartState extends State<Cart> {
     // using stream builder to get the cart data from firebase firestore//
     //==================================================================//
     return StreamBuilder<List<CartModel>>(
-      stream: cartCollection
-          .doc(currentUser.uid)
-          .collection('MyCart')
-          .snapshots()
-          .map(_cartServices.cartListMap),
+      stream: _cartServices.cartProducts,
       builder: (context, snapshot) {
         return Scaffold(
           appBar: AppBar(
