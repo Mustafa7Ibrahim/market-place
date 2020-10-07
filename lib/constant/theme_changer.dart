@@ -52,14 +52,14 @@ class ThemeChanger extends ChangeNotifier {
       elevation: 0.0,
     ),
     snackBarTheme: SnackBarThemeData(
-      backgroundColor: Colors.grey[900],
+      backgroundColor: Colors.grey[850],
       actionTextColor: Colors.greenAccent,
       contentTextStyle: TextStyle(color: Colors.white),
     ),
     brightness: Brightness.dark,
     appBarTheme: AppBarTheme(
       brightness: Brightness.dark,
-      color: Colors.grey[900],
+      color: Colors.grey[850],
       centerTitle: true,
       elevation: 0.0,
       textTheme: TextTheme(

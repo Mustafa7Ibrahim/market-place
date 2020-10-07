@@ -16,21 +16,18 @@ class ProductDeteles extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            product.productType,
-            style: Theme.of(context).textTheme.caption,
-          ),
+          Text(product.productType, style: Theme.of(context).textTheme.caption),
           SizedBox(height: 4.0),
-          Text(
-            product.productName,
-            style: Theme.of(context).textTheme.headline6,
-          ),
+          Text(product.productName, style: Theme.of(context).textTheme.headline6),
           SizedBox(height: 4.0),
-          Text(
-            product.companyName,
-            style: Theme.of(context).textTheme.caption,
-          ),
+          Text(product.companyName, style: Theme.of(context).textTheme.caption),
           Divider(thickness: 2),
+          Text('Description', style: Theme.of(context).textTheme.caption),
+          SizedBox(height: 4.0),
+          Text(product.description),
+          Divider(thickness: 2),
+          Text('Specification', style: Theme.of(context).textTheme.caption),
+          SizedBox(height: 4.0),
           Text(product.specification),
         ],
       ),

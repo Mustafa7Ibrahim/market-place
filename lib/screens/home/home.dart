@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:market_place/constant/constant.dart';
 import 'package:market_place/screens/categories/categories.dart';
-import 'package:market_place/screens/list_product_cate/list_product_cate.dart';
-import 'package:market_place/widgets/categore_item.dart';
+import 'package:market_place/widgets/categories_list_card.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -19,137 +18,63 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    double imageHeight = size.height * 0.12;
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Market Place'),
-        centerTitle: true,
-      ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: <Widget>[
-          Expanded(
-            child: Swiper(
-              itemCount: imageDeals.length,
-              autoplay: true,
-              autoplayDelay: 5000,
-              duration: 1000,
-              pagination: SwiperPagination(alignment: Alignment.bottomCenter),
-              control: SwiperControl(),
-              itemBuilder: (BuildContext context, int index) {
-                return Image.asset(
-                  imageDeals[index],
-                  fit: BoxFit.fill,
-                );
-              },
+      appBar: AppBar(title: Text('Market Place')),
+      body: SingleChildScrollView(
+        physics: BouncingScrollPhysics(),
+        child: Column(
+          children: <Widget>[
+            Container(
+              height: size.height * 0.3,
+              child: Swiper(
+                itemCount: imageDeals.length,
+                autoplay: true,
+                autoplayDelay: 5000,
+                duration: 1000,
+                pagination: SwiperPagination(alignment: Alignment.bottomCenter),
+                itemBuilder: (BuildContext context, int index) {
+                  return Container(
+                    margin: EdgeInsets.all(12.0),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(18.0),
+                      image: DecorationImage(
+                        image: AssetImage(imageDeals[index]),
+                        fit: BoxFit.fill,
+                      ),
+                    ),
+                  );
+                },
+              ),
             ),
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 14.0),
-                child: Text(
-                  'Browse By Category ',
-                  style: Theme.of(context).textTheme.subtitle1,
-                ),
-              ),
-              FlatButton(
-                textColor: Theme.of(context).accentColor,
-                onPressed: () => Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => Categories(),
-                  ),
-                ),
-                child: Text('See All'),
-              ),
-            ],
-          ),
-          Expanded(
-            flex: 2,
-            child: GridView.count(
-              crossAxisCount: 3,
-              padding: EdgeInsets.symmetric(horizontal: 12.0, vertical: 6.0),
-              crossAxisSpacing: 12.0,
-              mainAxisSpacing: 12.0,
-              shrinkWrap: true,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
-                CategoreItem(
-                  image: 'assets/images/supermarket.jpg',
-                  lable: 'Super Market',
-                  imageHeight: imageHeight,
-                  onTap: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => ListProductCategories(productCat: 'Supermarket'),
-                    ),
-                  ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                  child: Text('Browse By Category'),
                 ),
-                CategoreItem(
-                  image: 'assets/images/fashion.jpg',
-                  lable: 'Fashion',
-                  imageHeight: imageHeight,
-                  onTap: () => Navigator.push(
+                FlatButton(
+                  child: Text('See All'),
+                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                  textColor: Theme.of(context).accentColor,
+                  onPressed: () => Navigator.push(
                     context,
-                    MaterialPageRoute(
-                      builder: (context) => ListProductCategories(productCat: 'Fashion'),
-                    ),
-                  ),
-                ),
-                CategoreItem(
-                  image: 'assets/images/mobile&tablets.jpg',
-                  lable: 'Mobile & Tablets',
-                  imageHeight: imageHeight,
-                  onTap: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => ListProductCategories(productCat: 'Mobile & Tablets'),
-                    ),
-                  ),
-                ),
-                CategoreItem(
-                  image: 'assets/images/electronics.jpg',
-                  lable: 'Electronics',
-                  imageHeight: imageHeight,
-                  onTap: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => ListProductCategories(productCat: 'Electronics'),
-                    ),
-                  ),
-                ),
-                CategoreItem(
-                  image: 'assets/images/healthandbeauty.jpg',
-                  lable: 'Health & Beauty',
-                  imageHeight: imageHeight,
-                  onTap: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => ListProductCategories(
-                        productCat: 'Health & Beauty',
-                      ),
-                    ),
-                  ),
-                ),
-                CategoreItem(
-                  image: 'assets/images/houseandkitchen.jpg',
-                  lable: 'Home & Kitchen',
-                  imageHeight: imageHeight,
-                  onTap: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => ListProductCategories(
-                        productCat: 'Home & Kitchen',
-                      ),
-                    ),
+                    MaterialPageRoute(builder: (context) => Categories()),
                   ),
                 ),
               ],
             ),
-          ),
-        ],
+            Container(
+              height: size.height * 0.4,
+              child: CategoriesListCard(
+                axisCount: 3,
+                scrollDirection: Axis.vertical,
+                fullList: false,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

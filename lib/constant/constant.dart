@@ -4,21 +4,6 @@ final CollectionReference productCollection = FirebaseFirestore.instance.collect
 
 final CollectionReference userCollection = FirebaseFirestore.instance.collection('users');
 
-List<String> types = <String>[
-  'Supermarket',
-  'Fashion',
-  'Mobile & Tablets',
-  'Electronics',
-  'Health & Beauty',
-  'Home & Kitchen',
-  'Babies',
-  'Toys',
-  'Appliances',
-  'Sports',
-  'Automotive',
-  'Tools',
-];
-
 // images that showing in the home tab
 List<String> imageDeals = <String>[
   'assets/images/deal1.png',

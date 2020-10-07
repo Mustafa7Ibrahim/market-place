@@ -15,32 +15,32 @@ class ItemUi extends StatelessWidget {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     return Scaffold(
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          SizedBox(
-            height: size.height * 0.6,
-            child: Stack(
-              children: [
-                ListOfImageHorizontal(product: product, size: size),
-                SafeArea(
-                  child: Align(
-                      alignment: Alignment.topLeft,
-                      child: BackButton(color: Theme.of(context).appBarTheme.color)),
-                ),
-                GoToCartBTN(),
-                ProductPrice(size: size, product: product)
-              ],
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(
+              height: size.height * 0.6,
+              child: Stack(
+                children: [
+                  ListOfImageHorizontal(product: product, size: size),
+                  SafeArea(
+                    child: Align(
+                        alignment: Alignment.topLeft,
+                        child: BackButton(color: Theme.of(context).appBarTheme.color)),
+                  ),
+                  GoToCartBTN(),
+                  ProductPrice(size: size, product: product)
+                ],
+              ),
             ),
-          ),
-          ProductDeteles(product: product)
-        ],
+            ProductDeteles(product: product)
+          ],
+        ),
       ),
       bottomNavigationBar: Container(
-        margin: EdgeInsets.symmetric(horizontal: 20.0, vertical: 12.0),
-        child: AddToCartAndBuy(
-          product: product,
-        ),
+        margin: EdgeInsets.symmetric(horizontal: 20.0, vertical: 6.0),
+        child: AddToCartAndBuy(product: product),
       ),
     );
   }
