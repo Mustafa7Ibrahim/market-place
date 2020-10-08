@@ -8,21 +8,13 @@ import 'package:market_place/widgets/item_cart.dart';
 import 'package:market_place/widgets/user_signin.dart';
 import 'package:market_place/widgets/width_button.dart';
 
-class Cart extends StatefulWidget {
-  @override
-  _CartState createState() => _CartState();
-}
-
-class _CartState extends State<Cart> {
-  CartServices _cartServices = CartServices();
+class Cart extends StatelessWidget {
+  final CartServices _cartServices = CartServices();
   final User currentUser = FirebaseAuth.instance.currentUser;
 
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    //==================================================================//
-    // using stream builder to get the cart data from firebase firestore//
-    //==================================================================//
     return currentUser == null
         ? UserSignIn('Cart')
         : StreamBuilder<List<CartModel>>(
@@ -30,9 +22,6 @@ class _CartState extends State<Cart> {
             builder: (context, snapshot) {
               return Scaffold(
                 appBar: AppBar(title: Text('My Cart')),
-                //=======================================================//
-                // if the data not ready yet, we showing a loading screan//
-                //=======================================================//
                 body: !snapshot.hasData
                     ? Loading(color: Theme.of(context).primaryColor)
                     : Stack(
@@ -40,28 +29,16 @@ class _CartState extends State<Cart> {
                           ListView.builder(
                             itemCount: snapshot.data.length,
                             itemBuilder: (context, index) {
-                              /*
-                          when data is ready we pase every item to show in 
-                          cart item widget.
-                        */
                               return CartItem(cart: snapshot.data[index]);
                             },
                           ),
-                          /*
-                      align the checkout button in the bottom
-                      of the screan.
-                    */
                           Align(
                             alignment: Alignment.bottomCenter,
                             child: WidthButton(
                               width: size.width,
                               onTap: snapshot.data.length > 0
-                                  ? () {
-                                      showDialog(
-                                        context: context,
-                                        child: confirmDialog(context),
-                                      );
-                                    }
+                                  ? () =>
+                                      showDialog(context: context, child: confirmDialog(context))
                                   : null,
                               title: 'PROCEED TO CHECKOUT',
                             ),
@@ -73,10 +50,6 @@ class _CartState extends State<Cart> {
           );
   }
 
-  /*
-    this function show a confirmation dialog when the user cleck
-    on the checkout button 
-  */
   AlertDialog confirmDialog(BuildContext context) {
     return AlertDialog(
       title: Text('Are you sure you wont to buy this items?'),

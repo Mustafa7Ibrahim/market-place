@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:market_place/models/product.dart';
 
-import 'components/add_to_cart.dart';
 import 'components/go_to_cart_btn.dart';
 import 'components/list_of_image_horizontal.dart';
 import 'components/product_deteles.dart';
@@ -16,6 +15,7 @@ class ItemUi extends StatelessWidget {
     final size = MediaQuery.of(context).size;
     return Scaffold(
       body: SingleChildScrollView(
+        physics: BouncingScrollPhysics(),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -38,10 +38,10 @@ class ItemUi extends StatelessWidget {
           ],
         ),
       ),
-      bottomNavigationBar: Container(
-        margin: EdgeInsets.symmetric(horizontal: 20.0, vertical: 6.0),
-        child: AddToCartAndBuy(product: product),
-      ),
+      // bottomNavigationBar: Container(
+      //   margin: EdgeInsets.symmetric(horizontal: 20.0, vertical: 6.0),
+      //   child: AddToCartAndBuy(product: product),
+      // ),
     );
   }
 }

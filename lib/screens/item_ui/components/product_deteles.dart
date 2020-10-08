@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:market_place/models/product.dart';
+import 'package:market_place/screens/item_ui/components/add_to_cart.dart';
 
 class ProductDeteles extends StatelessWidget {
   const ProductDeteles({
@@ -21,6 +22,8 @@ class ProductDeteles extends StatelessWidget {
           Text(product.productName, style: Theme.of(context).textTheme.headline6),
           SizedBox(height: 4.0),
           Text(product.companyName, style: Theme.of(context).textTheme.caption),
+          Divider(thickness: 2),
+          AddToCartAndBuy(product),
           Divider(thickness: 2),
           Text('Description', style: Theme.of(context).textTheme.caption),
           SizedBox(height: 4.0),

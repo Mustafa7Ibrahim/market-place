@@ -1,11 +1,11 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/services.dart';
+import 'package:market_place/screens/home/home.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/material.dart';
 
 import 'constant/theme_changer.dart';
-import 'screens/wrapper.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -38,7 +38,7 @@ class App extends StatelessWidget {
       title: 'Market Place',
       debugShowCheckedModeBanner: false,
       theme: theme.getTheme(),
-      home: Wrapper(),
+      home: Home(),
     );
   }
 }

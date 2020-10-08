@@ -22,13 +22,13 @@ InputDecoration inputDecoration = InputDecoration(
 );
 
 BoxDecoration textFaildDecoration = BoxDecoration(
-  borderRadius: BorderRadius.circular(12.0),
+  borderRadius: BorderRadius.circular(18.0),
   boxShadow: [shadow],
 );
 
 // Shadow decoration
 BoxShadow shadow = BoxShadow(
-  color: Colors.black.withOpacity(0.06),
+  color: Colors.green.withOpacity(0.06),
   offset: Offset(0, 21),
   blurRadius: 53,
 );

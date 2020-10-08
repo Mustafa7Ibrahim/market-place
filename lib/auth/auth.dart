@@ -6,7 +6,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:market_place/constant/toast.dart';
-import 'package:market_place/screens/wrapper.dart';
+import 'package:market_place/screens/home/home.dart';
 import 'package:market_place/services/user_services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -64,7 +64,7 @@ class Auth {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-          builder: (context) => Wrapper(),
+          builder: (context) => Home(),
         ),
       );
 
@@ -150,7 +150,7 @@ class Auth {
             Navigator.pushReplacement(
               context,
               MaterialPageRoute(
-                builder: (context) => Wrapper(),
+                builder: (context) => Home(),
               ),
             );
           } catch (e) {
