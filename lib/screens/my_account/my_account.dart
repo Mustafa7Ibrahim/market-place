@@ -1,7 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:market_place/auth/auth.dart';
-import 'package:market_place/constant/constant.dart';
 import 'package:market_place/constant/decoration.dart';
 import 'package:market_place/constant/theme_changer.dart';
 import 'package:market_place/models/user_model.dart';
@@ -69,7 +68,7 @@ class _MyAccountState extends State<MyAccount> {
     return currentUser == null
         ? UserSignIn('Account')
         : StreamBuilder<UserModel>(
-            stream: userCollection.doc(currentUser.uid).snapshots().map(UserServices().getUserData),
+            stream: UserServices().currentUserData,
             builder: (context, snapshot) {
               final user = snapshot.data;
               if (snapshot.hasData) {

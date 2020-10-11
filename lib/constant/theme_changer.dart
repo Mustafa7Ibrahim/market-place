@@ -13,8 +13,8 @@ class ThemeChanger extends ChangeNotifier {
   }
 
   static ThemeData lightTheme = ThemeData(
-    primaryColor: Colors.green,
-    accentColor: Colors.green,
+    primaryColor: Colors.black,
+    accentColor: Colors.black,
     brightness: Brightness.light,
     iconTheme: IconThemeData(color: Colors.grey[900]),
     floatingActionButtonTheme: FloatingActionButtonThemeData(
@@ -29,15 +29,12 @@ class ThemeChanger extends ChangeNotifier {
     appBarTheme: AppBarTheme(
       color: Colors.white,
       elevation: 0.0,
-      centerTitle: true,
+      centerTitle: false,
       brightness: Brightness.light,
       textTheme: TextTheme(
-        headline6: TextStyle(color: Colors.green).copyWith(
-          fontSize: 18,
-          fontWeight: FontWeight.bold,
-        ),
+        headline6: TextStyle(color: Colors.black).copyWith(fontSize: 18),
       ),
-      iconTheme: IconThemeData(color: Colors.green),
+      iconTheme: IconThemeData(color: Colors.black),
     ),
     scaffoldBackgroundColor: Colors.white,
     cursorColor: Colors.green,

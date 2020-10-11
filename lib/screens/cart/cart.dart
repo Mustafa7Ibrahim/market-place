@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:market_place/constant/toast.dart';
 import 'package:market_place/models/cart_model.dart';
 import 'package:market_place/services/cart_services.dart';
+import 'package:market_place/widgets/custom_appbar.dart';
 import 'package:market_place/widgets/loading.dart';
 import 'package:market_place/widgets/item_cart.dart';
 import 'package:market_place/widgets/user_signin.dart';
@@ -21,7 +22,7 @@ class Cart extends StatelessWidget {
             stream: _cartServices.cartProducts,
             builder: (context, snapshot) {
               return Scaffold(
-                appBar: AppBar(title: Text('My Cart')),
+                appBar: CustomAppBar(size.height * 0.1, false),
                 body: !snapshot.hasData
                     ? Loading(color: Theme.of(context).primaryColor)
                     : Stack(

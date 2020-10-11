@@ -1,89 +1,131 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:market_place/models/category_model.dart';
 import 'package:market_place/screens/list_product_cate/list_product_cate.dart';
 import 'package:market_place/services/category_services.dart';
 
 class CategoriesListCard extends StatelessWidget {
-  final int axisCount;
-  final Axis scrollDirection;
-  final bool fullList;
-
+  final bool listView;
   final CategoryServices _categoryServices = CategoryServices();
-  CategoriesListCard({@required this.axisCount, this.scrollDirection, this.fullList});
+
+  CategoriesListCard(this.listView);
 
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<List<CategoryModel>>(
       stream: _categoryServices.listOfCategories,
       builder: (context, snapshot) {
-        return GridView.builder(
-          physics: BouncingScrollPhysics(),
-          scrollDirection: scrollDirection,
-          padding: EdgeInsets.all(12.0),
-          shrinkWrap: true,
-          itemCount: fullList ? snapshot?.data?.length ?? 0 : 6,
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: axisCount,
-            crossAxisSpacing: 12.0,
-            mainAxisSpacing: 12.0,
+        if (snapshot.hasData) {
+          return listView == true
+              ? CatListView(snapshot: snapshot)
+              : CatGridList(snapshot: snapshot);
+        } else {
+          return Center(child: LinearProgressIndicator());
+        }
+      },
+    );
+  }
+}
+
+class CatListView extends StatelessWidget {
+  CatListView({this.snapshot});
+  final snapshot;
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.builder(
+      padding: const EdgeInsets.symmetric(horizontal: 6.0),
+      itemCount: snapshot.data.length,
+      physics: NeverScrollableScrollPhysics(),
+      shrinkWrap: true,
+      itemBuilder: (context, index) {
+        return InkWell(
+          onTap: () => Navigator.push(
+            context,
+            CupertinoPageRoute(
+              builder: (context) => ListProductCategories(
+                categoryModel: snapshot.data[index],
+              ),
+            ),
           ),
-          itemBuilder: (context, index) {
-            return !snapshot.hasData || snapshot.data.length == null
-                ? Center(child: CircularProgressIndicator())
-                : ClipRRect(
-                    borderRadius: BorderRadius.circular(18.0),
-                    child: InkWell(
-                      highlightColor: Colors.green,
-                      onTap: () => Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => ListProductCategories(
-                            productCat: snapshot.data[index].lable,
-                          ),
-                        ),
-                      ),
-                      child: Stack(
-                        children: [
-                          Image.network(
-                            snapshot.data[index].image,
-                            fit: BoxFit.cover,
-                            height: double.infinity,
-                            width: double.infinity,
-                            loadingBuilder: (context, child, loadingProgress) {
-                              if (loadingProgress == null) return child;
-                              return Center(
-                                child: CircularProgressIndicator(
-                                  value: loadingProgress.expectedTotalBytes != null
-                                      ? loadingProgress.cumulativeBytesLoaded /
-                                          loadingProgress.expectedTotalBytes
-                                      : null,
-                                ),
-                              );
-                            },
-                          ),
-                          Align(
-                            alignment: Alignment.bottomCenter,
-                            child: Container(
-                              height: 26.0,
-                              padding: EdgeInsets.all(4.0),
-                              alignment: Alignment.bottomCenter,
-                              width: double.infinity,
-                              color: Theme.of(context).accentColor,
-                              child: Text(
-                                snapshot.data[index].lable,
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .subtitle2
-                                    .copyWith(color: Theme.of(context).appBarTheme.color),
-                              ),
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
-                  );
-          },
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 6.0),
+            child: ListTile(
+              title: Text(
+                snapshot.data[index].lable,
+                style: Theme.of(context).textTheme.bodyText1,
+              ),
+              leading: SizedBox(
+                height: 48.0,
+                width: 48.0,
+                child: SvgPicture.network(
+                  snapshot.data[index].image,
+                  placeholderBuilder: (BuildContext context) => Center(
+                    child: const CircularProgressIndicator(),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        );
+      },
+    );
+  }
+}
+
+class CatGridList extends StatelessWidget {
+  CatGridList({@required this.snapshot});
+
+  final snapshot;
+
+  @override
+  Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+    return ListView.builder(
+      physics: BouncingScrollPhysics(),
+      scrollDirection: Axis.horizontal,
+      itemCount: 6,
+      itemBuilder: (context, index) {
+        return InkWell(
+          onTap: () => Navigator.push(
+            context,
+            CupertinoPageRoute(
+              builder: (context) => ListProductCategories(
+                categoryModel: snapshot.data[index],
+              ),
+            ),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(12.0),
+            child: Column(
+              children: [
+                SvgPicture.network(
+                  snapshot.data[index].image,
+                  height: size.height * 0.2,
+                  width: size.width * 0.2,
+                  placeholderBuilder: (BuildContext context) => Center(
+                    child: const CircularProgressIndicator(),
+                  ),
+                ),
+                Container(
+                  height: 26.0,
+                  padding: EdgeInsets.all(4.0),
+                  alignment: Alignment.bottomCenter,
+                  width: size.width * 0.3,
+                  color: Colors.white,
+                  child: Text(
+                    snapshot.data[index].lable,
+                    style: Theme.of(context)
+                        .textTheme
+                        .subtitle1
+                        .copyWith(color: Theme.of(context).accentColor),
+                  ),
+                )
+              ],
+            ),
+          ),
         );
       },
     );
