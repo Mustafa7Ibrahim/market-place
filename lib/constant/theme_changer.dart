@@ -16,7 +16,7 @@ class ThemeChanger extends ChangeNotifier {
     primaryColor: Colors.green,
     accentColor: Colors.greenAccent,
     brightness: Brightness.light,
-    iconTheme: IconThemeData(color: Colors.grey[900]),
+    iconTheme: IconThemeData(color: Colors.green),
     floatingActionButtonTheme: FloatingActionButtonThemeData(
       backgroundColor: Colors.greenAccent,
       elevation: 0.0,
@@ -36,7 +36,7 @@ class ThemeChanger extends ChangeNotifier {
       ),
       iconTheme: IconThemeData(color: Colors.green),
     ),
-    scaffoldBackgroundColor: Colors.grey.withOpacity(0.1),
+    scaffoldBackgroundColor: Colors.grey[50],
     cursorColor: Colors.green,
   );
 
@@ -56,16 +56,13 @@ class ThemeChanger extends ChangeNotifier {
     brightness: Brightness.dark,
     appBarTheme: AppBarTheme(
       brightness: Brightness.dark,
-      color: Colors.grey[850],
-      centerTitle: true,
+      color: Colors.grey[900],
+      centerTitle: false,
       elevation: 0.0,
+      iconTheme: IconThemeData(color: Colors.greenAccent),
       textTheme: TextTheme(
-        headline6: TextStyle(color: Colors.greenAccent).copyWith(
-          fontSize: 18,
-          fontWeight: FontWeight.bold,
-        ),
+        headline6: TextStyle(color: Colors.greenAccent),
       ),
-      iconTheme: IconThemeData(color: Colors.white),
     ),
     scaffoldBackgroundColor: Colors.grey[850],
     cursorColor: Colors.greenAccent,

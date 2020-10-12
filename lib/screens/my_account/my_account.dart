@@ -78,7 +78,7 @@ class _MyAccountState extends State<MyAccount> {
           );
   }
 
-  buildProfileWhenHasData(BuildContext context, UserModel user, void switchChange(bool value)) {
+  buildProfileWhenHasData(BuildContext context, UserModel user, Function switchChange) {
     return SingleChildScrollView(
       physics: BouncingScrollPhysics(),
       child: Column(
@@ -86,7 +86,6 @@ class _MyAccountState extends State<MyAccount> {
           Container(
             padding: const EdgeInsets.all(12.0),
             width: double.infinity,
-            color: Theme.of(context).appBarTheme.color,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -156,7 +155,7 @@ class _MyAccountState extends State<MyAccount> {
                         activeColor: Theme.of(context).accentColor,
                         activeTrackColor: Theme.of(context).accentColor,
                         value: isSwitched,
-                        onChanged: (value) => switchChange(value),
+                        onChanged: switchChange,
                       ),
                     ],
                   ),
@@ -222,7 +221,7 @@ class HoverEffect extends StatelessWidget {
       child: Ink(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12.0),
-          color: Colors.white,
+          color: Theme.of(context).appBarTheme.color,
         ),
         child: InkWell(
           borderRadius: BorderRadius.circular(12.0),

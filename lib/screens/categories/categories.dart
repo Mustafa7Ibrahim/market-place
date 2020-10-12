@@ -12,7 +12,6 @@ class Categories extends StatelessWidget {
           children: [
             Container(
               alignment: Alignment.centerLeft,
-              color: Theme.of(context).appBarTheme.color,
               padding: const EdgeInsets.symmetric(horizontal: 12.0),
               height: size.height * 0.12,
               child: Row(

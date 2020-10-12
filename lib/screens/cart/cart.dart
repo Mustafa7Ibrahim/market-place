@@ -20,7 +20,7 @@ class Cart extends StatelessWidget {
         ? UserSignIn('Cart')
         : Scaffold(
             appBar: AppBar(
-              leading: Icon(Icons.shopping_bag_outlined),
+              leading: BackButton(),
               title: Text('Market Place'),
               titleSpacing: 0.0,
               actions: [
@@ -31,10 +31,6 @@ class Cart extends StatelessWidget {
                     context,
                     CupertinoPageRoute(builder: (context) => Cart()),
                   ),
-                ),
-                IconButton(
-                  icon: Icon(Icons.dehaze_rounded),
-                  onPressed: () {},
                 ),
               ],
             ),

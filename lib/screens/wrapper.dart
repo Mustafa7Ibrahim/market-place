@@ -40,27 +40,6 @@ class _WrapperState extends State<Wrapper> {
               CupertinoPageRoute(builder: (context) => Cart()),
             ),
           ),
-          IconButton(
-            icon: Icon(Icons.dehaze_rounded),
-            onPressed: () {
-              showModalBottomSheet(
-                context: context,
-                backgroundColor: Colors.transparent,
-                barrierColor: Colors.black.withOpacity(0.8),
-                elevation: 0.9,
-                isScrollControlled: true,
-                clipBehavior: Clip.antiAlias,
-                enableDrag: true,
-                isDismissible: true,
-                builder: (context) {
-                  return Container(
-                    margin: EdgeInsets.all(24.0),
-                    child: MyAccount(),
-                  );
-                },
-              );
-            },
-          ),
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(

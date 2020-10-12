@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:market_place/constant/decoration.dart';
 import 'package:market_place/models/cart_model.dart';
 import 'package:market_place/services/cart_services.dart';
-
-import 'image_network.dart';
+import 'loading.dart';
 
 class CartItem extends StatefulWidget {
   CartItem({this.cart});
@@ -64,7 +63,7 @@ class _CartItemState extends State<CartItem> {
                   text: '${widget.cart.sallerName}',
                   style: Theme.of(context).textTheme.caption.copyWith(
                         decoration: TextDecoration.underline,
-                        color: Theme.of(context).accentColor,
+                        color: Theme.of(context).primaryColor,
                       ),
                 ),
               ],
@@ -87,7 +86,7 @@ class _CartItemState extends State<CartItem> {
           icon: Icon(
             Icons.remove_circle,
             size: 30.0,
-            color: Theme.of(context).accentColor,
+            color: Theme.of(context).primaryColor,
           ),
           disabledColor: Colors.grey,
           onPressed: widget.cart.numberOfItems <= 1
@@ -111,7 +110,7 @@ class _CartItemState extends State<CartItem> {
           icon: Icon(
             Icons.add_circle,
             size: 30.0,
-            color: Theme.of(context).accentColor,
+            color: Theme.of(context).primaryColor,
           ),
           onPressed: () {
             _cartServices.addNewItemToCart(
@@ -133,7 +132,8 @@ class _CartItemState extends State<CartItem> {
       flex: 1,
       child: Text(
         '${widget.cart.itemPrice}',
-        style: Theme.of(context).textTheme.subtitle1.copyWith(color: Theme.of(context).accentColor),
+        style:
+            Theme.of(context).textTheme.subtitle1.copyWith(color: Theme.of(context).primaryColor),
       ),
     );
   }
@@ -145,12 +145,20 @@ class _CartItemState extends State<CartItem> {
         child: Stack(
           alignment: Alignment.center,
           children: <Widget>[
-            ImageNetwork(image: widget.cart.itemImg),
+            Image.network(
+              widget.cart.itemImg,
+              fit: BoxFit.cover,
+              loadingBuilder: (context, child, loadingProgress) {
+                return loadingProgress == null
+                    ? child
+                    : Loading(color: Theme.of(context).primaryColor);
+              },
+            ),
             IconButton(
               icon: Icon(
                 Icons.remove_shopping_cart,
                 size: 34.0,
-                color: Theme.of(context).accentColor,
+                color: Theme.of(context).primaryColor,
               ),
               onPressed: () => _cartServices.removeItemFromCart(itemId: widget.cart.itemId),
             ),

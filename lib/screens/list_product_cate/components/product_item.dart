@@ -24,10 +24,10 @@ class _ProductItemState extends State<ProductItem> {
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
             SizedBox(
-              height: size.height * 0.4,
+              height: size.height * 0.3,
               child: Image.network(
                 widget.product.productImages.first,
-                fit: BoxFit.contain,
+                fit: BoxFit.cover,
                 height: double.infinity,
                 width: double.infinity,
                 loadingBuilder: (context, child, loadingProgress) {
@@ -37,22 +37,29 @@ class _ProductItemState extends State<ProductItem> {
                 },
               ),
             ),
-            Text(
-              widget.product.productName,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: Theme.of(context).textTheme.bodyText1.copyWith(fontSize: 16.0),
+            SizedBox(height: 8.0),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+              child: Text(
+                widget.product.productName,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: Theme.of(context).textTheme.bodyText1.copyWith(fontSize: 16.0),
+              ),
             ),
             SizedBox(height: 8.0),
-            Text(
-              '\$${widget.product.price}',
-              style: Theme.of(context).textTheme.bodyText2.copyWith(fontSize: 18.0),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+              child: Text(
+                '\$${widget.product.price}',
+                style: Theme.of(context).textTheme.bodyText2.copyWith(fontSize: 18.0),
+              ),
             ),
           ],
         ),
         Positioned(
-          right: 8.0,
-          top: 8.0,
+          right: 4.0,
+          top: 4.0,
           child: IconButton(icon: Icon(Icons.favorite_outline_rounded), onPressed: () {}),
         )
       ],
