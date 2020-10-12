@@ -4,6 +4,7 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:market_place/models/category_model.dart';
 import 'package:market_place/screens/list_product_cate/list_product_cate.dart';
+import 'package:market_place/screens/my_account/my_account.dart';
 import 'package:market_place/services/category_services.dart';
 
 class CategoriesListCard extends StatelessWidget {
@@ -41,25 +42,25 @@ class CatListView extends StatelessWidget {
       physics: NeverScrollableScrollPhysics(),
       shrinkWrap: true,
       itemBuilder: (context, index) {
-        return InkWell(
-          onTap: () => Navigator.push(
-            context,
-            CupertinoPageRoute(
-              builder: (context) => ListProductCategories(
-                categoryModel: snapshot.data[index],
+        return Container(
+          margin: const EdgeInsets.symmetric(vertical: 4.0),
+          child: HoverEffect(
+            onTap: () => Navigator.push(
+              context,
+              CupertinoPageRoute(
+                builder: (context) => ListProductCategories(
+                  categoryModel: snapshot.data[index],
+                ),
               ),
             ),
-          ),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 6.0),
             child: ListTile(
               title: Text(
                 snapshot.data[index].lable,
                 style: Theme.of(context).textTheme.bodyText1,
               ),
               leading: SizedBox(
-                height: 48.0,
-                width: 48.0,
+                height: 28.0,
+                width: 28.0,
                 child: SvgPicture.network(
                   snapshot.data[index].image,
                   placeholderBuilder: (BuildContext context) => Center(

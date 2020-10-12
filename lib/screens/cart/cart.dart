@@ -1,9 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:market_place/constant/toast.dart';
 import 'package:market_place/models/cart_model.dart';
 import 'package:market_place/services/cart_services.dart';
-import 'package:market_place/widgets/custom_appbar.dart';
 import 'package:market_place/widgets/loading.dart';
 import 'package:market_place/widgets/item_cart.dart';
 import 'package:market_place/widgets/user_signin.dart';
@@ -18,12 +18,30 @@ class Cart extends StatelessWidget {
     final size = MediaQuery.of(context).size;
     return currentUser == null
         ? UserSignIn('Cart')
-        : StreamBuilder<List<CartModel>>(
-            stream: _cartServices.cartProducts,
-            builder: (context, snapshot) {
-              return Scaffold(
-                appBar: CustomAppBar(size.height * 0.1, false),
-                body: !snapshot.hasData
+        : Scaffold(
+            appBar: AppBar(
+              leading: Icon(Icons.shopping_bag_outlined),
+              title: Text('Market Place'),
+              titleSpacing: 0.0,
+              actions: [
+                IconButton(icon: Icon(Icons.search_rounded), onPressed: () {}),
+                IconButton(
+                  icon: Icon(Icons.shopping_cart_outlined),
+                  onPressed: () => Navigator.push(
+                    context,
+                    CupertinoPageRoute(builder: (context) => Cart()),
+                  ),
+                ),
+                IconButton(
+                  icon: Icon(Icons.dehaze_rounded),
+                  onPressed: () {},
+                ),
+              ],
+            ),
+            body: StreamBuilder<List<CartModel>>(
+              stream: _cartServices.cartProducts,
+              builder: (context, snapshot) {
+                return !snapshot.hasData
                     ? Loading(color: Theme.of(context).primaryColor)
                     : Stack(
                         children: <Widget>[
@@ -45,9 +63,9 @@ class Cart extends StatelessWidget {
                             ),
                           ),
                         ],
-                      ),
-              );
-            },
+                      );
+              },
+            ),
           );
   }
 

@@ -7,7 +7,6 @@ import 'package:market_place/models/product.dart';
 import 'package:market_place/screens/item_ui/item_ui.dart';
 import 'package:market_place/services/product_services.dart';
 import 'package:market_place/screens/list_product_cate/components/product_item.dart';
-import 'package:market_place/widgets/custom_appbar.dart';
 import 'package:market_place/widgets/loading.dart';
 
 class ListProductCategories extends StatefulWidget {
@@ -25,7 +24,7 @@ class _ListProductCategoriesState extends State<ListProductCategories> {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     return Scaffold(
-      appBar: CustomAppBar(size.height * 0.1, false),
+      // appBar: CustomAppBar(size.height * 0.1, false),
       body: SingleChildScrollView(
         physics: BouncingScrollPhysics(),
         child: Column(

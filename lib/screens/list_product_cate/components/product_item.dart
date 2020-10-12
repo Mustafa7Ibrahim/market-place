@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:market_place/models/product.dart';
-import 'package:market_place/services/cart_services.dart';
-
 import '../../../widgets/loading.dart';
 
 class ProductItem extends StatefulWidget {
@@ -14,7 +12,7 @@ class ProductItem extends StatefulWidget {
 
 class _ProductItemState extends State<ProductItem> {
   bool taped = false;
-  CartServices _cartServices = CartServices();
+  // CartServices _cartServices = CartServices();
 
   @override
   Widget build(BuildContext context) {

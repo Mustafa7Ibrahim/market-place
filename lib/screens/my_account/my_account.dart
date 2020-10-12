@@ -1,17 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:market_place/auth/auth.dart';
-import 'package:market_place/constant/decoration.dart';
 import 'package:market_place/constant/theme_changer.dart';
 import 'package:market_place/models/user_model.dart';
-import 'package:market_place/screens/my_account/edit_profile.dart';
 import 'package:market_place/services/user_services.dart';
-import 'package:market_place/widgets/image_network.dart';
-import 'package:market_place/widgets/info_row.dart';
 import 'package:market_place/widgets/loading.dart';
-import 'package:market_place/widgets/row_edit.dart';
 import 'package:market_place/widgets/user_signin.dart';
-import 'package:market_place/widgets/width_button.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -43,8 +37,6 @@ class _MyAccountState extends State<MyAccount> {
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
-
     var changeTheme = Provider.of<ThemeChanger>(context, listen: false);
     void switchChange(bool value) async {
       SharedPreferences pref = await SharedPreferences.getInstance();
@@ -67,193 +59,176 @@ class _MyAccountState extends State<MyAccount> {
 
     return currentUser == null
         ? UserSignIn('Account')
-        : StreamBuilder<UserModel>(
-            stream: UserServices().currentUserData,
-            builder: (context, snapshot) {
-              final user = snapshot.data;
-              if (snapshot.hasData) {
-                return Scaffold(
-                  appBar: appBar(context, user),
-                  body: Column(
-                    children: <Widget>[
-                      Expanded(
-                        child: ListView(
-                          children: <Widget>[
-                            SizedBox(height: 12.0),
-                            titleLine(context, 'My Account'),
-                            SizedBox(height: 12.0),
-                            personalInfo(user, context, size),
-                            SizedBox(height: 12.0),
-                            titleLine(context, 'Address'),
-                            SizedBox(height: 12.0),
-                            addressInfo(size, user),
-                          ],
-                        ),
-                      ),
-                      Align(
-                        alignment: Alignment.bottomCenter,
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 12.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: <Widget>[
-                              Text('Dark Theme'),
-                              Switch(
-                                activeColor: Theme.of(context).accentColor,
-                                activeTrackColor: Theme.of(context).accentColor,
-                                value: isSwitched,
-                                onChanged: (value) => switchChange(value),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      Align(
-                        alignment: Alignment.bottomCenter,
-                        child: WidthButton(
-                          width: size.width,
-                          onTap: () => auth.signOutWithGoogle(context),
-                          title: 'Sign Out',
-                        ),
-                      ),
-                    ],
-                  ),
-                );
-              } else if (snapshot.hasError) {
-                return Center(
-                  child: Text(snapshot.error),
-                );
-              } else {
+        : Scaffold(
+            body: StreamBuilder<UserModel>(
+              stream: UserServices().currentUserData,
+              builder: (context, snapshot) {
+                final user = snapshot.data;
+                if (snapshot.hasData) {
+                  return buildProfileWhenHasData(context, user, switchChange);
+                }
+
+                if (snapshot.hasError) {
+                  return Center(child: Text(snapshot.error));
+                }
+
                 return Loading(color: Theme.of(context).accentColor);
-              }
-            },
+              },
+            ),
           );
   }
 
-  AppBar appBar(BuildContext context, UserModel user) {
-    return AppBar(
-      title: Text('Account'),
-      actions: <Widget>[
-        FlatButton(
-          onPressed: () => Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => EditMyAccount(user),
-            ),
-          ),
-          child: Text('EDIT'),
-        )
-      ],
-    );
-  }
-
-  Container titleLine(BuildContext context, String title) {
-    return Container(
-      margin: EdgeInsets.symmetric(horizontal: 26.0),
-      child: Text(
-        title,
-        style: Theme.of(context).textTheme.headline6.copyWith(
-              fontWeight: FontWeight.bold,
-              color: Theme.of(context).iconTheme.color,
-            ),
-      ),
-    );
-  }
-
-  Container addressInfo(Size size, UserModel user) {
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: 12.0, vertical: 6.0),
-      margin: EdgeInsets.symmetric(horizontal: 12.0, vertical: 6.0),
-      decoration: BoxDecoration(
-        boxShadow: [shadow],
-        color: Theme.of(context).appBarTheme.color,
-        borderRadius: BorderRadius.circular(12.0),
-      ),
+  buildProfileWhenHasData(BuildContext context, UserModel user, void switchChange(bool value)) {
+    return SingleChildScrollView(
+      physics: BouncingScrollPhysics(),
       child: Column(
-        children: <Widget>[
-          RowEdit(
-            iconRow: Icons.person_pin_circle,
-            onTap: () {},
-            title: 'Home',
-          ),
-          InfoRow(
-            size: size,
-            title: 'Name',
-            info: user?.userName ?? '',
-          ),
-          InfoRow(
-            size: size,
-            title: 'Address',
-            info: user?.userAddress ?? '',
-          ),
-          InfoRow(
-            size: size,
-            title: 'Mobile Number',
-            info: user?.phoneNamber ?? '',
-          )
-        ],
-      ),
-    );
-  }
-
-  Container personalInfo(UserModel user, BuildContext context, Size size) {
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: 12.0, vertical: 6.0),
-      margin: EdgeInsets.symmetric(horizontal: 12.0, vertical: 6.0),
-      decoration: BoxDecoration(
-        boxShadow: [shadow],
-        color: Theme.of(context).appBarTheme.color,
-        borderRadius: BorderRadius.circular(12.0),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: <Widget>[
-          RowEdit(
-            title: 'Personal Information',
-            iconRow: Icons.person,
-            onTap: () {},
-          ),
-          SizedBox(height: 12.0),
-          Row(
-            children: <Widget>[
-              SizedBox(
-                height: size.width * 0.13,
-                width: size.width * 0.13,
-                child: ImageNetwork(
-                  image: user?.userImg ??
-                      'https://images.unsplash.com/photo-1532276269954-64188308dcb3?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80',
+        children: [
+          Container(
+            padding: const EdgeInsets.all(12.0),
+            width: double.infinity,
+            color: Theme.of(context).appBarTheme.color,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  '${user.userName}',
+                  style: Theme.of(context)
+                      .textTheme
+                      .headline6
+                      .copyWith(color: Theme.of(context).primaryColor),
                 ),
-              ),
-              SizedBox(width: 6.0),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 6.0),
-                child: RichText(
-                  text: TextSpan(
-                    children: [
-                      TextSpan(
-                        text: '${user?.userName ?? ""}\n',
-                        style: Theme.of(context)
-                            .textTheme
-                            .headline5
-                            .copyWith(fontWeight: FontWeight.bold),
+                Text('${user.userEmail}'),
+              ],
+            ),
+          ),
+          Container(
+            padding: const EdgeInsets.all(12.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 2.0),
+                  child: Text(
+                    'My Account',
+                    style: Theme.of(context).textTheme.caption,
+                  ),
+                ),
+                TypeOne(
+                  icon: Icons.dashboard_outlined,
+                  title: 'Orders',
+                  onTap: () {},
+                ),
+                SizedBox(height: 6.0),
+                TypeOne(
+                  icon: Icons.favorite_border_rounded,
+                  title: 'WishList',
+                  onTap: () {},
+                ),
+                SizedBox(height: 6.0),
+                TypeOne(
+                  icon: Icons.edit_rounded,
+                  title: 'Details',
+                  onTap: () {},
+                ),
+                SizedBox(height: 6.0),
+                TypeOne(
+                  icon: Icons.not_listed_location_outlined,
+                  title: 'Address book',
+                  onTap: () {},
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 2.0),
+                  child: Text(
+                    'Settings',
+                    style: Theme.of(context).textTheme.caption,
+                  ),
+                ),
+                HoverEffect(
+                  onTap: () {},
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                        child: Text('Dark Theme'),
                       ),
-                      TextSpan(
-                        text: user?.userEmail ?? '',
-                        style: Theme.of(context).textTheme.bodyText2,
+                      Switch(
+                        activeColor: Theme.of(context).accentColor,
+                        activeTrackColor: Theme.of(context).accentColor,
+                        value: isSwitched,
+                        onChanged: (value) => switchChange(value),
                       ),
                     ],
                   ),
                 ),
-              ),
-            ],
+                SizedBox(height: 6.0),
+                TypeOne(
+                  icon: Icons.language,
+                  title: 'Language',
+                  onTap: () {},
+                ),
+                SizedBox(height: 6.0),
+                TypeOne(
+                  icon: Icons.admin_panel_settings_outlined,
+                  title: 'Sign out',
+                  onTap: () => auth.signOutWithGoogle(context),
+                ),
+              ],
+            ),
           ),
-          SizedBox(height: 12.0),
-          InfoRow(
-            size: size,
-            title: 'Gender',
-            info: user?.userGender ?? 'Gender',
-          )
         ],
+      ),
+    );
+  }
+}
+
+class TypeOne extends StatelessWidget {
+  final Function onTap;
+  final String title;
+  final IconData icon;
+
+  const TypeOne({this.onTap, this.title, this.icon});
+
+  @override
+  Widget build(BuildContext context) {
+    return HoverEffect(
+      onTap: onTap,
+      child: Padding(
+        padding: const EdgeInsets.all(12.0),
+        child: Row(
+          children: [
+            Icon(icon),
+            SizedBox(width: 6.0),
+            Text(title),
+            Spacer(),
+            Icon(Icons.arrow_forward_ios_rounded),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class HoverEffect extends StatelessWidget {
+  const HoverEffect({@required this.onTap, @required this.child});
+
+  final Function onTap;
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      color: Colors.transparent,
+      child: Ink(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(12.0),
+          color: Colors.white,
+        ),
+        child: InkWell(
+          borderRadius: BorderRadius.circular(12.0),
+          onTap: onTap,
+          child: child,
+        ),
       ),
     );
   }

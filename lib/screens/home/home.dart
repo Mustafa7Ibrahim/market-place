@@ -4,7 +4,6 @@ import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:market_place/constant/constant.dart';
 import 'package:market_place/screens/categories/categories.dart';
 import 'package:market_place/widgets/categories_list_card.dart';
-import 'package:market_place/widgets/custom_appbar.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -18,7 +17,6 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     return Scaffold(
-      appBar: CustomAppBar(size.height * 0.1, true),
       body: SafeArea(
         child: SingleChildScrollView(
           physics: BouncingScrollPhysics(),
@@ -26,7 +24,7 @@ class _HomeState extends State<Home> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Container(
-                height: size.height * 0.35,
+                height: size.height * 0.3,
                 child: Swiper(
                   itemCount: imageDeals.length,
                   autoplay: true,
@@ -47,29 +45,25 @@ class _HomeState extends State<Home> {
                   },
                 ),
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 12.0),
-                    child: Text('Browse By Category'),
-                  ),
-                  FlatButton(
-                    child: Text('See All'),
-                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                    textColor: Theme.of(context).accentColor,
-                    onPressed: () => Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => Categories()),
-                    ),
-                  ),
-                ],
-              ),
-              Container(
-                height: size.height * 0.4,
-                child: CategoriesListCard(false),
-              ),
+              // Row(
+              //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              //   crossAxisAlignment: CrossAxisAlignment.center,
+              //   children: <Widget>[
+              //     Padding(
+              //       padding: const EdgeInsets.symmetric(horizontal: 12.0),
+              //       child: Text('Browse By Category'),
+              //     ),
+              //     FlatButton(
+              //       child: Text('See All'),
+              //       padding: const EdgeInsets.symmetric(horizontal: 8.0),
+              //       textColor: Theme.of(context).accentColor,
+              //       onPressed: () => Navigator.push(
+              //         context,
+              //         MaterialPageRoute(builder: (context) => Categories()),
+              //       ),
+              //     ),
+              //   ],
+              // ),
             ],
           ),
         ),
