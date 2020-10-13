@@ -15,7 +15,9 @@ Future<void> main() async {
   runApp(
     ChangeNotifierProvider(
       create: (_) => ThemeChanger(
-        themeData: darkTheme == null || false ? ThemeChanger.lightTheme : ThemeChanger.darkTheme,
+        themeData: darkTheme == false || darkTheme == null
+            ? ThemeChanger.lightTheme
+            : ThemeChanger.darkTheme,
       ),
       child: App(),
     ),

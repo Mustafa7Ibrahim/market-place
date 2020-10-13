@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:market_place/constant/decoration.dart';
 import 'package:market_place/models/cart_model.dart';
 import 'package:market_place/services/cart_services.dart';
-import 'loading.dart';
+import '../../../widgets/loading.dart';
 
 class CartItem extends StatefulWidget {
   CartItem({this.cart});

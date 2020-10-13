@@ -8,8 +8,9 @@ import 'package:market_place/models/product.dart';
 import 'package:market_place/screens/cart/cart.dart';
 import 'package:market_place/screens/item_ui/item_ui.dart';
 import 'package:market_place/services/product_services.dart';
-import 'package:market_place/screens/list_product_cate/components/product_item.dart';
 import 'package:market_place/widgets/loading.dart';
+
+import 'components/product_item.dart';
 
 class ListProductCategories extends StatefulWidget {
   final CategoryModel categoryModel;
@@ -28,7 +29,7 @@ class _ListProductCategoriesState extends State<ListProductCategories> {
     return Scaffold(
       appBar: AppBar(
         leading: BackButton(),
-        title: Text('Market Place'),
+        title: Text('M-Place'),
         titleSpacing: 0.0,
         actions: [
           IconButton(icon: Icon(Icons.search_rounded), onPressed: () {}),
@@ -38,10 +39,6 @@ class _ListProductCategoriesState extends State<ListProductCategories> {
               context,
               CupertinoPageRoute(builder: (context) => Cart()),
             ),
-          ),
-          IconButton(
-            icon: Icon(Icons.dehaze_rounded),
-            onPressed: () {},
           ),
         ],
       ),

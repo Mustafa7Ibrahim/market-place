@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:market_place/widgets/categories_list_card.dart';
+import 'package:market_place/models/category_model.dart';
+import 'package:market_place/services/category_services.dart';
+
+import 'components/categories_list.dart';
 
 class Categories extends StatelessWidget {
   @override
@@ -24,14 +27,20 @@ class Categories extends StatelessWidget {
                         .headline6
                         .copyWith(color: Theme.of(context).primaryColor),
                   ),
-                  Icon(
-                    Icons.category_rounded,
-                    color: Theme.of(context).primaryColor,
-                  ),
+                  Icon(Icons.category_rounded, color: Theme.of(context).primaryColor),
                 ],
               ),
             ),
-            CategoriesListCard(true),
+            StreamBuilder<List<CategoryModel>>(
+              stream: CategoryServices().listOfCategories,
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  return CategoriesList(snapshot: snapshot);
+                } else {
+                  return Center(child: LinearProgressIndicator());
+                }
+              },
+            ),
           ],
         ),
       ),

@@ -4,7 +4,6 @@ import 'package:market_place/models/product.dart';
 import 'package:market_place/screens/cart/cart.dart';
 import 'components/list_of_image_horizontal.dart';
 import 'components/product_deteles.dart';
-import 'components/product_price.dart';
 
 class ItemUi extends StatelessWidget {
   final Product product;
@@ -16,7 +15,7 @@ class ItemUi extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         leading: BackButton(),
-        title: Text('Market Place'),
+        title: Text('M-Place'),
         titleSpacing: 0.0,
         actions: [
           IconButton(icon: Icon(Icons.search_rounded), onPressed: () {}),
@@ -35,11 +34,19 @@ class ItemUi extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(
-              height: size.height * 0.4,
+              height: size.height * 0.5,
               child: Stack(
                 children: [
                   ListOfImageHorizontal(product: product, size: size),
-                  ProductPrice(size: size, product: product)
+                  Positioned(
+                    right: 12.0,
+                    top: 12.0,
+                    child: IconButton(
+                      icon: Icon(Icons.favorite_border),
+                      onPressed: () {},
+                    ),
+                  )
+                  // ProductPrice(size: size, product: product)
                 ],
               ),
             ),

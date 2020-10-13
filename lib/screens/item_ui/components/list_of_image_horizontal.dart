@@ -15,7 +15,7 @@ class ListOfImageHorizontal extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-      // physics: BouncingScrollPhysics(),
+      physics: PageScrollPhysics(),
       scrollDirection: Axis.horizontal,
       itemCount: product.productImages.length,
       itemBuilder: (context, index) {

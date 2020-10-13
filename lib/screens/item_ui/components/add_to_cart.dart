@@ -24,7 +24,7 @@ class AddToCartAndBuy extends StatelessWidget {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(18.0),
             ),
-            color: Theme.of(context).accentColor,
+            color: Theme.of(context).primaryColor,
             onPressed: () {
               if (currentUser == null) {
                 // showToast(context, 'Please Sign in first!');
@@ -43,7 +43,7 @@ class AddToCartAndBuy extends StatelessWidget {
             },
             child: Text(
               'Add to cart',
-              style: TextStyle(color: Theme.of(context).appBarTheme.color, fontSize: 18),
+              style: TextStyle(color: Theme.of(context).appBarTheme.color, fontSize: 16),
             ),
           ),
         )

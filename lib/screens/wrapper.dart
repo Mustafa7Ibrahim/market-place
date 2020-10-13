@@ -1,6 +1,7 @@
 import 'package:animations/animations.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:market_place/screens/cart/cart.dart';
 import 'package:market_place/screens/categories/categories.dart';
 import 'package:market_place/screens/home/home.dart';
@@ -26,10 +27,18 @@ class _WrapperState extends State<Wrapper> {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
-        leading: Icon(Icons.shopping_bag_outlined),
-        title: Text('Market Place'),
+        leading: Container(
+          margin: const EdgeInsets.symmetric(vertical: 8.0),
+          child: SvgPicture.asset(
+            'assets/images/appicon.svg',
+            color: Theme.of(context).primaryColor,
+          ),
+        ),
+        title: Text('M-Place'),
+        leadingWidth: size.width * 0.2,
         titleSpacing: 0.0,
         actions: [
           IconButton(icon: Icon(Icons.search_rounded), onPressed: () {}),
@@ -54,8 +63,8 @@ class _WrapperState extends State<Wrapper> {
         onTap: changePage,
         items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(label: 'Home', icon: Icon(Icons.home)),
-          BottomNavigationBarItem(label: 'Categories', icon: Icon(Icons.category)),
-          BottomNavigationBarItem(label: 'MyAccount', icon: Icon(Icons.person_outline)),
+          BottomNavigationBarItem(label: 'Categories', icon: Icon(Icons.category_rounded)),
+          BottomNavigationBarItem(label: 'MyAccount', icon: Icon(Icons.person)),
         ],
       ),
       body: PageTransitionSwitcher(

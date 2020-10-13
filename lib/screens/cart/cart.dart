@@ -5,7 +5,7 @@ import 'package:market_place/constant/toast.dart';
 import 'package:market_place/models/cart_model.dart';
 import 'package:market_place/services/cart_services.dart';
 import 'package:market_place/widgets/loading.dart';
-import 'package:market_place/widgets/item_cart.dart';
+import 'package:market_place/screens/cart/components/item_cart.dart';
 import 'package:market_place/widgets/user_signin.dart';
 import 'package:market_place/widgets/width_button.dart';
 

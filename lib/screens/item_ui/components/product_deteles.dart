@@ -13,25 +13,30 @@ class ProductDeteles extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 20.0, vertical: 12.0),
+      margin: EdgeInsets.symmetric(horizontal: 24.0, vertical: 18.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(product.productType, style: Theme.of(context).textTheme.caption),
-          SizedBox(height: 4.0),
+          Text(product.companyName, style: Theme.of(context).textTheme.overline),
+          SizedBox(height: 12.0),
           Text(product.productName, style: Theme.of(context).textTheme.headline6),
           SizedBox(height: 4.0),
-          Text(product.companyName, style: Theme.of(context).textTheme.caption),
-          Divider(thickness: 2),
+          Text(
+            '\$${product.price}',
+            style: Theme.of(context)
+                .textTheme
+                .headline6
+                .copyWith(color: Theme.of(context).primaryColor),
+          ),
+          SizedBox(height: 12.0),
           AddToCartAndBuy(product),
-          Divider(thickness: 2),
+          SizedBox(height: 12.0),
           Text('Description', style: Theme.of(context).textTheme.caption),
-          SizedBox(height: 4.0),
-          Text(product.description),
-          Divider(thickness: 2),
-          Text('Specification', style: Theme.of(context).textTheme.caption),
-          SizedBox(height: 4.0),
-          Text(product.specification),
+          SizedBox(height: 12.0),
+          Text(
+            product.description,
+            style: Theme.of(context).textTheme.bodyText2,
+          ),
         ],
       ),
     );
