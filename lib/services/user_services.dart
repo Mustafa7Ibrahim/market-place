@@ -78,9 +78,9 @@ class UserServices {
     );
   }
 
-  Stream<UserModel> get currentUserData {
+  Future<UserModel> get currentUserData {
     if (currentUser != null)
-      return userCollection.doc(currentUser.uid).snapshots().map(getUserData);
+      return userCollection.doc(currentUser.uid).get().then(getUserData);
     else
       return null;
   }

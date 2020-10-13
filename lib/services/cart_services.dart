@@ -94,6 +94,9 @@ class CartServices {
   }
 
   Stream<List<CartModel>> get cartProducts {
+    if (currentUser == null) {
+      return null;
+    }
     return userCollection.doc(currentUser.uid).collection('cart').snapshots().map(cartListMap);
   }
 }

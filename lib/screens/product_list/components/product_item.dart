@@ -60,7 +60,14 @@ class _ProductItemState extends State<ProductItem> {
         Positioned(
           right: 4.0,
           top: 4.0,
-          child: IconButton(icon: Icon(Icons.favorite_outline_rounded), onPressed: () {}),
+          child: IconButton(
+              icon: Icon(
+                taped ? Icons.favorite : Icons.favorite_outline_rounded,
+                color: Theme.of(context).primaryColor,
+              ),
+              onPressed: () {
+                setState(() => taped = !taped);
+              }),
         )
       ],
     );

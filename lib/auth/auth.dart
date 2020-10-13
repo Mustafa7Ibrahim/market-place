@@ -3,10 +3,11 @@ import 'dart:io';
 import 'package:apple_sign_in/apple_sign_in.dart';
 import 'package:device_info/device_info.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:market_place/constant/toast.dart';
-import 'package:market_place/screens/home/home.dart';
+import 'package:market_place/screens/wrapper.dart';
 import 'package:market_place/services/user_services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -21,13 +22,8 @@ class Auth {
   final UserServices _userServices = UserServices();
 
   Future signInWithGoogle({@required BuildContext context}) async {
-    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     try {
-      // try to sign in with google account
-      final GoogleSignInAccount googleSignInAccount = await googleSignIn.signIn().catchError(
-            (onError) => showToast(context, onError.toString()),
-          );
-
+      final GoogleSignInAccount googleSignInAccount = await googleSignIn.signIn();
       final GoogleSignInAuthentication googleSignInAuthentication =
           await googleSignInAccount.authentication;
 
@@ -54,19 +50,12 @@ class Auth {
         userGender: '',
       );
 
-      // make sure that the user id token is not null
-      assert(await user.getIdToken() != null);
-
-      final User currentUser = firebaseAuth.currentUser;
-
-      sharedPreferences.setString('user', currentUser.uid);
-
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-          builder: (context) => Home(),
-        ),
-      );
+      // Navigator.pushReplacement(
+      //   context,
+      //   CupertinoPageRoute(
+      //     builder: (context) => Wrapper(),
+      //   ),
+      // );
 
       return user;
     } catch (e) {
@@ -76,13 +65,10 @@ class Auth {
     }
   }
 
-  signOutWithGoogle(BuildContext context) async {
-    SharedPreferences pref = await SharedPreferences.getInstance();
+  Future signOutWithGoogle(BuildContext context) async {
     try {
-      await googleSignIn
-          .signOut()
-          .catchError((onError) => showToast(context, onError.toString()))
-          .whenComplete(() => pref.remove('user'));
+      await firebaseAuth.signOut();
+      await googleSignIn.signOut();
       showToast(context, 'Sign out Successfuly');
     } catch (e) {
       showToast(context, e.toString());
@@ -149,8 +135,8 @@ class Auth {
 
             Navigator.pushReplacement(
               context,
-              MaterialPageRoute(
-                builder: (context) => Home(),
+              CupertinoPageRoute(
+                builder: (context) => Wrapper(),
               ),
             );
           } catch (e) {
