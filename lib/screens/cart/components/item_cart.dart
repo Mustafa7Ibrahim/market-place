@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:market_place/constant/decoration.dart';
 import 'package:market_place/models/cart_model.dart';
 import 'package:market_place/services/cart_services.dart';
-import '../../../widgets/loading.dart';
 
 class CartItem extends StatefulWidget {
   CartItem({this.cart});
@@ -149,9 +148,7 @@ class _CartItemState extends State<CartItem> {
               widget.cart.itemImg,
               fit: BoxFit.cover,
               loadingBuilder: (context, child, loadingProgress) {
-                return loadingProgress == null
-                    ? child
-                    : Loading(color: Theme.of(context).primaryColor);
+                return loadingProgress == null ? child : Center(child: CircularProgressIndicator());
               },
             ),
             IconButton(

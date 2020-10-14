@@ -36,8 +36,10 @@ class CommonItemsList extends StatelessWidget {
                       onTap: null,
                       child: OpenContainer(
                         transitionType: _transitionType,
-                        closedColor: Theme.of(context).appBarTheme.color,
-                        openColor: Theme.of(context).appBarTheme.color,
+                        closedColor: Theme.of(context).colorScheme.surface,
+                        openColor: Theme.of(context).colorScheme.surface,
+                        openElevation: 0.0,
+                        closedElevation: 0.0,
                         closedShape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(12.0),
                         ),

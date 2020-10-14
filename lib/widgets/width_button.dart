@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'loading.dart';
-
 class WidthButton extends StatelessWidget {
   const WidthButton({
     @required this.width,
@@ -23,10 +21,10 @@ class WidthButton extends StatelessWidget {
       child: RaisedButton(
         padding: EdgeInsets.all(12.0),
         color: Theme.of(context).primaryColor,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
         child: loading == true
-            ? Loading(color: Colors.white)
-            : Text(title, style: TextStyle(color: Theme.of(context).appBarTheme.color)),
+            ? CircularProgressIndicator()
+            : Text(title, style: TextStyle(color: Colors.white)),
         onPressed: onTap,
       ),
     );

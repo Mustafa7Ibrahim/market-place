@@ -31,13 +31,16 @@ class _WrapperState extends State<Wrapper> {
     return Scaffold(
       appBar: AppBar(
         leading: Container(
-          margin: const EdgeInsets.symmetric(vertical: 8.0),
+          margin: const EdgeInsets.symmetric(vertical: 12.0),
           child: SvgPicture.asset(
             'assets/images/appicon.svg',
             color: Theme.of(context).primaryColor,
           ),
         ),
-        title: Text('M-Place'),
+        title: Text(
+          'M-Place',
+          style: TextStyle(color: Theme.of(context).iconTheme.color),
+        ),
         leadingWidth: size.width * 0.2,
         titleSpacing: 0.0,
         actions: [

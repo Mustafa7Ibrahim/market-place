@@ -14,57 +14,45 @@ class ThemeChanger extends ChangeNotifier {
 
   static ThemeData lightTheme = ThemeData(
     primaryColor: Colors.green,
-    accentColor: Colors.greenAccent,
+    accentColor: Colors.green,
+    scaffoldBackgroundColor: Colors.white,
     brightness: Brightness.light,
-    iconTheme: IconThemeData(color: Colors.green),
-    floatingActionButtonTheme: FloatingActionButtonThemeData(
-      backgroundColor: Colors.greenAccent,
-      elevation: 0.0,
-    ),
-    snackBarTheme: SnackBarThemeData(
-      backgroundColor: Colors.white,
-      actionTextColor: Colors.green,
-      contentTextStyle: TextStyle(color: Colors.grey[900]),
-    ),
     appBarTheme: AppBarTheme(
-      color: Colors.white,
+      color: Colors.transparent,
       elevation: 0.0,
       centerTitle: false,
       brightness: Brightness.light,
-      textTheme: TextTheme(
-        headline6: TextStyle(color: Colors.green).copyWith(fontSize: 18),
-      ),
-      iconTheme: IconThemeData(color: Colors.green),
+      iconTheme: IconThemeData(color: Colors.black),
     ),
-    scaffoldBackgroundColor: Colors.grey[50],
+    iconTheme: IconThemeData(color: Colors.black),
+    floatingActionButtonTheme: FloatingActionButtonThemeData(
+      backgroundColor: Colors.green,
+      elevation: 0.0,
+    ),
     cursorColor: Colors.green,
   );
 
   static ThemeData darkTheme = ThemeData(
-    primaryColor: Colors.greenAccent,
-    accentColor: Colors.greenAccent,
-    iconTheme: IconThemeData(color: Colors.white),
-    floatingActionButtonTheme: FloatingActionButtonThemeData(
-      backgroundColor: Colors.greenAccent,
-      elevation: 0.0,
-    ),
-    snackBarTheme: SnackBarThemeData(
-      backgroundColor: Colors.grey[850],
-      actionTextColor: Colors.greenAccent,
-      contentTextStyle: TextStyle(color: Colors.white),
-    ),
+    primaryColor: Color(0xff03dac6),
+    accentColor: Color(0xff03dac6),
+    scaffoldBackgroundColor: Colors.black,
     brightness: Brightness.dark,
     appBarTheme: AppBarTheme(
-      brightness: Brightness.dark,
-      color: Colors.grey[900],
-      centerTitle: false,
+      color: Colors.transparent,
       elevation: 0.0,
-      iconTheme: IconThemeData(color: Colors.greenAccent),
-      textTheme: TextTheme(
-        headline6: TextStyle(color: Colors.greenAccent),
-      ),
+      centerTitle: false,
+      brightness: Brightness.dark,
+      iconTheme: IconThemeData(color: Colors.white),
     ),
-    scaffoldBackgroundColor: Colors.grey[850],
-    cursorColor: Colors.greenAccent,
+    colorScheme: ColorScheme.light(
+      surface: Color(0xFF222225),
+      brightness: Brightness.dark,
+    ),
+    iconTheme: IconThemeData(color: Colors.white),
+    floatingActionButtonTheme: FloatingActionButtonThemeData(
+      backgroundColor: Color(0xff03dac6),
+      elevation: 0.0,
+    ),
+    cursorColor: Color(0xff03dac6),
   );
 }

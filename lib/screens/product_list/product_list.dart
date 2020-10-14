@@ -8,7 +8,6 @@ import 'package:market_place/models/product.dart';
 import 'package:market_place/screens/cart/cart.dart';
 import 'package:market_place/screens/item_ui/item_ui.dart';
 import 'package:market_place/services/product_services.dart';
-import 'package:market_place/widgets/loading.dart';
 
 import 'components/product_item.dart';
 
@@ -88,11 +87,13 @@ class _ListProductCategoriesState extends State<ListProductCategories> {
                     itemBuilder: (context, index) {
                       return OpenContainer(
                         transitionType: _transitionType,
-                        closedColor: Theme.of(context).appBarTheme.color,
-                        openColor: Theme.of(context).appBarTheme.color,
+                        closedColor: Theme.of(context).colorScheme.surface,
+                        openColor: Theme.of(context).colorScheme.surface,
                         closedShape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(12.0),
                         ),
+                        closedElevation: 0.0,
+                        openElevation: 0.0,
                         closedBuilder: (context, action) {
                           return ProductItem(
                             product: snapshot.data[index],
@@ -126,7 +127,7 @@ class _ListProductCategoriesState extends State<ListProductCategories> {
                   //   },
                   // );
                 }
-                return Loading(color: Theme.of(context).primaryColor);
+                return Center(child: CircularProgressIndicator());
               },
             ),
           ],

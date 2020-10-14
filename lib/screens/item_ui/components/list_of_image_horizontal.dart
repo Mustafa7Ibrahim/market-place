@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:market_place/models/product.dart';
-import 'package:market_place/widgets/loading.dart';
 
 class ListOfImageHorizontal extends StatelessWidget {
   const ListOfImageHorizontal({
@@ -24,7 +23,7 @@ class ListOfImageHorizontal extends StatelessWidget {
           fit: BoxFit.contain,
           width: size.width,
           loadingBuilder: (context, child, loadingProgress) {
-            return loadingProgress == null ? child : Loading(color: Theme.of(context).primaryColor);
+            return loadingProgress == null ? child : Center(child: CircularProgressIndicator());
           },
         );
       },

@@ -17,7 +17,7 @@ class CommonItems extends StatelessWidget {
     return Column(
       children: [
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+          padding: const EdgeInsets.symmetric(horizontal: 12.0),
           child: HoverEffect(
             child: Padding(
               padding: const EdgeInsets.all(14.0),

@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:market_place/models/product.dart';
 
-import '../../../widgets/loading.dart';
-
 class ProductItem extends StatefulWidget {
   ProductItem({this.product, @required this.size});
   final Product product;
@@ -34,7 +32,7 @@ class _ProductItemState extends State<ProductItem> {
                     loadingBuilder: (context, child, loadingProgress) {
                       return loadingProgress == null
                           ? child
-                          : Loading(color: Theme.of(context).primaryColor);
+                          : Center(child: CircularProgressIndicator());
                     },
                   ),
                 ),
