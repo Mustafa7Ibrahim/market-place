@@ -42,89 +42,95 @@ class _ListProductCategoriesState extends State<ListProductCategories> {
           ),
         ],
       ),
-      body: Column(
-        children: [
-          Container(
-            alignment: Alignment.centerLeft,
-            margin: const EdgeInsets.symmetric(horizontal: 24.0),
-            height: size.height * 0.12,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(widget.categoryModel.lable, style: Theme.of(context).textTheme.headline5),
-                SizedBox(
-                  height: 34.0,
-                  width: 34.0,
-                  child: SvgPicture.network(
-                    widget.categoryModel.image,
-                    placeholderBuilder: (BuildContext context) => Center(
-                      child: const CircularProgressIndicator(),
+      body: SingleChildScrollView(
+        physics: BouncingScrollPhysics(),
+        child: Column(
+          children: [
+            Container(
+              alignment: Alignment.centerLeft,
+              margin: const EdgeInsets.symmetric(horizontal: 24.0),
+              height: size.height * 0.12,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(widget.categoryModel.lable, style: Theme.of(context).textTheme.headline5),
+                  SizedBox(
+                    height: 34.0,
+                    width: 34.0,
+                    child: SvgPicture.network(
+                      widget.categoryModel.image,
+                      placeholderBuilder: (BuildContext context) => Center(
+                        child: const CircularProgressIndicator(),
+                      ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-          StreamBuilder<List<Product>>(
-            stream: FirebaseFirestore.instance
-                .collectionGroup(widget.categoryModel.lable)
-                .snapshots()
-                .map(ProductServices().productList),
-            builder: (context, snapshot) {
-              if (snapshot.hasData) {
-                return GridView.builder(
-                  shrinkWrap: true,
-                  padding: EdgeInsets.symmetric(horizontal: 18.0),
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    crossAxisSpacing: 8.0,
-                    mainAxisSpacing: 8.0,
-                    childAspectRatio: 0.6,
-                  ),
-                  physics: BouncingScrollPhysics(),
-                  itemCount: snapshot.data.length,
-                  itemBuilder: (context, index) {
-                    return OpenContainer(
-                      transitionType: _transitionType,
-                      closedColor: Theme.of(context).appBarTheme.color,
-                      closedElevation: 1,
-                      closedShape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12.0),
-                      ),
-                      closedBuilder: (context, action) {
-                        return ProductItem(product: snapshot.data[index]);
-                      },
-                      openBuilder: (context, action) {
-                        return ItemUi(product: snapshot.data[index]);
-                      },
-                    );
-                  },
-                );
-                //
-                // return ListView.builder(
-                //   itemCount: snapshot.data.length,
-                //   itemBuilder: (context, index) {
-                //     return OpenContainer(
-                //       onClosed: null,
-                //       closedColor: Theme.of(context).scaffoldBackgroundColor,
-                //       closedBuilder: (context, action) {
-                //         return Item(
-                //           size: size,
-                //           product: snapshot.data[index],
-                //         );
-                //       },
-                //       transitionType: _transitionType,
-                //       openBuilder: (context, action) {
-                //         return ProductViewing(product: snapshot.data[index]);
-                //       },
-                //     );
-                //   },
-                // );
-              }
-              return Loading(color: Theme.of(context).primaryColor);
-            },
-          ),
-        ],
+            StreamBuilder<List<Product>>(
+              stream: FirebaseFirestore.instance
+                  .collectionGroup(widget.categoryModel.lable)
+                  .snapshots()
+                  .map(ProductServices().productList),
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  return GridView.builder(
+                    shrinkWrap: true,
+                    padding: EdgeInsets.symmetric(horizontal: 18.0),
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      crossAxisSpacing: 8.0,
+                      mainAxisSpacing: 8.0,
+                      childAspectRatio: 0.6,
+                    ),
+                    physics: NeverScrollableScrollPhysics(),
+                    itemCount: snapshot.data.length,
+                    itemBuilder: (context, index) {
+                      return OpenContainer(
+                        transitionType: _transitionType,
+                        closedColor: Theme.of(context).appBarTheme.color,
+                        openColor: Theme.of(context).appBarTheme.color,
+                        closedShape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12.0),
+                        ),
+                        closedBuilder: (context, action) {
+                          return ProductItem(
+                            product: snapshot.data[index],
+                            size: size,
+                          );
+                        },
+                        openBuilder: (context, action) {
+                          return ItemUi(product: snapshot.data[index]);
+                        },
+                      );
+                    },
+                  );
+                  //
+                  // return ListView.builder(
+                  //   itemCount: snapshot.data.length,
+                  //   itemBuilder: (context, index) {
+                  //     return OpenContainer(
+                  //       onClosed: null,
+                  //       closedColor: Theme.of(context).scaffoldBackgroundColor,
+                  //       closedBuilder: (context, action) {
+                  //         return Item(
+                  //           size: size,
+                  //           product: snapshot.data[index],
+                  //         );
+                  //       },
+                  //       transitionType: _transitionType,
+                  //       openBuilder: (context, action) {
+                  //         return ProductViewing(product: snapshot.data[index]);
+                  //       },
+                  //     );
+                  //   },
+                  // );
+                }
+                return Loading(color: Theme.of(context).primaryColor);
+              },
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -1,7 +1,12 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:market_place/constant/constant.dart';
+import 'package:market_place/models/category_model.dart';
+import 'package:market_place/services/category_services.dart';
+
+import 'components/common_items.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -10,12 +15,14 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   var currentUser = FirebaseAuth.instance.currentUser;
+  ScrollController _scrollController = ScrollController();
 
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     return Scaffold(
       body: SingleChildScrollView(
+        controller: _scrollController,
         physics: BouncingScrollPhysics(),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -42,25 +49,24 @@ class _HomeState extends State<Home> {
                 },
               ),
             ),
-            // Row(
-            //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            //   crossAxisAlignment: CrossAxisAlignment.center,
-            //   children: <Widget>[
-            //     Padding(
-            //       padding: const EdgeInsets.symmetric(horizontal: 12.0),
-            //       child: Text('Browse By Category'),
-            //     ),
-            //     FlatButton(
-            //       child: Text('See All'),
-            //       padding: const EdgeInsets.symmetric(horizontal: 8.0),
-            //       textColor: Theme.of(context).accentColor,
-            //       onPressed: () => Navigator.push(
-            //         context,
-            //         MaterialPageRoute(builder: (context) => Categories()),
-            //       ),
-            //     ),
-            //   ],
-            // ),
+            StreamBuilder<List<CategoryModel>>(
+              stream: CategoryServices().listOfCategoriesAtHome,
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  return ListView.builder(
+                    shrinkWrap: true,
+                    physics: NeverScrollableScrollPhysics(),
+                    controller: _scrollController,
+                    itemCount: snapshot.data.length,
+                    itemBuilder: (context, index) {
+                      return CommonItems(size: size, categoryModel: snapshot.data[index]);
+                    },
+                  );
+                } else {
+                  return Center(child: LinearProgressIndicator());
+                }
+              },
+            ),
           ],
         ),
       ),
