@@ -28,7 +28,10 @@ class _ListProductCategoriesState extends State<ListProductCategories> {
     return Scaffold(
       appBar: AppBar(
         leading: BackButton(),
-        title: Text('M-Place'),
+        title: Text(
+          'M-Place',
+          style: TextStyle(color: Theme.of(context).iconTheme.color),
+        ),
         titleSpacing: 0.0,
         actions: [
           IconButton(icon: Icon(Icons.search_rounded), onPressed: () {}),
@@ -47,15 +50,15 @@ class _ListProductCategoriesState extends State<ListProductCategories> {
           children: [
             Container(
               alignment: Alignment.centerLeft,
-              margin: const EdgeInsets.symmetric(horizontal: 24.0),
+              margin: const EdgeInsets.symmetric(horizontal: 18.0),
               height: size.height * 0.12,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(widget.categoryModel.lable, style: Theme.of(context).textTheme.headline5),
+                  Text(widget.categoryModel.lable, style: Theme.of(context).textTheme.headline6),
                   SizedBox(
-                    height: 34.0,
-                    width: 34.0,
+                    height: 30.0,
+                    width: 30.0,
                     child: SvgPicture.network(
                       widget.categoryModel.image,
                       placeholderBuilder: (BuildContext context) => Center(
@@ -75,12 +78,12 @@ class _ListProductCategoriesState extends State<ListProductCategories> {
                 if (snapshot.hasData) {
                   return GridView.builder(
                     shrinkWrap: true,
-                    padding: EdgeInsets.symmetric(horizontal: 18.0),
+                    padding: EdgeInsets.symmetric(horizontal: 12.0),
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 2,
-                      crossAxisSpacing: 8.0,
-                      mainAxisSpacing: 8.0,
-                      childAspectRatio: 0.6,
+                      crossAxisSpacing: 12.0,
+                      mainAxisSpacing: 12.0,
+                      childAspectRatio: 0.7,
                     ),
                     physics: NeverScrollableScrollPhysics(),
                     itemCount: snapshot.data.length,

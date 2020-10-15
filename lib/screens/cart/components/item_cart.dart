@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:market_place/constant/decoration.dart';
 import 'package:market_place/models/cart_model.dart';
 import 'package:market_place/services/cart_services.dart';
 
 class CartItem extends StatefulWidget {
-  CartItem({this.cart});
+  CartItem({this.cart, this.size});
   final CartModel cart;
+  final Size size;
 
   @override
   _CartItemState createState() => _CartItemState();
@@ -17,17 +17,16 @@ class _CartItemState extends State<CartItem> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.all(6.0),
+      margin: EdgeInsets.all(12.0),
       padding: EdgeInsets.all(6.0),
       decoration: BoxDecoration(
-        boxShadow: [shadow],
-        color: Theme.of(context).appBarTheme.color,
+        color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(12.0),
       ),
       child: Row(
         children: <Widget>[
           SizedBox(width: 14.0),
-          itemImage(context),
+          itemImage(context, widget.size),
           SizedBox(width: 14.0),
           itemInfo(context),
           SizedBox(width: 12.0),
@@ -39,14 +38,14 @@ class _CartItemState extends State<CartItem> {
 
   Expanded itemInfo(BuildContext context) {
     return Expanded(
-      flex: 3,
+      flex: 4,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           SizedBox(height: 12.0),
           Text(
             widget.cart.itemName,
-            maxLines: 2,
+            maxLines: 1,
             overflow: TextOverflow.ellipsis,
             style: Theme.of(context).textTheme.subtitle1.copyWith(
                   color: Theme.of(context).iconTheme.color,
@@ -128,39 +127,37 @@ class _CartItemState extends State<CartItem> {
 
   Expanded itemPrice(BuildContext context) {
     return Expanded(
-      flex: 1,
+      flex: 2,
       child: Text(
-        '${widget.cart.itemPrice}',
+        '\$${widget.cart.itemPrice}',
         style:
             Theme.of(context).textTheme.subtitle1.copyWith(color: Theme.of(context).primaryColor),
       ),
     );
   }
 
-  Expanded itemImage(BuildContext context) {
+  Expanded itemImage(BuildContext context, Size size) {
     return Expanded(
       flex: 1,
-      child: GestureDetector(
-        child: Stack(
-          alignment: Alignment.center,
-          children: <Widget>[
-            Image.network(
-              widget.cart.itemImg,
-              fit: BoxFit.cover,
-              loadingBuilder: (context, child, loadingProgress) {
-                return loadingProgress == null ? child : Center(child: CircularProgressIndicator());
-              },
+      child: Stack(
+        alignment: Alignment.center,
+        children: <Widget>[
+          Image.network(
+            widget.cart.itemImg,
+            fit: BoxFit.cover,
+            loadingBuilder: (context, child, loadingProgress) {
+              return loadingProgress == null ? child : Center(child: CircularProgressIndicator());
+            },
+          ),
+          IconButton(
+            icon: Icon(
+              Icons.remove_shopping_cart,
+              size: 34.0,
+              color: Theme.of(context).primaryColor,
             ),
-            IconButton(
-              icon: Icon(
-                Icons.remove_shopping_cart,
-                size: 34.0,
-                color: Theme.of(context).primaryColor,
-              ),
-              onPressed: () => _cartServices.removeItemFromCart(itemId: widget.cart.itemId),
-            ),
-          ],
-        ),
+            onPressed: () => _cartServices.removeItemFromCart(itemId: widget.cart.itemId),
+          ),
+        ],
       ),
     );
   }

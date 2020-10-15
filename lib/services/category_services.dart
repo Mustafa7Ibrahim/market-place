@@ -19,7 +19,7 @@ class CategoryServices {
   Stream<List<CategoryModel>> get listOfCategoriesAtHome {
     return FirebaseFirestore.instance
         .collection('Categories')
-        .limit(4)
+        .limit(6)
         .snapshots()
         .map(_categoryList);
   }

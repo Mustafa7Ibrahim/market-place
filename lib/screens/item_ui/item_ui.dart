@@ -15,7 +15,10 @@ class ItemUi extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         leading: BackButton(),
-        title: Text('M-Place'),
+        title: Text(
+          'M-Place',
+          style: TextStyle(color: Theme.of(context).iconTheme.color),
+        ),
         titleSpacing: 0.0,
         actions: [
           IconButton(icon: Icon(Icons.search_rounded), onPressed: () {}),
@@ -46,7 +49,6 @@ class ItemUi extends StatelessWidget {
                       onPressed: () {},
                     ),
                   )
-                  // ProductPrice(size: size, product: product)
                 ],
               ),
             ),

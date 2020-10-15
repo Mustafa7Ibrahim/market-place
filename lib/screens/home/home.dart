@@ -28,18 +28,18 @@ class _HomeState extends State<Home> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Container(
-              height: size.height * 0.3,
+              height: size.height * 0.35,
               child: Swiper(
                 itemCount: imageDeals.length,
                 autoplay: true,
                 autoplayDelay: 5000,
                 duration: 1000,
-                pagination: SwiperPagination(alignment: Alignment.bottomCenter),
+                // pagination: SwiperPagination(alignment: Alignment.bottomCenter),
                 itemBuilder: (BuildContext context, int index) {
                   return Container(
                     margin: EdgeInsets.all(12.0),
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(18.0),
+                      borderRadius: BorderRadius.circular(12.0),
                       image: DecorationImage(
                         image: AssetImage(imageDeals[index]),
                         fit: BoxFit.fill,

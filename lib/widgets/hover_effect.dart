@@ -13,7 +13,7 @@ class HoverEffect extends StatelessWidget {
       child: Ink(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12.0),
-          color: Theme.of(context).colorScheme.surface,
+          // color: Theme.of(context).colorScheme.surface,
         ),
         child: InkWell(
           borderRadius: BorderRadius.circular(12.0),

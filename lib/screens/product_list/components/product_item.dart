@@ -28,7 +28,7 @@ class _ProductItemState extends State<ProductItem> {
                 child: Center(
                   child: Image.network(
                     widget.product.productImages.first,
-                    fit: BoxFit.cover,
+                    fit: BoxFit.fill,
                     loadingBuilder: (context, child, loadingProgress) {
                       return loadingProgress == null
                           ? child
@@ -61,8 +61,8 @@ class _ProductItemState extends State<ProductItem> {
             ],
           ),
           Positioned(
-            right: 4.0,
-            top: 4.0,
+            right: 0.0,
+            top: 0.0,
             child: IconButton(
                 icon: Icon(
                   taped ? Icons.favorite : Icons.favorite_outline_rounded,

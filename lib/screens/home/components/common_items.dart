@@ -17,16 +17,22 @@ class CommonItems extends StatelessWidget {
     return Column(
       children: [
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 12.0),
+          padding: const EdgeInsets.symmetric(horizontal: 10.0),
           child: HoverEffect(
             child: Padding(
-              padding: const EdgeInsets.all(14.0),
+              padding: const EdgeInsets.all(12.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Text(categoryModel.lable),
-                  Text('See more', style: TextStyle(color: Theme.of(context).primaryColor)),
+                  Text(categoryModel.lable, style: Theme.of(context).textTheme.bodyText1),
+                  Text(
+                    'See more',
+                    style: TextStyle(
+                      color: Theme.of(context).primaryColor,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
                 ],
               ),
             ),

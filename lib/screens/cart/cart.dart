@@ -15,17 +15,13 @@ class Cart extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         leading: BackButton(),
-        title: Text('Market Place'),
+        title: Text(
+          'M-Place',
+          style: TextStyle(color: Theme.of(context).iconTheme.color),
+        ),
         titleSpacing: 0.0,
         actions: [
           IconButton(icon: Icon(Icons.search_rounded), onPressed: () {}),
-          IconButton(
-            icon: Icon(Icons.shopping_cart_outlined),
-            onPressed: () => Navigator.push(
-              context,
-              CupertinoPageRoute(builder: (context) => Cart()),
-            ),
-          ),
         ],
       ),
       body: StreamBuilder<List<CartModel>>(
@@ -35,25 +31,48 @@ class Cart extends StatelessWidget {
               ? Center(child: Text('Please LogIn First!'))
               : !snapshot.hasData
                   ? Center(child: Text('No items in your cart!'))
-                  : Stack(
-                      children: <Widget>[
-                        ListView.builder(
-                          itemCount: snapshot.data.length,
-                          itemBuilder: (context, index) {
-                            return CartItem(cart: snapshot.data[index]);
-                          },
+                  : Scaffold(
+                      bottomNavigationBar: Container(
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.all(18.0),
+                                  child: Text('Total Price:'),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.all(18.0),
+                                  child: Text(
+                                    '\$4545.55',
+                                    style: TextStyle(
+                                      color: Theme.of(context).primaryColor,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            WidthButton(
+                              width: size.width,
+                              onTap: snapshot.data.length > 0
+                                  ? () =>
+                                      showDialog(context: context, child: confirmDialog(context))
+                                  : null,
+                              title: 'CHECKOUT',
+                            ),
+                          ],
                         ),
-                        Align(
-                          alignment: Alignment.bottomCenter,
-                          child: WidthButton(
-                            width: size.width,
-                            onTap: snapshot.data.length > 0
-                                ? () => showDialog(context: context, child: confirmDialog(context))
-                                : null,
-                            title: 'PROCEED TO CHECKOUT',
-                          ),
-                        ),
-                      ],
+                      ),
+                      body: ListView.builder(
+                        physics: BouncingScrollPhysics(),
+                        itemCount: snapshot.data.length,
+                        itemBuilder: (context, index) {
+                          return CartItem(cart: snapshot.data[index], size: size);
+                        },
+                      ),
                     );
         },
       ),

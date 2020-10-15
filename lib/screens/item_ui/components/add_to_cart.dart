@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:market_place/constant/toast.dart';
 import 'package:market_place/models/product.dart';
 import 'package:market_place/screens/item_ui/components/cart_counter.dart';
 import 'package:market_place/services/cart_services.dart';
@@ -27,7 +28,7 @@ class AddToCartAndBuy extends StatelessWidget {
             color: Theme.of(context).primaryColor,
             onPressed: () {
               if (currentUser == null) {
-                // showToast(context, 'Please Sign in first!');
+                showToast(context, 'Please Sign in first!');
                 return;
               }
 
@@ -39,11 +40,11 @@ class AddToCartAndBuy extends StatelessWidget {
                 itemPrice: product.price,
                 sallerName: product.companyName,
               );
-              // showToast(context, 'Add to cart');
+              showToast(context, 'Add to cart');
             },
             child: Text(
               'Add to cart',
-              style: TextStyle(color: Theme.of(context).appBarTheme.color, fontSize: 16),
+              style: TextStyle(color: Colors.white, fontSize: 16),
             ),
           ),
         )

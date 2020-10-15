@@ -15,7 +15,7 @@ class Categories extends StatelessWidget {
           children: [
             Container(
               alignment: Alignment.centerLeft,
-              padding: const EdgeInsets.symmetric(horizontal: 12.0),
+              padding: const EdgeInsets.symmetric(horizontal: 20.0),
               height: size.height * 0.12,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
