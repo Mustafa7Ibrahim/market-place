@@ -7,6 +7,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:market_place/constant/toast.dart';
+import 'package:market_place/models/user_model.dart';
 import 'package:market_place/screens/wrapper.dart';
 import 'package:market_place/services/user_services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -38,24 +39,16 @@ class Auth {
       // if it's a new user
       final User user = _userCredential.user;
 
-      // add a new user to fireStore
-      _userServices.addNewUser(
+      UserModel _userModel = UserModel(
         userId: user.uid,
         userEmail: user.email,
         userImg: user.photoURL,
         userName: user.displayName,
-        phoneNumber: '',
-        sallerCompanyName: '',
-        userAddress: '',
+        phoneNamber: '',
         userGender: '',
       );
 
-      // Navigator.pushReplacement(
-      //   context,
-      //   CupertinoPageRoute(
-      //     builder: (context) => Wrapper(),
-      //   ),
-      // );
+      _userServices.addNewUser(_userModel);
 
       return user;
     } catch (e) {
@@ -119,17 +112,17 @@ class Auth {
                 "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png";
             await currentUser.updateProfile(displayName: name, photoURL: photoURL);
 
-            // add new user to firestore
-            _userServices.addNewUser(
+            UserModel _userModel = UserModel(
               userId: _res.user.uid,
-              userName: _res.user.displayName,
               userEmail: _res.user.email,
               userImg: _res.user.photoURL,
-              phoneNumber: '',
-              sallerCompanyName: '',
-              userAddress: '',
+              userName: _res.user.displayName,
+              phoneNamber: '',
               userGender: '',
             );
+
+            // add new user to firestore
+            _userServices.addNewUser(_userModel);
 
             sharedPreferences.setString('user', currentUser.uid);
 
@@ -145,7 +138,6 @@ class Auth {
           break;
         case AuthorizationStatus.error:
           showToast(context, 'something went wrong!');
-
           break;
 
         case AuthorizationStatus.cancelled:

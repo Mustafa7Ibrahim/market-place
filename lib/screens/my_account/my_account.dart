@@ -1,9 +1,14 @@
 import 'dart:io';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:market_place/auth/auth.dart';
 import 'package:market_place/constant/theme_changer.dart';
 import 'package:market_place/models/user_model.dart';
+import 'package:market_place/screens/cart/cart.dart';
+import 'package:market_place/screens/my_account/components/addresses_list.dart';
+import 'package:market_place/screens/my_account/components/details.dart';
 import 'package:market_place/services/user_services.dart';
 import 'package:market_place/widgets/hover_effect.dart';
 import 'package:market_place/widgets/width_button.dart';
@@ -67,6 +72,31 @@ class _MyAccountState extends State<MyAccount> {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     return Scaffold(
+      appBar: AppBar(
+        leading: Container(
+          margin: const EdgeInsets.symmetric(vertical: 12.0),
+          child: SvgPicture.asset(
+            'assets/images/appicon.svg',
+            color: Theme.of(context).primaryColor,
+          ),
+        ),
+        title: Text(
+          'Account',
+          style: TextStyle(color: Theme.of(context).iconTheme.color),
+        ),
+        leadingWidth: size.width * 0.2,
+        titleSpacing: 0.0,
+        actions: [
+          IconButton(icon: Icon(Icons.search_rounded), onPressed: () {}),
+          IconButton(
+            icon: Icon(Icons.shopping_cart_outlined),
+            onPressed: () => Navigator.push(
+              context,
+              CupertinoPageRoute(builder: (context) => Cart()),
+            ),
+          ),
+        ],
+      ),
       body: FutureBuilder<UserModel>(
         future: UserServices().currentUserData,
         builder: (context, snapshot) {
@@ -134,13 +164,19 @@ class _MyAccountState extends State<MyAccount> {
                                     MenuButton(
                                       icon: Icons.edit_rounded,
                                       title: 'Details',
-                                      onTap: () {},
+                                      onTap: () => Navigator.push(
+                                        context,
+                                        CupertinoPageRoute(builder: (context) => Details(user)),
+                                      ),
                                     ),
                                     SizedBox(height: 6.0),
                                     MenuButton(
                                       icon: Icons.not_listed_location_outlined,
-                                      title: 'Address book',
-                                      onTap: () {},
+                                      title: 'My Addresses',
+                                      onTap: () => Navigator.push(
+                                        context,
+                                        CupertinoPageRoute(builder: (context) => AddressesBook()),
+                                      ),
                                     ),
                                     Padding(
                                       padding: const EdgeInsets.symmetric(
@@ -192,13 +228,7 @@ class _MyAccountState extends State<MyAccount> {
                         )
               : snapshot.connectionState == ConnectionState.waiting
                   ? Center(child: CircularProgressIndicator())
-                  : Center(
-                      child: WidthButton(
-                        width: double.infinity,
-                        onTap: signIn,
-                        title: 'Sign In',
-                      ),
-                    );
+                  : Center(child: WidthButton(onTap: signIn, title: 'Sign In'));
         },
       ),
     );

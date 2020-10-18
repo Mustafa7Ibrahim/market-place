@@ -1,8 +1,6 @@
 import 'package:animations/animations.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:market_place/screens/cart/cart.dart';
 import 'package:market_place/screens/categories/categories.dart';
 import 'package:market_place/screens/home/home.dart';
 import 'package:market_place/screens/my_account/my_account.dart';
@@ -27,33 +25,7 @@ class _WrapperState extends State<Wrapper> {
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
     return Scaffold(
-      appBar: AppBar(
-        leading: Container(
-          margin: const EdgeInsets.symmetric(vertical: 12.0),
-          child: SvgPicture.asset(
-            'assets/images/appicon.svg',
-            color: Theme.of(context).primaryColor,
-          ),
-        ),
-        title: Text(
-          'M-Place',
-          style: TextStyle(color: Theme.of(context).iconTheme.color),
-        ),
-        leadingWidth: size.width * 0.2,
-        titleSpacing: 0.0,
-        actions: [
-          IconButton(icon: Icon(Icons.search_rounded), onPressed: () {}),
-          IconButton(
-            icon: Icon(Icons.shopping_cart_outlined),
-            onPressed: () => Navigator.push(
-              context,
-              CupertinoPageRoute(builder: (context) => Cart()),
-            ),
-          ),
-        ],
-      ),
       bottomNavigationBar: BottomNavigationBar(
         elevation: 0.0,
         type: BottomNavigationBarType.fixed,
@@ -75,10 +47,11 @@ class _WrapperState extends State<Wrapper> {
           return FadeThroughTransition(
             animation: primaryAnimation,
             secondaryAnimation: secondaryAnimation,
+            fillColor: Theme.of(context).colorScheme.surface,
             child: child,
           );
         },
-        child: IndexedStack(children: _screenIndex, index: currentIndex),
+        child: _screenIndex[currentIndex],
       ),
     );
   }

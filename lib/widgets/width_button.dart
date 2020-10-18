@@ -1,15 +1,8 @@
 import 'package:flutter/material.dart';
 
 class WidthButton extends StatelessWidget {
-  const WidthButton({
-    @required this.width,
-    @required this.onTap,
-    @required this.title,
-    this.loading,
-  });
+  const WidthButton({@required this.onTap, @required this.title});
 
-  final bool loading;
-  final double width;
   final Function onTap;
   final String title;
 
@@ -17,14 +10,12 @@ class WidthButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.all(12.0),
-      width: width,
+      width: double.infinity,
       child: RaisedButton(
         padding: EdgeInsets.all(12.0),
         color: Theme.of(context).primaryColor,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
-        child: loading == true
-            ? CircularProgressIndicator()
-            : Text(title, style: TextStyle(color: Colors.white)),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
+        child: Text(title, style: TextStyle(color: Theme.of(context).scaffoldBackgroundColor)),
         onPressed: onTap,
       ),
     );

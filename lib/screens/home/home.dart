@@ -1,9 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:market_place/constant/constant.dart';
 import 'package:market_place/models/category_model.dart';
+import 'package:market_place/screens/cart/cart.dart';
 import 'package:market_place/services/category_services.dart';
 
 import 'components/common_items.dart';
@@ -21,6 +23,31 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     return Scaffold(
+      appBar: AppBar(
+        leading: Container(
+          margin: const EdgeInsets.symmetric(vertical: 8.0),
+          child: SvgPicture.asset(
+            'assets/images/appicon.svg',
+            color: Theme.of(context).primaryColor,
+          ),
+        ),
+        title: Text(
+          'Market Place',
+          style: TextStyle(color: Theme.of(context).iconTheme.color),
+        ),
+        leadingWidth: size.width * 0.2,
+        titleSpacing: 0.0,
+        actions: [
+          IconButton(icon: Icon(Icons.search_rounded), onPressed: () {}),
+          IconButton(
+            icon: Icon(Icons.shopping_cart_outlined),
+            onPressed: () => Navigator.push(
+              context,
+              CupertinoPageRoute(builder: (context) => Cart()),
+            ),
+          ),
+        ],
+      ),
       body: SingleChildScrollView(
         controller: _scrollController,
         physics: BouncingScrollPhysics(),
@@ -28,7 +55,7 @@ class _HomeState extends State<Home> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Container(
-              height: size.height * 0.35,
+              height: size.height * 0.3,
               child: Swiper(
                 itemCount: imageDeals.length,
                 autoplay: true,

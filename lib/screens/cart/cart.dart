@@ -56,7 +56,6 @@ class Cart extends StatelessWidget {
                               ],
                             ),
                             WidthButton(
-                              width: size.width,
                               onTap: snapshot.data.length > 0
                                   ? () =>
                                       showDialog(context: context, child: confirmDialog(context))
@@ -88,7 +87,6 @@ class Cart extends StatelessWidget {
           child: Text('Cancel'),
         ),
         WidthButton(
-          width: 75,
           onTap: () {
             showToast(context, 'Thank you for using Market Place');
             Navigator.pop(context);
