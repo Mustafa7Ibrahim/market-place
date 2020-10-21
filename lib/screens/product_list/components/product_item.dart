@@ -1,5 +1,9 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:market_place/constant/toast.dart';
 import 'package:market_place/models/product.dart';
+import 'package:market_place/models/wish_list_model.dart';
+import 'package:market_place/services/wishlist_services.dart';
 
 class ProductItem extends StatefulWidget {
   ProductItem({this.product, @required this.size});
@@ -12,7 +16,28 @@ class ProductItem extends StatefulWidget {
 
 class _ProductItemState extends State<ProductItem> {
   bool taped = false;
-  // CartServices _cartServices = CartServices();
+
+  void addToWishList() {
+    final User currentUser = FirebaseAuth.instance.currentUser;
+    if (currentUser == null) {
+      showToast(context, 'Please Sign in first!');
+      return;
+    }
+    WishListModel wishListModel = WishListModel(
+      itemId: widget.product.productId,
+      itemImg: widget.product.productImages.first,
+      itemName: widget.product.productName,
+      itemPrice: widget.product.price,
+      sallerName: widget.product.companyName,
+    );
+    WishListServices().addItemToWishList(wishListModel).whenComplete(() {
+      setState(() => taped = !taped);
+      showToast(
+        context,
+        '${widget.product.productName} is sucsessfuly add to WishList.',
+      );
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -64,44 +89,15 @@ class _ProductItemState extends State<ProductItem> {
             right: 0.0,
             top: 0.0,
             child: IconButton(
-                icon: Icon(
-                  taped ? Icons.favorite : Icons.favorite_outline_rounded,
-                  color: Theme.of(context).primaryColor,
-                ),
-                onPressed: () {
-                  setState(() => taped = !taped);
-                }),
+              icon: Icon(
+                taped ? Icons.favorite : Icons.favorite_outline_rounded,
+                color: Theme.of(context).primaryColor,
+              ),
+              onPressed: addToWishList,
+            ),
           )
         ],
       ),
     );
   }
-
-  // void addToCart() {
-  //   final User currentUser = FirebaseAuth.instance.currentUser;
-  //   if (currentUser == null) {
-  //     showToast(context, 'Please Sign in first!');
-  //     return;
-  //   }
-  //   if (taped == false) {
-  //     _cartServices.addNewItemToCart(
-  //       itemId: widget.product.productId,
-  //       itemImg: widget.product.productImages.first,
-  //       numberOfItems: 1,
-  //       itemName: widget.product.productName,
-  //       itemPrice: widget.product.price,
-  //       sallerName: widget.product.companyName,
-  //     );
-  //     setState(() {
-  //       taped = true;
-  //       showToast(context, '${widget.product.productName} Added');
-  //     });
-  //   } else {
-  //     _cartServices.removeItemFromCart(itemId: widget.product.productId);
-  //     setState(() {
-  //       taped = false;
-  //       showToast(context, '${widget.product.productName} removed');
-  //     });
-  //   }
-  // }
 }

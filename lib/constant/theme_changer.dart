@@ -29,6 +29,14 @@ class ThemeChanger extends ChangeNotifier {
       backgroundColor: Colors.green,
       elevation: 0.0,
     ),
+    snackBarTheme: SnackBarThemeData(
+      behavior: SnackBarBehavior.floating,
+      actionTextColor: Colors.black,
+      backgroundColor: Colors.white,
+      contentTextStyle: TextStyle(color: Colors.black),
+      elevation: 0.5,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
+    ),
     cursorColor: Colors.green,
   );
 
@@ -52,6 +60,14 @@ class ThemeChanger extends ChangeNotifier {
     floatingActionButtonTheme: FloatingActionButtonThemeData(
       backgroundColor: Color(0xff03dac6),
       elevation: 0.0,
+    ),
+    snackBarTheme: SnackBarThemeData(
+      behavior: SnackBarBehavior.floating,
+      actionTextColor: Colors.white,
+      backgroundColor: Color(0xFF222225),
+      contentTextStyle: TextStyle(color: Colors.white),
+      elevation: 0.9,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
     ),
     cursorColor: Color(0xff03dac6),
   );

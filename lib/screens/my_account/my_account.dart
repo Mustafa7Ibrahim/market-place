@@ -6,9 +6,10 @@ import 'package:flutter_svg/svg.dart';
 import 'package:market_place/auth/auth.dart';
 import 'package:market_place/constant/theme_changer.dart';
 import 'package:market_place/models/user_model.dart';
+import 'package:market_place/screens/address/addresses_list.dart';
 import 'package:market_place/screens/cart/cart.dart';
-import 'package:market_place/screens/my_account/components/addresses_list.dart';
-import 'package:market_place/screens/my_account/components/details.dart';
+import 'package:market_place/screens/details/details.dart';
+import 'package:market_place/screens/wish_list/wish_list.dart';
 import 'package:market_place/services/user_services.dart';
 import 'package:market_place/widgets/hover_effect.dart';
 import 'package:market_place/widgets/width_button.dart';
@@ -158,7 +159,10 @@ class _MyAccountState extends State<MyAccount> {
                                     MenuButton(
                                       icon: Icons.favorite_border_rounded,
                                       title: 'WishList',
-                                      onTap: () {},
+                                      onTap: () => Navigator.push(
+                                        context,
+                                        CupertinoPageRoute(builder: (context) => WishList()),
+                                      ),
                                     ),
                                     SizedBox(height: 6.0),
                                     MenuButton(

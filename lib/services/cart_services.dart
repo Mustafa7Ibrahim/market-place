@@ -43,7 +43,7 @@ class CartServices {
     }
   }
 
-  addNewItemToCart({
+  Future addNewItemToCart({
     String itemId,
     String itemName,
     String itemImg,

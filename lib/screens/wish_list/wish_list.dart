@@ -1,24 +1,19 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:market_place/models/address_model.dart';
+import 'package:market_place/models/wish_list_model.dart';
 import 'package:market_place/screens/cart/cart.dart';
-import 'package:market_place/services/address_services.dart';
-import 'package:market_place/widgets/width_button.dart';
+import 'package:market_place/screens/wish_list/components/wish_list_tile.dart';
+import 'package:market_place/services/wishlist_services.dart';
 
-import 'add_new_address.dart';
-import 'address_tile.dart';
-
-class AddressesBook extends StatelessWidget {
+class WishList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: BackButton(),
         title: Text(
-          'My Addresses',
+          'My WishList',
           style: TextStyle(color: Theme.of(context).iconTheme.color),
         ),
-        titleSpacing: 0.0,
         actions: [
           IconButton(icon: Icon(Icons.search_rounded), onPressed: () {}),
           IconButton(
@@ -30,23 +25,17 @@ class AddressesBook extends StatelessWidget {
           ),
         ],
       ),
-      bottomNavigationBar: WidthButton(
-        onTap: () => Navigator.push(
-          context,
-          CupertinoPageRoute(builder: (context) => AddNewAddress(null)),
-        ),
-        title: 'ADD NEW ADDRESS',
-      ),
-      body: StreamBuilder<List<AddressModel>>(
-        stream: AddressServices().getListOfAddress,
+      body: StreamBuilder<List<WishListModel>>(
+        stream: WishListServices().getWishList,
         builder: (context, snapshot) {
           if (!snapshot.hasData) {
             return Center(child: CircularProgressIndicator());
           } else {
             return ListView.builder(
+              physics: BouncingScrollPhysics(),
               itemCount: snapshot.data.length,
               itemBuilder: (context, index) {
-                return AddressTile(snapshot.data[index]);
+                return WishListTile(snapshot.data[index]);
               },
             );
           }
